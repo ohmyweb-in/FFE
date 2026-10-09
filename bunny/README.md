@@ -6,10 +6,10 @@ DNS, SSL and the domain stay as they are.
 
 | Piece | Bunny resource | URL |
 |---|---|---|
-| Live domain (coming-soon page now) | Site `ffe` (storage 1977351, pull zone 6764453, SG) | https://sites-ffe-yla75m.b-cdn.net → freshfoodexpoasiapacific.com, www |
+| Live domain (coming-soon page now) | Site `ffe` (storage 1977351, pull zone 6764453, SG) | https://sites-ffe-yla75m.b-cdn.net → www.freshfoodexpoapac.com (+ bare domain) |
 | Client preview (full site) | Site `ffe-preview` (storage 1977353, pull zone 6764456, SG) | https://sites-ffe-preview-yc7f5d.b-cdn.net |
 | Contact form → email | Edge Script `ffe-contact` (95863, standalone) | https://ffe-contact.bunny.run |
-| DNS | Asked helpdesk@biz-era.net for A (preferred) or B | **A:** nameservers → `kiki.bunny.net`, `coco.bunny.net` (Bunny DNS zone already holds every record). **B:** stay on GoDaddy: `www` CNAME → sites-ffe-yla75m.b-cdn.net, bare domain 301-forwarded to https://www., ZeptoMail DKIM TXT + `bounce-zem` CNAME. If B, delete the Bunny DNS zone and the bare-domain hostname on `ffe`. |
+| DNS | biz-era (pridns/secdns.biz-era.net), helpdesk@biz-era.net. Their HQ keeps DNS in-house, so no nameserver change | `www` CNAME → sites-ffe-yla75m.b-cdn.net; bare domain 301 → https://www. from biz-era's server, or ALIAS/ANAME → sites-ffe-yla75m.b-cdn.net if their DNS supports it; ZeptoMail DKIM TXT + `bounce-zem` CNAME for freshfoodexpoapac.com. Mail (MX/SPF) is Microsoft 365. Don't touch it. |
 
 ## Deploying
 
@@ -25,12 +25,12 @@ npx -y @bunny.net/cli@0.19.0 sites deployments publish --previous --site ffe   #
 Contact form script: `npx -y @bunny.net/cli@0.19.0 scripts deploy bunny/contact-form.ts 95863`.
 Its env (Bunny dashboard → Edge Scripting → ffe-contact → Env):
 `ZEPTOMAIL_TOKEN` (secret, ZeptoMail Send Mail token), `CONTACT_TO` (comma-separated inboxes),
-`MAIL_FROM` (`noreply@freshfoodexpoasiapacific.com`), `ALLOWED_ORIGINS` (sites allowed to post).
+`MAIL_FROM` (`noreply@freshfoodexpoapac.com`), `ALLOWED_ORIGINS` (sites allowed to post).
 
 ## SSL
 
-A: Bunny DNS issues certificates automatically once the nameservers switch.
-B: once the `www` CNAME is live, run `npx -y @bunny.net/cli@0.19.0 sites domains ssl www.freshfoodexpoasiapacific.com ffe`.
+Once the `www` CNAME is live, run `npx -y @bunny.net/cli@0.19.0 sites domains ssl www.freshfoodexpoapac.com ffe`
+(and for `freshfoodexpoapac.com` too if biz-era used ALIAS rather than a redirect).
 
 ## Search engines
 
@@ -43,7 +43,7 @@ both sites serve a `robots.txt` with `Disallow: /`. Nothing is indexable until l
 2. Pull zone `sites-ffe-yla75m` → Edge Rules: delete "Pre-launch: keep out of search engines".
    Leave the preview's rule on.
 3. Add a real `robots.txt` / sitemap if wanted (`src/app/robots.ts`), then redeploy.
-4. Check https://freshfoodexpoasiapacific.com and the contact form.
+4. Check https://www.freshfoodexpoapac.com, the bare domain redirect, and the contact form.
 5. Remove `http://localhost:3000` and the preview host from the script's `ALLOWED_ORIGINS`.
 
 ## Known risks
@@ -53,7 +53,7 @@ both sites serve a `robots.txt` with `Disallow: /`. Nothing is indexable until l
   `ffe-contact` pull zone (1/s, burst 5). If spam arrives, add a captcha that works in China
   (not reCAPTCHA) or a Bunny Shield rate-limit rule.
 - **`ffe-contact.bunny.run` from China** is untested. If it's blocked, add a custom hostname
-  (e.g. `forms.freshfoodexpoasiapacific.com`) to the script's pull zone and update `ENDPOINT`.
+  (e.g. `forms.freshfoodexpoapac.com`) to the script's pull zone and update `ENDPOINT`.
 - **Bunny Sites is a preview CLI feature.** The CLI is pinned (0.19.0); underneath it's an ordinary
   storage zone + pull zone, manageable from the dashboard if the CLI changes.
 - **Accidental `deploy:live` before sign-off** publishes the full site. Undo with

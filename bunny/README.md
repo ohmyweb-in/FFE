@@ -6,10 +6,10 @@ DNS, SSL and the domain stay as they are.
 
 | Piece | Bunny resource | URL |
 |---|---|---|
-| Live domain (coming-soon page now) | Site `ffe` (storage 1977351, pull zone 6764453, SG) | https://sites-ffe-yla75m.b-cdn.net → www.freshfoodexpoapac.com (+ bare domain) |
+| Live domain (coming-soon page now) | Site `ffe` (storage 1977351, pull zone 6764453, SG) | https://sites-ffe-yla75m.b-cdn.net → www.freshfoodexpoapac.com |
 | Client preview (full site) | Site `ffe-preview` (storage 1977353, pull zone 6764456, SG) | https://sites-ffe-preview-yc7f5d.b-cdn.net |
 | Contact form → email | Edge Script `ffe-contact` (95863, standalone) | https://ffe-contact.bunny.run |
-| DNS | biz-era (pridns/secdns.biz-era.net), helpdesk@biz-era.net. Their HQ keeps DNS in-house, so no nameserver change | `www` CNAME → sites-ffe-yla75m.b-cdn.net; bare domain 301 → https://www. from biz-era's server, or ALIAS/ANAME → sites-ffe-yla75m.b-cdn.net if their DNS supports it; ZeptoMail DKIM TXT + `bounce-zem` CNAME for freshfoodexpoapac.com. Mail (MX/SPF) is Microsoft 365. Don't touch it. |
+| DNS | biz-era (pridns/secdns.biz-era.net), helpdesk@biz-era.net. Their HQ keeps DNS in-house, so no nameserver change | `www` CNAME → sites-ffe-yla75m.b-cdn.net; bare domain `@` A → 89.106.200.1 (redirect.pizza free plan, 301 → https://www. with path + query; their DNS has no ALIAS and Bunny has no fixed IP); ZeptoMail DKIM TXT + `bounce-zem` CNAME for freshfoodexpoapac.com. Mail (MX/SPF) is Microsoft 365. Don't touch it. |
 
 ## Deploying
 
@@ -29,8 +29,7 @@ Its env (Bunny dashboard → Edge Scripting → ffe-contact → Env):
 
 ## SSL
 
-Once the `www` CNAME is live, run `npx -y @bunny.net/cli@0.19.0 sites domains ssl www.freshfoodexpoapac.com ffe`
-(and for `freshfoodexpoapac.com` too if biz-era used ALIAS rather than a redirect).
+Once the `www` CNAME is live, run `npx -y @bunny.net/cli@0.19.0 sites domains ssl www.freshfoodexpoapac.com ffe` (done 9 Oct 2026; redirect.pizza issues its own cert for the bare domain).
 
 ## Search engines
 

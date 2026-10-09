@@ -154,7 +154,7 @@ export default function NewsList() {
                     </div>
                     <span className="flex items-center gap-[14px] text-[15px] leading-[20px] font-semibold text-forest" aria-hidden>
                       Read More
-                      <span className="flex size-[40px] items-center justify-center rounded-full border-[1.5px] border-accent bg-white transition-colors duration-(--dur-ui) group-hover:bg-mint">
+                      <span className="flex size-[40px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-accent bg-white transition-colors duration-(--dur-ui) group-hover:bg-mint">
                         <Image
                           src={chevronRight}
                           alt=""
@@ -175,8 +175,8 @@ export default function NewsList() {
       </div>
 
       {/* Pagination (736:3188) — visual until there is a CMS behind the list. */}
-      <nav aria-label="News pages" className="flex items-center justify-center gap-[10px]">
-        <span className="flex size-[40px] items-center justify-center rounded-full border-[1.5px] border-[#e0e0e0] bg-white" aria-hidden>
+      <nav aria-label="News pages" className="flex items-center justify-center gap-[10px] max-sm:gap-[6px]">
+        <span className="flex size-[40px] shrink-0 max-sm:size-[32px] items-center justify-center rounded-full border-[1.5px] border-[#e0e0e0] bg-white" aria-hidden>
           <Image src={chevronLeft} alt="" className="size-[18px]" />
         </span>
         {PAGES.map((n) =>
@@ -189,7 +189,7 @@ export default function NewsList() {
               key={n}
               href="#"
               aria-current={n === "1" ? "page" : undefined}
-              className={`tap flex size-[40px] items-center justify-center rounded-full border-[1.5px] text-[15px] leading-[18px] font-semibold transition-colors duration-(--dur-ui) ${
+              className={`tap flex size-[40px] shrink-0 max-sm:size-[32px] items-center justify-center rounded-full border-[1.5px] text-[15px] leading-[18px] font-semibold transition-colors duration-(--dur-ui) ${
                 n === "1" ? "border-accent bg-accent text-white" : "border-[#e0e0e0] bg-white text-accent hover:border-accent"
               }`}
             >
@@ -200,7 +200,7 @@ export default function NewsList() {
         <a
           href="#"
           aria-label="Next page"
-          className="tap flex size-[40px] items-center justify-center rounded-full border-[1.5px] border-accent bg-white transition-colors duration-(--dur-ui) hover:bg-mint"
+          className="tap flex size-[40px] shrink-0 max-sm:size-[32px] items-center justify-center rounded-full border-[1.5px] border-accent bg-white transition-colors duration-(--dur-ui) hover:bg-mint"
         >
           <Image src={chevronRight} alt="" className="size-[18px]" />
         </a>

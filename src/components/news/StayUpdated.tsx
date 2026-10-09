@@ -23,8 +23,8 @@ export default function StayUpdated({
 }: Props) {
   return (
     <section className={`untrim mx-auto w-[min(1360px,100%-2*var(--gutter))] ${mt}`}>
-      <div className="group relative flex flex-col overflow-hidden rounded-[24px] bg-linear-to-r from-mint to-page lg:block lg:h-[327px] lg:rounded-[32px]" data-reveal>
-        <div className="relative px-[24px] pt-[36px] pb-[32px] lg:w-[760px] lg:max-w-[calc(100%-440px)] lg:pt-[52px] lg:pr-[40px] lg:pb-0 lg:pl-[56px] xl:max-w-none">
+      <div className="group relative flex flex-col overflow-hidden rounded-[24px] bg-linear-to-r from-mint to-page lg:block lg:min-h-[327px] lg:rounded-[32px]" data-reveal>
+        <div className="relative px-[24px] pt-[36px] pb-[32px] lg:w-[760px] lg:max-w-[calc(100%-440px)] lg:pt-[52px] lg:pr-[40px] lg:pb-[48px] lg:pl-[56px] xl:max-w-[calc(100%-600px)]">
           <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">{eyebrow}</p>
           <h2 className="mt-[16px] font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[40px] md:leading-[46px] lg:text-[44px] lg:leading-[50px]">
             {title}
@@ -38,7 +38,7 @@ export default function StayUpdated({
             </Pill>
           </div>
           {/* image 86 (736:3220): 93×89 sprig rotated -34.04° in a 126.9×125.8 box at (705.1, 8.31). */}
-          <span className="pointer-events-none absolute top-[8.31px] left-[705.1px] hidden h-[125.81px] w-[126.885px] items-center justify-center xl:flex" aria-hidden>
+          <span className="pointer-events-none absolute top-[8.31px] left-[705.1px] hidden h-[125.81px] w-[126.885px] items-center justify-center min-[1424px]:flex" aria-hidden>
             <Image src={sprig} alt="" sizes="93px" className="h-[89px] w-[93px] max-w-none rotate-[-34.04deg] object-cover" />
           </span>
         </div>

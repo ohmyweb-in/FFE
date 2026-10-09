@@ -35,11 +35,8 @@ export default function RegisterToVisitPage() {
           curveLeft={4.39}
           cta={
             <div className="untrim">
-              {/* Sub (793:4306): 30/36 semibold + 15/24, 8px apart, 3px right of the title. */}
-              <div className="flex flex-col gap-[8px] lg:ml-[3px]">
-                <p className="text-[22px] leading-[28px] font-semibold md:text-[30px] md:leading-[36px]">Be Part of Asia Pacific’s Fresh Food Ecosystem.</p>
-                <p className="text-[15px] leading-[24px] font-medium">Be among the first to visit Asia Pacific’s premier trade fair for fresh food.</p>
-              </div>
+              {/* Sub (793:4306): 15/24, 3px right of the title. */}
+              <p className="text-[15px] leading-[24px] font-medium lg:ml-[3px]">Be among the first to visit Asia Pacific’s premier trade fair for fresh food.</p>
               {/* Date & Venue (793:4309): 24px icons, 12px gap, 18/23 semibold, rows 10px apart, 4px padding. */}
               <ul className="mt-[20px] flex flex-col gap-[10px] py-[4px] md:mt-[23.38px] lg:ml-[3.5px]">
                 {VENUE.map((v) => (

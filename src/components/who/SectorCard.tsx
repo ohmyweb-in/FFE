@@ -44,7 +44,7 @@ export default function SectorCard({ title, lead, icon, items, tiles, tileH, tex
             </div>
           </div>
 
-          <ul className={`grid w-full gap-[8px] ${tiles === "stack" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4"}`}>
+          <ul className={`grid w-full gap-[8px] ${tiles === "stack" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 min-[1360px]:grid-cols-4"}`}>
             {items.map((it) =>
               tiles === "stack" ? (
                 <li key={it.label} className={`flex flex-col items-center gap-[10px] rounded-[14px] border border-accent bg-mint px-[10px] py-[16px] text-center ${tileH}`}>
@@ -54,7 +54,7 @@ export default function SectorCard({ title, lead, icon, items, tiles, tileH, tex
               ) : (
                 <li key={it.label} className={`flex items-center gap-[12px] rounded-[14px] border border-accent bg-mint p-[14px] max-sm:gap-[10px] max-sm:px-[10px] ${tileH} max-sm:min-h-0!`}>
                   <Image src={it.icon} alt="" className="shrink-0" />
-                  <span className="min-w-0 flex-1 text-[13px] leading-[17px] font-medium whitespace-pre-line text-accent max-sm:whitespace-normal">{it.label}</span>
+                  <span className="min-w-0 flex-1 text-[13px] leading-[17px] font-medium whitespace-pre-line hyphens-auto text-accent max-sm:whitespace-normal">{it.label}</span>
                 </li>
               ),
             )}

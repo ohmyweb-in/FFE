@@ -38,7 +38,7 @@ type Props = {
    * "exhibit" = Why Exhibit 786:3081: 380px panel, no eyebrow, 18/26 copy, date block + CTAs passed in `cta`.
    * "apply" = Apply to Exhibit 786:3263: 246px panel (30px radius), three-line title only, exhibit curve.
    * "plan" = Plan Your Visit 793:4215: 338px panel (30px radius), one 325px fade, one-line copy, date block + CTAs via `cta`.
-   * "register" = Register as a Trade Visitor 793:4301: 404px panel (30px radius), title only; sub, date block + CTAs via `cta`; taller curve.
+   * "register" = Register as a Trade Visitor 793:4301: 404px panel (360px since the 30px sub line was dropped), title only; sub, date block + CTAs via `cta`; taller curve.
    * "why" = Why Visit 869:777: 316px panel (30px radius), title only; date block + CTAs via `cta`; exhibit curve.
    * "contact" = Contact Us 483:211: 298px panel, eyebrow + title only, image 78 curve at top 118.
    */
@@ -137,8 +137,8 @@ const SIZES: Record<NonNullable<Props["size"]>, Size> = {
   },
   // Title cap top 71 at x 55; sub (untrimmed) top 132 via `cta`. Curve Group 1000015919: 196.84×207.85 at (4.39, 215.98).
   register: {
-    panel: "lg:h-[404px] lg:rounded-[30px]!",
-    curve: "top-[215.98px] h-[207.848px] w-[196.842px]",
+    panel: "lg:h-[360px] lg:rounded-[30px]!",
+    curve: "top-[171.98px] h-[207.848px] w-[196.842px]",
     curveSrc: registerCurve,
     content: "lg:pt-[71px] lg:pl-[0.5px]",
     title: "mt-0!",
@@ -194,9 +194,9 @@ export default function PageHero({ eyebrow, title, children, img, imgBox, date, 
         </div>
         {/* Below lg: brand green over the photo so white copy stays readable. */}
         <div className="absolute inset-0 bg-linear-to-b from-brand from-35% via-brand/85 to-brand/65 lg:hidden" />
-        {/* Desktop: brand fades over the photo's left edge. */}
+        {/* Desktop: brand fades over the photo's left edge. -ml-[3px] tucks each fade under the photo's edge so no hairline shows when zoomed. */}
         {(z.fades ?? FADES).map((f) => (
-          <div key={f} className={`absolute inset-y-0 hidden bg-linear-to-l from-brand/0 to-brand lg:block ${f}`} />
+          <div key={f} className={`absolute inset-y-0 -ml-[3px] hidden bg-linear-to-l from-brand/0 to-brand lg:block ${f}`} />
         ))}
         {/* image 78: 213×181 slot, Figma fill crop. */}
         <span className={`pointer-events-none absolute hidden overflow-hidden lg:block ${z.curve}`} style={{ left: curveLeft }} aria-hidden>

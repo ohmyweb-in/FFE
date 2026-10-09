@@ -24,11 +24,11 @@ export default function SubscribeSection() {
           Be the first to know about
         </h2>
 
-        <ul className="grid grid-cols-2 gap-[14px] sm:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-[14px] sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
           {BENEFITS.map((b, idx) => (
             <li
               key={b.label[0]}
-              className="lift flex h-[182px] flex-col items-center gap-[16px] rounded-[22px] rounded-bl-none bg-mint px-[12px] py-[24px] text-center"
+              className="lift flex min-h-[182px] flex-col items-center gap-[16px] rounded-[22px] rounded-bl-none bg-mint px-[12px] py-[24px] text-center"
               data-reveal
               style={{ "--i": idx } as CSSProperties}
             >

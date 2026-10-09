@@ -56,7 +56,7 @@ export default function JoinBanner({
       {/* Tablet. */}
       <div className="absolute inset-0 hidden bg-linear-to-b from-brand from-40% via-brand/85 to-brand/50 md:block lg:hidden" />
       {/* Desktop (359:481): green fade over the photo's left edge. */}
-      <div className="absolute inset-y-0 left-[23.66%] hidden w-[51.9%] bg-linear-to-l from-brand/0 to-brand lg:block" />
+      <div className="absolute inset-y-0 -ml-[3px] left-[23.66%] hidden w-[51.9%] bg-linear-to-l from-brand/0 to-brand lg:block" />
 
       <div className={`container-page relative pt-[48px] text-white md:pt-12 md:pb-12 ${inner}`}>
         <div data-reveal>

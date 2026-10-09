@@ -29,11 +29,11 @@ export default function Grow() {
           {BENEFITS.map((b, idx) => (
             <li
               key={b.text}
-              className="lift flex flex-col items-start gap-[14px] rounded-[20px] bg-white px-[22px] pt-[24px] pb-[26px] xl:h-[249px]"
+              className="lift flex flex-col items-start gap-[14px] rounded-[20px] bg-white px-[22px] pt-[24px] pb-[26px] xl:min-h-[249px]"
               data-reveal
               style={{ "--i": idx } as CSSProperties}
             >
-              <span className="grid size-[60px] place-items-center rounded-full bg-mint">
+              <span className="grid size-[60px] shrink-0 place-items-center rounded-full bg-mint">
                 <Image src={b.icon} alt="" />
               </span>
               <h3 className="font-display text-[19px] leading-[24px] font-semibold text-[#032919]">{b.title}</h3>

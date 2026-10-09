@@ -80,7 +80,7 @@ export default function CommunityForm() {
       <div className="flex flex-col gap-[16px] md:flex-row md:items-start md:gap-[28px]">
         <div className="flex flex-col items-start gap-[16px]">
           {/* Placeholder for the Cloudflare Turnstile widget (image 79). */}
-          <span className="relative block h-[58.712px] w-[267px] overflow-hidden" aria-hidden>
+          <span className="relative block h-[58.712px] w-[267px] max-w-full overflow-hidden" aria-hidden>
             <Image src={captcha} alt="" sizes="353px" style={crop(131.94, 691.67, -15.45, -182.14)} />
           </span>
           <Pill className="bg-accent text-white">Subscribe</Pill>

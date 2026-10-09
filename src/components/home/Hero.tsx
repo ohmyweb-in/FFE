@@ -32,8 +32,8 @@ export default function Hero() {
         {/* Tablet. */}
         <div className="absolute inset-0 hidden bg-linear-to-b from-brand from-35% via-brand/85 to-brand/65 md:block lg:hidden" />
         {/* Desktop (359:31 / 359:32): brand-green fades over the photo's left edge. */}
-        <div className="absolute inset-y-0 left-[16.34%] hidden w-[38.57%] bg-linear-to-l from-brand/0 to-brand lg:block" />
-        <div className="absolute inset-y-0 left-[16.34%] hidden w-[65.88%] bg-linear-to-l from-brand/0 to-brand lg:block" />
+        <div className="absolute inset-y-0 -ml-[3px] left-[16.34%] hidden w-[38.57%] bg-linear-to-l from-brand/0 to-brand lg:block" />
+        <div className="absolute inset-y-0 -ml-[3px] left-[16.34%] hidden w-[65.88%] bg-linear-to-l from-brand/0 to-brand lg:block" />
 
         <div className="container-page relative pt-[51px] text-white md:pt-10 md:pb-16 lg:pt-[90px] lg:pb-0">
           <p className="eyebrow load-in max-w-[200px] md:max-w-none" style={i(0)}>

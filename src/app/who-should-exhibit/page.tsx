@@ -68,7 +68,7 @@ export default function WhoShouldExhibitPage() {
           lead="For growers, producers, exporters and suppliers of:"
           icon={basket}
           tiles="row"
-          tileH="min-h-[62px] xl:h-[62px]"
+          tileH="min-h-[62px]"
           items={[
             { label: "Fruit &\nVegetables", icon: apple },
             { label: "Meat &\nPoultry", icon: meat },
@@ -88,7 +88,7 @@ export default function WhoShouldExhibitPage() {
           lead="For companies providing technologies and solutions that help maintain quality, extend shelf life and reduce losses."
           icon={gear}
           tiles="stack"
-          tileH="min-h-[123px] xl:h-[123px]"
+          tileH="min-h-[123px]"
           items={[
             { label: "Agricultural\nTechnologies", icon: thermo },
             { label: "Cooling &\nRefrigeration", icon: snowLg },
@@ -107,7 +107,7 @@ export default function WhoShouldExhibitPage() {
           lead="For companies providing the infrastructure, services and technologies that move fresh food safely and efficiently."
           icon={truck}
           tiles="row"
-          tileH="min-h-[79px] xl:h-[79px]"
+          tileH="min-h-[79px]"
           items={[
             { label: "Transportation\n– Air, Sea, Land\n& Rail", icon: plane },
             { label: "Cold Chain", icon: snow },

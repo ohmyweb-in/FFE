@@ -21,7 +21,7 @@ export default function UsefulResources() {
           <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">Need more information?</p>
           <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[40px] md:leading-[46px]">Useful Resources</h2>
         </div>
-        <ul className="grid gap-[16px] sm:grid-cols-2 md:gap-[20px] xl:grid-cols-4">
+        <ul className="grid gap-[16px] sm:grid-cols-2 md:gap-[20px] min-[1424px]:grid-cols-4">
           {LINKS.map((l, idx) => (
             <li key={l.title} data-reveal style={{ "--i": idx } as CSSProperties}>
               <a href={l.href} className="lift group flex h-full min-h-[108px] items-center gap-[16px] rounded-[22px] bg-white px-[20px] py-[22px]">
@@ -34,7 +34,7 @@ export default function UsefulResources() {
                     {l.desc[0]}
                     {l.desc[1] && (
                       <>
-                        <br className="hidden xl:block" /> {l.desc[1]}
+                        <br className="hidden min-[1424px]:block" /> {l.desc[1]}
                       </>
                     )}
                   </span>

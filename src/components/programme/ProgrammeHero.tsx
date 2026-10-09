@@ -24,8 +24,8 @@ export default function ProgrammeHero() {
           className="absolute inset-0 size-full max-w-none object-cover lg:top-[-19.09%] lg:left-[23.81%] lg:h-[138.19%] lg:w-[76.19%]"
         />
         <div className="absolute inset-0 bg-linear-to-b from-brand from-35% via-brand/85 to-brand/65 lg:hidden" />
-        <div className="absolute inset-y-0 left-[16.4%] hidden w-[38.57%] bg-linear-to-l from-brand/0 to-brand lg:block" />
-        <div className="absolute inset-y-0 left-[16.41%] hidden w-[71.11%] bg-linear-to-l from-brand/0 to-brand lg:block" />
+        <div className="absolute inset-y-0 -ml-[3px] left-[16.4%] hidden w-[38.57%] bg-linear-to-l from-brand/0 to-brand lg:block" />
+        <div className="absolute inset-y-0 -ml-[3px] left-[16.41%] hidden w-[71.11%] bg-linear-to-l from-brand/0 to-brand lg:block" />
         <Image
           src={curve}
           alt=""

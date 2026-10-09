@@ -29,7 +29,7 @@ export default function BePartOf() {
         <div className="relative px-[24px] pt-[36px] pb-[36px] lg:px-[52px] lg:pt-[48px] lg:pb-[48px] xl:max-w-[620px] xl:pr-0" data-reveal>
           <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">Join us</p>
           <h2 className="mt-[12px] font-display text-[30px] leading-[36px] font-semibold text-forest lg:text-[34px] lg:leading-[40px]">
-            Be part of <span className="text-accent">Fresh Food</span> Expo APAC
+            Be part of <span className="text-accent">Fresh Food Expo APAC</span>
           </h2>
           <div className="mt-[12px] flex flex-col gap-[10px] text-[15px] leading-[21px] font-medium text-body">
             <p>Connect with the businesses, technologies and decision-makers shaping the future of fresh food across Asia Pacific.</p>

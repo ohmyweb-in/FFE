@@ -83,19 +83,20 @@ export default function LaunchPopup() {
         </button>
       </div>
 
-      <div className="modal-body grid overflow-hidden rounded-[20px] bg-white lg:grid-cols-[minmax(0,735fr)_minmax(0,564fr)] lg:rounded-[30px] landscape-phone:grid-cols-2">
+      {/* Portrait phones/tablets: a capped column where the poster shrinks (min 140px) so the whole popup fits the screen without scrolling. */}
+      <div className="modal-body grid overflow-hidden rounded-[20px] bg-white max-lg:portrait:flex max-lg:portrait:max-h-[calc(100dvh-24px)] max-lg:portrait:flex-col max-lg:portrait:overflow-y-auto lg:grid-cols-[minmax(0,735fr)_minmax(0,564fr)] lg:rounded-[30px] landscape-phone:grid-cols-2">
         {/* Phones/tablets/1024 band: whole poster (its own background is white). ≥1280: Figma’s cover fill. */}
-        <div className="relative flex items-center bg-white">
+        <div className="relative flex items-center bg-white max-lg:portrait:contents">
           <Image
             src={poster}
             alt="Fresh Food Expo APAC 2027 poster"
             placeholder="blur"
             sizes="(min-width: 1024px) 735px, 100vw"
-            className="h-auto w-full xl:absolute xl:inset-0 xl:size-full xl:object-cover xl:object-[25%_50%] 3xl:object-center"
+            className="h-auto w-full max-lg:portrait:min-h-[140px] max-lg:portrait:object-contain xl:absolute xl:inset-0 xl:size-full xl:object-cover xl:object-[25%_50%] 3xl:object-center"
           />
         </div>
 
-        <div className="flex flex-col p-[20px] pt-[22px] md:p-[32px] lg:py-[36px] lg:pr-[32px] lg:pl-[28px] xl:pt-[45px] xl:pr-[55px] xl:pb-[52px] xl:pl-[31px] landscape-phone:p-[20px]!">
+        <div className="flex flex-col p-[16px] pt-[18px] sm:p-[20px] sm:pt-[22px] md:p-[32px] lg:py-[36px] lg:pr-[32px] lg:pl-[28px] xl:pt-[45px] xl:pr-[55px] xl:pb-[52px] xl:pl-[31px] landscape-phone:p-[20px]!">
           <p className="inline-flex h-[27px] items-center gap-[7px] self-start rounded-full bg-mint pr-[14px] pl-[16px] text-[12px] font-semibold text-forest uppercase">
             <span className="size-[10px] animate-pulse rounded-full bg-accent" aria-hidden />
             Registration is now open!
@@ -103,13 +104,13 @@ export default function LaunchPopup() {
 
           <h2
             id="launch-popup-title"
-            className="mt-[22px] max-w-[429px] pr-[40px] font-display text-[26px] leading-[32px] font-semibold text-forest md:mt-[29px] md:pr-0 md:text-[34px] md:leading-[42px] xl:text-[40px] xl:leading-[49.2px] landscape-phone:mt-[16px]! landscape-phone:text-[22px]! landscape-phone:leading-[28px]!"
+            className="mt-[14px] max-w-[429px] font-display text-[24px] leading-[30px] font-semibold text-forest sm:mt-[22px] sm:text-[26px] sm:leading-[32px] md:mt-[29px] md:text-[34px] md:leading-[42px] xl:text-[40px] xl:leading-[49.2px] landscape-phone:mt-[16px]! landscape-phone:text-[22px]! landscape-phone:leading-[28px]!"
           >
             Be Part of Asia Pacific’s Fresh Food Ecosystem!
           </h2>
 
           {/* Figma 1228:243: 374×58 mint strip. */}
-          <div className="mt-[22px] flex h-[50px] items-center gap-[10px] self-start rounded-[10px] bg-mint pr-[12px] pl-[10px] sm:h-[58px] sm:gap-0 sm:pr-[14px] sm:pl-[12px] md:mt-[29px] landscape-phone:mt-[16px]!">
+          <div className="mt-[14px] flex h-[46px] items-center gap-[10px] self-start rounded-[10px] bg-mint pr-[12px] pl-[10px] sm:mt-[22px] sm:h-[58px] sm:gap-0 sm:pr-[14px] sm:pl-[12px] md:mt-[29px] landscape-phone:mt-[16px]!">
             <p className="font-display text-[15px] font-semibold text-forest uppercase sm:mr-[17px] sm:w-[134px] sm:text-[20px]">Powered By:</p>
             <span className="relative aspect-[94/30] w-[75px] shrink-0 sm:w-[94px]" role="img" aria-label="Grüne Woche">
               <Image src={gwMark} alt="" className="absolute top-[4.43%] left-0 h-auto w-[29.9%]" />
@@ -118,9 +119,9 @@ export default function LaunchPopup() {
             <Image src={flLogo} alt="Fruit Logistica" className="h-auto w-[67px] shrink-0 sm:ml-[19px] sm:w-[84px]" />
           </div>
 
-          <ul className="mt-[18px] grid gap-[12px] sm:grid-cols-[240fr_224fr] sm:gap-[14px] md:mt-[23px] lg:grid-cols-1 xl:grid-cols-[240fr_224fr] landscape-phone:grid-cols-1! landscape-phone:mt-[14px]!">
+          <ul className="mt-[14px] grid gap-[8px] sm:mt-[18px] sm:grid-cols-[240fr_224fr] sm:gap-[14px] md:mt-[23px] lg:grid-cols-1 xl:grid-cols-[240fr_224fr] landscape-phone:grid-cols-1! landscape-phone:mt-[14px]!">
             {OPTIONS.map((o) => (
-              <li key={o.cta} className="flex flex-col items-start gap-[14px] rounded-[20px] bg-[#edf6ee] px-[17px] pt-[20px] pb-[17px] landscape-phone:flex-row! landscape-phone:items-center! landscape-phone:justify-between landscape-phone:py-[12px]!">
+              <li key={o.cta} className="flex flex-col items-start gap-[10px] rounded-[16px] bg-[#edf6ee] p-[14px] sm:gap-[14px] sm:rounded-[20px] sm:px-[17px] sm:pt-[20px] sm:pb-[17px] landscape-phone:flex-row! landscape-phone:items-center! landscape-phone:justify-between landscape-phone:py-[12px]!">
                 <p className="text-[14px] font-semibold text-body uppercase">{o.q}</p>
                 <Button
                   href={o.href}

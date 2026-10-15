@@ -9,7 +9,7 @@ import RuleEyebrow from "@/components/story/RuleEyebrow";
 import SectorCard from "@/components/who/SectorCard";
 import hero from "@/assets/who/hero.jpg";
 import imgFresh from "@/assets/siaw/card-fresh.jpg";
-import imgTech from "@/assets/siaw/card-agri.jpg";
+import imgTech from "@/assets/who/tech-processing.jpg";
 import imgLogistics from "@/assets/eco-logistics.jpg";
 import basket from "@/assets/who/f-basket.svg";
 import apple from "@/assets/who/f-apple.svg";
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     "If your business plays a role in bringing fresh food from source to buyer, Fresh Food Expo APAC provides a dedicated platform to connect with buyers, partners and industry decision-makers across Asia Pacific.",
 };
 
-/** Figma 778:1240 (Who_Should_Exhibit_Desktop; hero 1053:242). Intro 42px under the hero, cards 24px apart. */
+/** Figma 1142:5034 (Who_Should_Exhibit; hero as 1053:242). Intro 42px under the hero, cards 24px apart. */
 export default function WhoShouldExhibitPage() {
   return (
     <>
@@ -62,7 +62,7 @@ export default function WhoShouldExhibitPage() {
           mt="mt-[24px]"
           title={
             <>
-              Fresh Food<span className="text-accent">.</span>
+              Fresh Food
             </>
           }
           lead="For growers, producers, exporters and suppliers of:"
@@ -98,12 +98,13 @@ export default function WhoShouldExhibitPage() {
           ]}
           text="Showcase solutions to businesses looking to improve how fresh food is handled, protected and prepared for the market."
           img={imgTech}
-          alt="Robotic arm tending leafy greens in a vertical farm"
-          pos="object-center"
+          alt="Workers in protective clothing on a food-processing line"
+          // Figma 1142:5169 fill: 113.97% × 115.48% at (−6.9%, −0.08%) = cover zoomed 1.14× from the top centre (hides the photo credit).
+          pos="object-top scale-[1.14] origin-top"
         />
         <SectorCard
           mt="mt-[24px]"
-          title="Logistics & Distribution."
+          title="Logistics & Distribution"
           lead="For companies providing the infrastructure, services and technologies that move fresh food safely and efficiently."
           icon={truck}
           tiles="row"
@@ -131,7 +132,7 @@ export default function WhoShouldExhibitPage() {
               <RuleEyebrow light>Put your business at the centre of</RuleEyebrow>
             </div>
           }
-          title="Asia Pacific’s fresh food industry."
+          title="Asia Pacific’s fresh food industry"
           titleCls="md:max-w-[730px]! lg:ml-[5px]"
           lead="Showcase your products and solutions, meet prospective buyers and partners, and build new commercial opportunities across the region."
           leadMt="lg:mt-[28.41px] lg:ml-[0.5px] md:max-w-[591px]!"

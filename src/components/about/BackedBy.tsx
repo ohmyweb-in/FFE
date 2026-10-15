@@ -27,18 +27,18 @@ export default function BackedBy() {
       <div className="flex min-w-0 flex-1 flex-col items-start gap-[16px]" data-reveal style={{ "--i": 1 } as CSSProperties}>
         <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">Organiser</p>
         <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[40px] md:leading-[46px] lg:text-[44px] lg:leading-[50px] min-[1344px]:w-[636px] min-[1344px]:max-w-none">
-          Led by <br />
-          <span className="text-accent">Messe Berlin Asia Pacific</span>
+          Led by <span className="text-accent">Messe Berlin Asia Pacific</span>
         </h2>
         <div className="flex flex-col gap-[12px] text-[15px] leading-[22px] font-medium text-body">
-          <p>Fresh Food Expo APAC is organised by Messe Berlin Asia Pacific, one of the world’s leading trade fair companies.</p>
           <p>
-            With decades of international exhibition expertise and a global network spanning industries and markets, Messe Berlin Asia Pacific creates
-            professional platforms that bring industries together, facilitate international business and connect markets.
+            Messe Berlin Asia Pacific is the regional headquarters of Messe Berlin GmbH for the Asia Pacific region, headquartered in Singapore with a
+            growing presence in key markets including India. It leads the development and expansion of Messe Berlin’s business across Asia, connecting
+            global industries with high-growth regional opportunities.
           </p>
           <p>
-            Fresh Food Expo APAC brings this international trade fair expertise to Singapore, creating a dedicated platform built around the
-            opportunities and priorities of Asia Pacific’s fresh food ecosystem.
+            Messe Berlin Asia Pacific develops and delivers leading platforms including ITB Asia, InnoTrans Asia, CMS Asia, Smart Health Asia, ITB
+            India, MICE Show Asia, Travel Tech Asia and Travel Meet Asia. The organisation also oversees Messe Berlin India, supporting the group’s
+            growth in the Indian market.
           </p>
         </div>
         <div className="pt-[6px]">

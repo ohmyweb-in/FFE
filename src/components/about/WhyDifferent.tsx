@@ -50,7 +50,7 @@ export default function WhyDifferent() {
       />
       <div className="container-narrow relative pt-[48px] pb-[48px] lg:pt-[72px] lg:pb-[53px]">
         <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[40px] md:leading-[46px] lg:text-[44px] lg:leading-[50px]" data-reveal>
-          Why <span className="text-accent">Fresh Food Expo APAC</span> is different.
+          Why <span className="text-accent">Fresh Food Expo APAC</span> is different
         </h2>
 
         <ul className="points mt-[32px] grid gap-x-[28px] gap-y-[28px] md:grid-cols-2 lg:mt-[44px] lg:flex lg:items-stretch lg:gap-0">

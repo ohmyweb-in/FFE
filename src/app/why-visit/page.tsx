@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "Fresh Food Expo APAC brings together suppliers, solution providers and industry professionals in one dedicated B2B platform – giving visitors direct access to new products, partners and commercial opportunities.",
 };
 
-/** Figma 869:402 (Why_Visit_Desktop). */
+/** Figma 1138:4547 (Why_Visit). */
 export default function WhyVisitPage() {
   return (
     <>
@@ -49,7 +49,7 @@ export default function WhyVisitPage() {
           title={
             <>
               Be part of Asia Pacific’s <br className="max-md:hidden" />
-              fresh food ecosystem.
+              fresh food ecosystem
             </>
           }
           titleCls="md:max-w-[751px]! lg:ml-[5px]"

@@ -21,7 +21,7 @@ export default function Grow() {
       <div className="flex flex-col gap-[24px] rounded-[24px] bg-linear-to-b from-mint to-[#eef6ef] p-[20px] md:p-[40px] lg:rounded-[32px]">
         <div className="flex flex-col items-start gap-[10px]" data-reveal>
           <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[36px] md:leading-[44px] lg:text-[38px] lg:leading-[46px]">
-            Grow your business across <span className="text-accent">Asia Pacific.</span>
+            Grow your business across <span className="text-accent">Asia Pacific</span>
           </h2>
           <p className="text-[17px] leading-[24px] font-medium text-body md:text-[18px] md:leading-[26px]">Fresh Food Expo APAC gives exhibitors a platform to:</p>
         </div>

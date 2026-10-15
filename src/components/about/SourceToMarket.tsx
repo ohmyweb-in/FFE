@@ -17,7 +17,7 @@ export default function SourceToMarket() {
       <div className="relative px-[20px] pt-[36px] md:px-8 md:pt-12 lg:px-[56px] lg:pt-[56px]" data-reveal>
         <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">From source to market</p>
         <h2 className="h-section mt-[14px] max-w-[780px] lg:leading-[52px]">
-          From <span className="text-accent">Fresh Food</span> to Market.
+          From <span className="text-accent">Fresh Food</span> to Market
         </h2>
         <p className="mt-[14px] max-w-[780px] text-[17px] leading-[23px] font-medium text-body md:text-[18px]">
           Fresh Food Expo APAC connects fresh food with the technologies and logistics solutions that help maintain quality, preserve freshness and move products

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "From fresh food to technology, logistics and distribution, Fresh Food Expo APAC connects the businesses and solutions that bring fresh food to market.",
 };
 
-/** Figma 450:3745 (Ecosystem_Desktop). Sections sit 67px apart; the intro (793:4477) was slotted in at 40.32 / 20.63. */
+/** Figma 1138:2024 (Ecosystem_Desktop, was 450:3745). Sections sit 67px apart; the intro (793:4477) was slotted in at 40.32 / 20.63. */
 export default function EcosystemPage() {
   return (
     <>
@@ -48,7 +48,7 @@ export default function EcosystemPage() {
           title={
             <>
               Connect across the fresh <br className="max-md:hidden" />
-              food ecosystem.
+              food ecosystem
             </>
           }
           lead="Fresh Food Expo APAC connects fresh food, technology, logistics and distribution — bringing the ecosystem together in one dedicated business platform."

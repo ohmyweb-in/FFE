@@ -21,7 +21,7 @@ const VENUE = [
   { icon: pin, text: "Sands Expo & Convention Centre, Singapore" },
 ];
 
-/** Figma 781:2237 (Plan Your Visit). */
+/** Figma 1138:4309 (Plan Your Visit). */
 export default function PlanYourVisitPage() {
   return (
     <>

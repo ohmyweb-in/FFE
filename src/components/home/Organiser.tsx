@@ -70,10 +70,10 @@ export default function Organiser() {
           Led by <br className="max-md:hidden" />
           <span className="text-accent">Messe Berlin Asia Pacific</span>
         </h2>
-        <p className="text-lead mt-[21px] max-w-[663px] md:mt-[24px] lg:mt-[22px] lg:ml-px">
-          Being one of the world&apos;s leading trade fair companies with decades of international exhibition expertise and a global network spanning
-          industries and markets, <br className="max-md:hidden" />
-          Messe Berlin Asia Pacific creates professional platforms that bring industries together, facilitate international business and connect markets.
+        <p className="text-lead mt-[21px] max-w-[697px] md:mt-[24px] lg:mt-[22px] lg:ml-px">
+          Messe Berlin Asia Pacific is the regional headquarters of Messe Berlin GmbH for the Asia Pacific region, headquartered in Singapore with a
+          growing presence in key markets including India. It leads the development and expansion of Messe Berlin’s business across Asia, connecting
+          global industries with high-growth regional opportunities.
         </p>
       </div>
 
@@ -99,13 +99,13 @@ export default function Organiser() {
       </div>
 
       {/* Mobile: full-bleed map with the tagline over its lower right (Figma 318:2286).
-          2xl: map bleeds to the viewport's right edge (359:256 at x=695, w=745). */}
-      <div className="relative mt-[36px] ml-[calc(var(--gutter)*-1)] w-screen md:mt-8 md:ml-0 md:w-auto 2xl:static 2xl:mt-0">
-        <div className="2xl:absolute 2xl:top-[13px] 2xl:right-[calc((100%-100vw)/2)] 2xl:mt-0 2xl:w-[745px]" data-reveal="fade">
-          <Image src={worldMap} alt="" aria-hidden sizes="(min-width: 1536px) 745px, 100vw" className="aspect-[440/146] h-auto w-full object-cover md:aspect-[745/248]" />
+          ≥1440: beside the copy, ending 2px short of the viewport edge (1138:329 at x=720, w=718); narrower screens stack it so it never crosses the copy. */}
+      <div className="relative mt-[36px] ml-[calc(var(--gutter)*-1)] w-screen md:mt-8 md:ml-0 md:w-auto 3xl:static 3xl:mt-0">
+        <div className="3xl:absolute 3xl:top-[17px] 3xl:right-[calc((100%-100vw)/2+2px)] 3xl:mt-0 3xl:w-[718px]" data-reveal="fade">
+          <Image src={worldMap} alt="" aria-hidden sizes="(min-width: 1440px) 718px, 100vw" className="aspect-[440/146] h-auto w-full object-cover md:aspect-[718/240]" />
         </div>
         <p
-          className="text-lead absolute top-[95px] right-[22px] w-[172px] text-right text-[12px] md:static md:mt-4 md:w-auto md:text-[18px] 2xl:absolute 2xl:top-[231px] 2xl:right-[-2px] 2xl:mt-0 2xl:w-[172px]"
+          className="text-lead absolute top-[95px] right-[22px] w-[172px] text-right text-[12px] md:static md:mt-4 md:w-auto md:text-[18px] 3xl:absolute 3xl:top-[231px] 3xl:right-[-2px] 3xl:mt-0 3xl:w-[172px]"
           data-reveal
         >
           Global Platforms.
@@ -117,7 +117,7 @@ export default function Organiser() {
       </div>
 
       {/* Line 22 (359:254): 8.88px below the stats rules (Figma 359:255 update). */}
-      <div className="mt-[25px] ml-[2px] h-px bg-accent/37 md:mt-10 md:ml-0 md:w-full 2xl:mt-[8.88px]" />
+      <div className="mt-[25px] ml-[2px] h-px bg-accent/37 md:mt-10 md:ml-0 md:w-full 3xl:mt-[8.88px]" />
 
       <h2 className="h-section mt-[21px] ml-px md:mt-10 md:ml-0 lg:mt-[29.12px] xl:ml-[3px]" data-reveal>
         Explore our <span className="text-accent">trade shows</span>

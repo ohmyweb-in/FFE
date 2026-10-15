@@ -14,16 +14,16 @@ type Group = { title: [string, string]; icon: StaticImageData; tags: string[]; t
 // `tags`: one string per Figma line. Figma fills are full-width at the photo’s true ratio, shifted up; `pos` = that shift as object-position (top offset / overflow).
 const GROUPS: Group[] = [
   {
-    title: ["Buyers & Procurement", "Professionals."],
+    title: ["Buyers & Procurement", "Professionals"],
     icon: users,
-    tags: ["Importers  ·  Sourcing Professionals  ·  Procurement Teams  ·  ", "Purchasing Managers  ·  Traders  ·  Buying Offices"],
+    tags: ["Importers  ·  Exporters  ·  Sourcing Professionals  ·  Procurement Teams  ·  ", "Purchasing Managers  ·  Traders  ·  Buying Offices"],
     text: "Discover new suppliers, compare products and identify new sourcing opportunities across the fresh food ecosystem.",
     img: buyers,
     alt: "Buyers meeting exhibitors at a stand",
     pos: "object-[50%_80.3%]",
   },
   {
-    title: ["Distributors, Wholesalers", "& Retailers."],
+    title: ["Distributors, Wholesalers", "& Retailers"],
     icon: store,
     tags: ["Distributors  ·  Wholesalers  ·  Supermarkets  ·  Grocery Retailers  ·  ", "E\u2011commerce Platforms  ·  Regional Distribution Networks"],
     text: "Meet suppliers, expand your product portfolio and build new commercial relationships across regional and international markets.",
@@ -32,7 +32,7 @@ const GROUPS: Group[] = [
     pos: "object-[50%_73.3%]",
   },
   {
-    title: ["Foodservice & ", "Hospitality."],
+    title: ["Foodservice & ", "Hospitality"],
     icon: chef,
     tags: ["Hotels  ·  Restaurants  ·  Catering Companies  ·  Foodservice Operators  · Institutional Buyers"],
     text: "Source fresh food products, discover new suppliers and explore solutions that support quality, consistency and supply reliability.",
@@ -41,7 +41,7 @@ const GROUPS: Group[] = [
     pos: "object-[50%_61.3%]",
   },
   {
-    title: ["Supply Chain & Industry", "Professionals."],
+    title: ["Supply Chain & Industry", "Professionals"],
     icon: box,
     tags: ["Logistics Operators  ·  Cold Chain Professionals  ·  Warehousing Specialists  · Supply Chain Managers  ·  Quality & Operations Teams  ·  Industry Organisations"],
     text: "Explore technologies, services and partnerships that improve how fresh food is handled, stored, transported and distributed.",
@@ -51,7 +51,7 @@ const GROUPS: Group[] = [
   },
 ];
 
-/** Visitor groups (781:2102): 2×2 cards, 24px gaps, 1360px row (40px sides at 1440). */
+/** Visitor groups (1138:4177): 2×2 cards, 24px gaps, 1360px row (40px sides at 1440). */
 export default function VisitorGroups() {
   return (
     <section className="untrim mx-auto mt-[24px] grid w-[min(1360px,100%-2*var(--gutter))] gap-[24px] lg:grid-cols-2">

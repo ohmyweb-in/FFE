@@ -33,7 +33,7 @@ export default function Buyers() {
       <div className="flex min-w-0 flex-1 flex-col items-start gap-[16px]" data-reveal>
         {/* Figma's text box is 37px for a 46px line, so the copy below sits 9px higher. */}
         <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[36px] md:leading-[44px] lg:text-[38px] lg:leading-[46px] xl:h-[37px]">
-          Connect with the buyers that matter.
+          Connect with the buyers that matter
         </h2>
         <p className="text-[17px] leading-[24px] font-medium text-body md:text-[18px] md:leading-[26px]">
           Meet professionals responsible for sourcing, procurement, distribution and purchasing across the fresh food industry.
@@ -58,14 +58,21 @@ export default function Buyers() {
         </Pill>
       </div>
 
-      {/* Media 440×520: meeting photo 400×400, stand photo 240×220 (8px page-colour frame) at (200, 300). */}
+      {/* Media 440×520 (1138:3307): the 777:739 photo pair scaled to 0.898 and moved in, meeting photo 359×359 at (22, 26), stand photo 216×198 (7px page-colour frame) at (202, 295). */}
       <div className="relative mx-auto aspect-[440/520] w-full max-w-[440px] xl:mx-0 xl:w-[440px] xl:shrink-0" data-reveal style={{ "--i": 1 } as CSSProperties}>
-        <div className="group overflow-hidden rounded-[26px] bg-linear-to-b from-mint to-[#c2e3c3]" style={M(0, 0, 400, 400)}>
+        <div className="group overflow-hidden rounded-[23.35px] bg-linear-to-b from-mint to-[#c2e3c3]" style={M(22, 26, 359.23, 359.23)}>
           {/* Fill 175.67% wide at −40.26% → cover, 53.2% across. */}
-          <Image src={buyerMeeting} alt="Journalists interviewing a speaker on the show floor" placeholder="blur" sizes="400px" className="zoom size-full object-cover object-[53.2%_50%]" />
+          <Image src={buyerMeeting} alt="Journalists interviewing a speaker on the show floor" placeholder="blur" sizes="360px" className="zoom size-full object-cover object-[53.2%_50%]" />
         </div>
-        <div className="group overflow-hidden rounded-[24px] border-8 border-page bg-linear-to-b from-mint to-[#c2e3c3]" style={M(200, 300, 240, 220)}>
-          <Image src={standChat} alt="Two visitors talking at an exhibitor stand" placeholder="blur" sizes="240px" className="zoom size-full object-cover object-left" />
+        <div className="group overflow-hidden rounded-[21.55px] border-[7.185px] border-page bg-linear-to-b from-mint to-[#c2e3c3]" style={M(201.62, 295.42, 215.54, 197.58)}>
+          {/* Fill 161.16% × 100% of the framed box at (3.68%, 1.03%), measured inside the 7px frame; hides the photo credit. */}
+          <Image
+            src={standChat}
+            alt="Two visitors talking at an exhibitor stand"
+            placeholder="blur"
+            sizes="350px"
+            className="zoom absolute top-[-2.81%] left-[0.37%] h-[107.84%] w-[172.69%] max-w-none"
+          />
         </div>
       </div>
     </section>

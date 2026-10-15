@@ -19,6 +19,39 @@ const PARTICIPATION = [
   "Not Sure Yet – Please Advise",
 ];
 
+// Company Business Activity (1143:5692): fresh food, technology, then logistics and services.
+const ACTIVITY = [
+  ["Eggs & Dairy", "Fresh Fruit", "Fresh Vegetables", "Meat & Poultry", "Seafood"],
+  [
+    "Agricultural Technology",
+    "Biosecurity & Protection Systems",
+    "Chilling, Freezing & Cold Storage Technology",
+    "Cultivation, Greenhouse & Controlled Environment Agriculture",
+    "Digital Technologies and Applications",
+    "Freshness & Shelf-Life Extension Technology",
+    "Genetics, Breeding & Hatchery Technology",
+    "Livestock Farming & Aquaculture Technology",
+    "Preservation & Freshness Monitoring Technology",
+    "Processing, Sorting & Packaging Technology",
+    "Seeds, Variety Development, Plant Biotechnology",
+    "Sorting & Grading Technology",
+  ],
+  [
+    "Air, Land & Sea Freight",
+    "Cargo Handling, Ports, Terminals, Reefer, Packhouse and Warehouse Facilities",
+    "Cold Chain Management",
+    "Supply Chain Technology & Tracking",
+    "Tracking systems (RFID/barcode/GPS)",
+    "Transport Services / Customs Clearance Services",
+    "Wholesale Markets / Producer markets/Auctions",
+    "Associations, Research and Educational institutions",
+    "Financial, Insurance, Research & Consulting Services",
+    "Government, Public Sector, Regulatory Agencies",
+    "Quality, Food Safety, Standards and Certification",
+    "Others",
+  ],
+];
+
 const Field = (p: { label: string; required?: boolean; className?: string; children: React.ReactNode }) => (
   <FormField gap={8} labelCls="text-[15px] leading-[19px]" {...p} />
 );
@@ -45,7 +78,7 @@ function Select({ name, placeholder, options }: { name: string; placeholder: str
   );
 }
 
-/** UI-only enquiry form (Figma 781:1522): native validation + success state, no submission. */
+/** UI-only enquiry form (Figma 1143:5643): native validation + success state, no submission. */
 export default function ApplyForm() {
   const [done, setDone] = useState(false);
 
@@ -95,16 +128,36 @@ export default function ApplyForm() {
         <Field label="Participation Interest" required className="md:col-span-2">
           <Select name="participation" placeholder="Select an option" options={PARTICIPATION} />
         </Field>
-        <Field label="Tell Us About Your Participation Goals" required className="md:col-span-2">
+        {/* Figma 1143:5692: three columns (171 / 291 / 41 + 333) where the form card is wide enough (lg–xl full width, 1440+ beside the panel);
+            otherwise the three lists stack and each flows into two columns from sm. */}
+        <div role="group" aria-labelledby="activity-label" className="flex min-w-0 flex-col gap-[8px] md:col-span-2">
+          <p id="activity-label" className="text-[15px] leading-[19px] font-medium text-black">
+            Company Business Activity
+          </p>
+          <div className="flex flex-col gap-[14px] pt-[8px] lg:max-xl:grid lg:max-xl:grid-cols-[171px_291px_minmax(0,1fr)] lg:max-xl:gap-0 3xl:grid 3xl:grid-cols-[171px_291px_minmax(0,1fr)] 3xl:gap-0">
+            {ACTIVITY.map((col, c) => (
+              <ul
+                key={c}
+                className={`gap-x-[24px] sm:columns-2 lg:max-xl:columns-1 3xl:columns-1 ${c === 2 ? "lg:max-xl:pl-[41px] 3xl:pl-[41px]" : ""}`}
+              >
+                {col.map((a) => (
+                  <li key={a} className="mb-[14px] break-inside-avoid last:mb-0">
+                    <label className="flex cursor-pointer items-start gap-[14px] text-[13px] leading-[19px] font-medium text-body">
+                      <input type="checkbox" name="activity" value={a} className={checkbox} />
+                      <span className="min-w-0 flex-1">{a}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+        <Field label="Tell Us About Your Participation Goals" className="md:col-span-2">
           <textarea
             name="goals"
-            required
             placeholder="Please share your goals, products or solutions you would like to showcase, and any specific requirements."
             className={textarea}
           />
-        </Field>
-        <Field label="Other Questions" className="md:col-span-2">
-          <textarea name="questions" placeholder="Let us know if you have any other questions." className={textarea} />
         </Field>
       </div>
 

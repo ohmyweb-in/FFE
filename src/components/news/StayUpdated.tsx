@@ -15,7 +15,7 @@ export default function StayUpdated({
   eyebrow = "Stay updated",
   title = (
     <>
-      Join the <span className="text-accent">FFE APAC</span> community.
+      Join the <span className="text-accent">FFE APAC</span> community
     </>
   ),
   copy = "Subscribe to receive the latest news, programme announcements, industry insights and opportunities.",

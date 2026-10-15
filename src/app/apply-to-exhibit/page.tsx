@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const i = (n: number) => ({ "--i": n }) as CSSProperties;
 
-/** Figma 781:1482 (Apply_to_Exhibit_Desktop). */
+/** Figma 1138:3506 (Apply_to_Exhibit_Desktop). */
 export default function ApplyToExhibitPage() {
   return (
     <>

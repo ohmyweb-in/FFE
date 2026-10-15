@@ -22,8 +22,8 @@ type Props = {
 };
 
 /**
- * Figma 778:1285 / 778:1324 / 778:1368: 1360px card (#eef6ef → page), 20px padding, 560px photo, 40px gap,
- * content column (16px vertical padding, 24px on the side away from the photo, 20px gaps).
+ * Figma 1142:5097 / 1142:5131 / 1142:5170: 1360px card (#eef6ef → page), 20px padding, 560px photo, 40px gap,
+ * content column (16px vertical padding, 24px on the side away from the photo, 20px gaps). Tile heights include the 1px border.
  */
 export default function SectorCard({ title, lead, icon, items, tiles, tileH, text, img, alt, pos, flip, mt }: Props) {
   return (
@@ -44,15 +44,15 @@ export default function SectorCard({ title, lead, icon, items, tiles, tileH, tex
             </div>
           </div>
 
-          <ul className={`grid w-full gap-[8px] ${tiles === "stack" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 min-[1360px]:grid-cols-4"}`}>
+          <ul className={`grid w-full gap-[8px] ${tiles === "stack" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 3xl:grid-cols-4"}`}>
             {items.map((it) =>
               tiles === "stack" ? (
-                <li key={it.label} className={`flex flex-col items-center gap-[10px] rounded-[14px] border border-accent bg-mint px-[10px] py-[16px] text-center ${tileH}`}>
+                <li key={it.label} className={`flex flex-col items-center gap-[10px] rounded-[14px] border border-accent bg-mint px-[10px] pt-[16px] pb-[14px] text-center ${tileH}`}>
                   <Image src={it.icon} alt="" className="shrink-0" />
                   <span className="text-[13px] leading-[17px] font-medium whitespace-pre-line text-accent">{it.label}</span>
                 </li>
               ) : (
-                <li key={it.label} className={`flex items-center gap-[12px] rounded-[14px] border border-accent bg-mint p-[14px] max-sm:gap-[10px] max-sm:px-[10px] ${tileH} max-sm:min-h-0!`}>
+                <li key={it.label} className={`flex items-center gap-[12px] rounded-[14px] border border-accent bg-mint px-[14px] py-[13px] max-sm:gap-[10px] max-sm:px-[10px] ${tileH} max-sm:min-h-0!`}>
                   <Image src={it.icon} alt="" className="shrink-0" />
                   <span className="min-w-0 flex-1 text-[13px] leading-[17px] font-medium whitespace-pre-line hyphens-auto text-accent max-sm:whitespace-normal">{it.label}</span>
                 </li>

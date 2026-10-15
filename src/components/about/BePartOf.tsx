@@ -51,7 +51,7 @@ export default function BePartOf() {
               Apply to Exhibit
             </Pill>
             <Pill href="/register-to-visit" className="border-[1.5px] border-accent text-accent hover:bg-mint">
-              Register to Visit
+              Register Your Interest
             </Pill>
           </div>
         </div>

@@ -7,11 +7,12 @@ import chevronWhite from "@/assets/chevron-white.svg";
 import { Button } from "../ui";
 
 // Button gaps put the chevron where Figma has it (label widths measured in Outfit 500/18px).
-const CARDS: { title: string; desc: string; tags: string; img: ReactNode; pl: string; gap: string; buttons: ReactNode }[] = [
+const CARDS: { title: string; desc: string; tags: string; tagW: string; img: ReactNode; pl: string; gap: string; buttons: ReactNode }[] = [
   {
     title: "Visitors",
-    desc: "For Buyers and industry professionals seeking new fresh food products, suppliers, technologies, solutions and business partners.",
-    tags: "Wholesalers | Importers | Retailers | Food Service Operators...",
+    desc: "For buyers and industry professionals seeking new fresh food products, suppliers, technologies, solutions and business partners.",
+    tags: "Wholesalers | Importers | Exporters | Retailers | Food Service Operators...",
+    tagW: "max-w-[391px]",
     img: <Image src={visit} alt="Visitors walking through a busy exhibition hall" placeholder="blur" sizes="(min-width: 1024px) 622px, 100vw" className="zoom absolute inset-0 size-full object-cover" />,
     pl: "lg:pl-[42px]",
     gap: "md:gap-[9px]",
@@ -20,8 +21,8 @@ const CARDS: { title: string; desc: string; tags: string; img: ReactNode; pl: st
         <Button href="/why-visit" chevron={chevronBlack} w={162} h={52} pl={33} gap={9.73} m={{ w: 125, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 }} className="border-[1.5px] border-white bg-white text-black">
           Why Visit
         </Button>
-        <Button href="/who-should-visit" chevron={chevronWhite} w={220} h={52} pl={33} gap={8.83} m={{ w: 179, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 }} className="border-[1.5px] border-white text-white hover:bg-white/10">
-          Who Should Visit
+        <Button href="/register-to-visit" chevron={chevronWhite} w={248} h={52} pl={27} gap={13.66} m={{ w: 200, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 }} className="border-[1.5px] border-white text-white hover:bg-white/10">
+          Register Your Interest
         </Button>
       </>
     ),
@@ -30,6 +31,7 @@ const CARDS: { title: string; desc: string; tags: string; img: ReactNode; pl: st
     title: "Exhibitors",
     desc: "For companies looking to showcase fresh food products, technologies and logistics solutions, enter new markets and build commercial relationships across Asia Pacific's fresh food ecosystem",
     tags: "Producer | Packaging Companies | Cold Chain Operators...",
+    tagW: "max-w-[549px]",
     // Same Figma fill crop as the homepage Exhibit card (359:226).
     img: (
       <Image
@@ -74,7 +76,7 @@ export default function WhoFor() {
               <div className="relative">
                 <h3 className="trim font-display text-[30px] leading-[normal] font-semibold md:text-[48px] md:leading-[52.2px]">{c.title}</h3>
                 <p className="trim mt-[20px] max-w-[534px] text-[17px] leading-[normal] font-medium md:mt-[26px] md:text-[18px]">{c.desc}</p>
-                <p className="trim mt-[24px] max-w-[549px] text-[17px] leading-[normal] font-medium text-white/60 md:mt-[30px] md:text-[18px]">{c.tags}</p>
+                <p className={`trim mt-[24px] ${c.tagW} text-[17px] leading-[normal] font-medium text-white/60 md:mt-[30px] md:text-[18px]`}>{c.tags}</p>
                 <div className={`mt-[28px] flex flex-wrap gap-[10px] md:mt-[36px] ${c.gap}`}>{c.buttons}</div>
               </div>
             </article>

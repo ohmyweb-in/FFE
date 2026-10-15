@@ -19,7 +19,7 @@ export default function AboutSiaw() {
         <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">Part of</p>
         <h2 className="h-section trim max-w-[525px] lg:min-h-[98px]">
           Singapore International <br className="hidden lg:block" />
-          Agri-Food Week.
+          Agri-Food Week
         </h2>
         <div className="flex flex-col gap-[12px] text-[15px] leading-[22px] font-medium text-body">
           <p>
@@ -27,12 +27,12 @@ export default function AboutSiaw() {
             business to advance a more sustainable, resilient and connected food future in Asia.
           </p>
           <p>
-            Within SIAW, Fresh Food Expo APAC serves as the dedicated B2B trade platform for the fresh food ecosystem, connecting fresh food, agri and
+            Within SIAW, Fresh Food Expo APAC serves as the dedicated B2B exhibition for the fresh food ecosystem, connecting fresh food, agri and
             fresh technology, logistics and distribution.
           </p>
         </div>
         <p className="text-[15px] leading-[22px] font-semibold text-black">
-          Supported by Singapore Food Agency, Enterprise Singapore and Singapore Tourism Board.*
+          Supported by Singapore Food Agency, Enterprise Singapore, Temasek and Singapore Tourism Board.*
         </p>
         <div className="pt-[6px]">
           <Pill

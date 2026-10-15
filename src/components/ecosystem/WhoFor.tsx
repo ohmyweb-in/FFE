@@ -6,7 +6,7 @@ import chevronWhite from "@/assets/chevron-white.svg";
 import chevronBlack from "@/assets/chevron-black.svg";
 import { Button } from "../ui";
 
-type Card = { title: string; text: string; roles: string; img: ReactNode; pl: string; textMt: string; textW: string; rolesW: string; ctaGap: string; ctas: ReactNode };
+type Card = { title: string; text: string; roles: string; img: ReactNode; pl: string; textMt: string; textW: string; rolesW: string; rolesMt?: string; ctaMt?: string; ctaGap: string; ctas: ReactNode };
 
 // Figma 669:1481: two 622×467 cards, 42px apart (ratio kept on single-column md and on xl; taller on 2-column lg); content anchored 39px above the bottom edge.
 // Gaps are tuned so title/copy/roles land on Figma’s y (181|178 / 240 / 327) with the browser’s trimmed metrics,
@@ -15,20 +15,23 @@ const CARDS: Card[] = [
   {
     title: "Looking to Visit?",
     text: "Discover fresh food suppliers, technologies and supply chain solutions while connecting with businesses from across regional and global markets.",
-    roles: "Wholesalers | Importers | Retailers | Food Service Operators...",
+    roles: "Wholesalers | Importers | Exporters | Retailers | Food Service Operators...",
     img: <Image src={visit} alt="Visitors walking through a busy exhibition hall" placeholder="blur" sizes="(min-width: 1024px) 622px, 100vw" className="zoom absolute inset-0 size-full object-cover" />,
     pl: "lg:pl-[42px]",
     textMt: "mt-[23px] md:mt-[25.41px]",
     textW: "max-w-[534px]",
-    rolesW: "max-w-[498px]",
+    rolesW: "max-w-[391px]",
+    // Two-line roles (1138:2377): 18px above, 22px to the pills, so the title stays on Figma’s y.
+    rolesMt: "mt-[18px] md:mt-[18.83px]",
+    ctaMt: "mt-[22px] md:mt-[22.83px]",
     ctaGap: "gap-[9px]",
     ctas: (
       <>
         <Button href="/why-visit" chevron={chevronBlack} w={162} h={52} pl={33} gap={16.39} className="border-[1.5px] border-white bg-white text-black">
           Why Visit
         </Button>
-        <Button href="/who-should-visit" chevron={chevronWhite} w={220} h={52} pl={33} gap={15.49} className="border-[1.5px] border-white text-white hover:bg-white/10">
-          Who Should Visit
+        <Button href="/register-to-visit" chevron={chevronWhite} w={248} h={52} pl={27} gap={13.66} className="border-[1.5px] border-white text-white hover:bg-white/10">
+          Register Your Interest
         </Button>
       </>
     ),
@@ -79,8 +82,8 @@ export default function WhoFor() {
             <div className="relative text-white">
               <h3 className="font-display text-[30px] leading-[32.4px] font-semibold md:text-[48px] md:leading-[52.2px]">{c.title}</h3>
               <p className={`text-[17px] leading-[normal] font-medium md:text-[18px] ${c.textMt} ${c.textW}`}>{c.text}</p>
-              <p className={`mt-[28px] text-[17px] md:mt-[28.83px] leading-[normal] font-medium text-white/60 md:text-[18px] ${c.rolesW}`}>{c.roles}</p>
-              <div className={`mt-[36px] flex flex-wrap md:mt-[36.83px] ${c.ctaGap}`}>{c.ctas}</div>
+              <p className={`text-[17px] leading-[normal] font-medium text-white/60 md:text-[18px] ${c.rolesMt ?? "mt-[28px] md:mt-[28.83px]"} ${c.rolesW}`}>{c.roles}</p>
+              <div className={`flex flex-wrap ${c.ctaMt ?? "mt-[36px] md:mt-[36.83px]"} ${c.ctaGap}`}>{c.ctas}</div>
             </div>
           </article>
         </div>

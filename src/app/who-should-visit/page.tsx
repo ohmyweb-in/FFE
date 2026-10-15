@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     "Fresh Food Expo APAC is designed for buyers, sourcing professionals and industry decision-makers looking for fresh food products, technologies and logistics solutions from across Asia Pacific and global markets.",
 };
 
-/** Figma 781:2064 (Who_Should_Visit_Desktop; hero 1053:369). Intro 42px under the hero, cards 24px below it. */
+/** Figma 1138:4117 (Who_Should_Visit; hero as 1053:369). Intro 42px under the hero, cards 24px below it. */
 export default function WhoShouldVisitPage() {
   return (
     <>

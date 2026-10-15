@@ -34,7 +34,7 @@ const COLUMNS: Column[] = [
     ],
   },
   {
-    title: "Fresh Technology",
+    title: "Agri & Fresh Technology",
     icon: gear,
     desc: "Technologies and solutions that help maintain freshness, protect product quality, extend shelf life and improve efficiency.",
     items: [

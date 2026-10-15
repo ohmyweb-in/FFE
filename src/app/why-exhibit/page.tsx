@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "Put your business in front of the buyers, partners and decision-makers shaping Asia Pacific’s fresh food ecosystem. 16–18 November 2027, Sands Expo & Convention Centre, Singapore.",
 };
 
-/** Figma 777:689 (Why_Exhibit_Desktop). Sections sit 72px apart. */
+/** Figma 1138:3194 (Why_Exhibit_Desktop). Sections sit 72px apart. */
 export default function WhyExhibitPage() {
   return (
     <>
@@ -50,7 +50,7 @@ export default function WhyExhibitPage() {
           title={
             <>
               Put your business at the centre of <br className="max-md:hidden" />
-              Asia Pacific’s fresh food ecosystem.
+              Asia Pacific’s fresh food ecosystem
             </>
           }
           titleCls="md:max-w-[771px]! lg:ml-[5px]"

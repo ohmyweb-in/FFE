@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     "Get in touch with the Fresh Food Expo APAC team about exhibiting, sponsorship, partnerships or general enquiries. We reply within three business days.",
 };
 
-/** Figma 736:2694 (Contact_Us_Desktop), hero per revision 450:2843. Sections sit 65px apart, as in the frame. */
+/** Figma 1138:2812 (Contact_Us), hero per revision 450:2843. Sections sit 50px apart, as in the frame. */
 export default function ContactPage() {
   return (
     <>
@@ -35,7 +35,7 @@ export default function ContactPage() {
         <UsefulResources />
         <JoinPanel />
       </main>
-      <Footer mt="mt-[48px] lg:mt-[65px]" />
+      <Footer mt="mt-[48px] lg:mt-[50px]" />
       <RevealObserver />
     </>
   );

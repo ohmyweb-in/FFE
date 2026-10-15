@@ -3,12 +3,14 @@ import logo from "@/assets/logo.png";
 import linkedin from "@/assets/social-linkedin.png";
 import facebook from "@/assets/social-facebook.svg";
 import youtube from "@/assets/social-youtube.png";
+import instagram from "@/assets/social-instagram.png";
 import FooterNav from "./FooterNav";
 
 const SOCIAL = [
   { label: "LinkedIn", icon: linkedin },
   { label: "Facebook", icon: facebook },
   { label: "YouTube", icon: youtube },
+  { label: "Instagram", icon: instagram },
 ];
 
 export default function Footer({ mt = "mt-[47px] md:mt-20 lg:mt-[96px]" }: { mt?: string }) {
@@ -17,7 +19,7 @@ export default function Footer({ mt = "mt-[47px] md:mt-20 lg:mt-[96px]" }: { mt?
       <div className="flex flex-col md:gap-12 xl:flex-row xl:gap-0">
         <div className="ml-[3px] md:ml-0 xl:w-[225px] xl:shrink-0 xl:pt-[8px]">
           <Image src={logo} alt="Fresh Food Expo Asia Pacific" sizes="131px" className="h-[90px] w-[131px] object-cover object-right" />
-          <p className="text-lead mt-[21px] max-w-[245px] text-[18px] lg:max-w-[193px]">Asia Pacific&apos;s premier trade fair for fresh food</p>
+          <p className="text-lead mt-[21px] max-w-[245px] text-[18px] lg:max-w-[208px]">Asia Pacific’s Premier Trade Fair for Fresh Food</p>
           <ul className="mt-[23px] flex gap-[7px]">
             {SOCIAL.map((s) => (
               <li key={s.label}>

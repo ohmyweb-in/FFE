@@ -7,9 +7,9 @@ import plus from "@/assets/icon-plus.png";
 // Figma 736:1519. `w` = desktop column width (flex-grow ratio; 0 = sized to content),
 // `max` = Figma text box width where links wrap, `gap` = phone bar→title gap.
 const COLS = [
-  { title: "About", w: 225, max: 178, gap: 7, links: ["Overview", "Our Story", "Fresh Food Ecosystem", "SIAW", "Messe Berlin", "Contact Us"] },
+  { title: "About", w: 225, max: 201, gap: 7, links: ["Overview", "Our Story", "Fresh Food Ecosystem", "Singapore International Agri-Food Week", "Messe Berlin", "Contact Us"] },
   { title: "Exhibit", w: 230, max: 190, gap: 8, links: ["Why Exhibit", "Who Should Exhibit", "Apply to Exhibit"] },
-  { title: "Visit", w: 185, gap: 6, links: ["Why Visit", "Who Should Visit", "Plan Your Visit", "Register to Visit"] },
+  { title: "Visit", w: 185, gap: 6, links: ["Why Visit", "Who Should Visit", "Plan Your Visit", "Register Your Interest"] },
   { title: "News & Media", w: 0, gap: 5, links: ["News & Press Release", "Subscribe Newsletter"] },
 ];
 
@@ -18,7 +18,7 @@ const HREF: Record<string, string> = {
   Overview: "/about",
   "Our Story": "/our-story",
   "Fresh Food Ecosystem": "/ecosystem",
-  SIAW: "/siaw",
+  "Singapore International Agri-Food Week": "/siaw",
   "Contact Us": "/contact",
   "Messe Berlin": "/messe-berlin",
   "Why Exhibit": "/why-exhibit",
@@ -27,7 +27,7 @@ const HREF: Record<string, string> = {
   "Why Visit": "/why-visit",
   "Who Should Visit": "/who-should-visit",
   "Plan Your Visit": "/plan-your-visit",
-  "Register to Visit": "/register-to-visit",
+  "Register Your Interest": "/register-to-visit",
   "News & Press Release": "/news",
   "Subscribe Newsletter": "/subscribe",
 };

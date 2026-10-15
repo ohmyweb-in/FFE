@@ -13,7 +13,7 @@ export default function BeInvolved() {
       <div className="ml-[4px] md:ml-0" data-reveal>
         <p className="eyebrow text-accent">BE INVOLVED</p>
         <h2 className="h-section mt-[23px] max-w-[330px] text-[#032919] md:mt-[20px] md:max-w-none md:text-forest lg:mt-[28px]">
-          Be part of <span className="text-accent">Fresh Food Expo APAC.</span>
+          Be part of <span className="text-accent">Fresh Food Expo APAC</span>
         </h2>
       </div>
 
@@ -60,14 +60,14 @@ export default function BeInvolved() {
               <Button
                 href="/register-to-visit"
                 chevron={chevronBlack}
-                w={220}
+                w={248}
                 h={52}
-                pl={33}
-                gap={21.66}
-                m={{ w: 136.9, h: 32.4, pl: 20.5, gap: 10.9, fs: 11.2, chev: 0.617 }}
+                pl={27}
+                gap={13.66}
+                m={{ w: 153, h: 32.4, pl: 16.7, gap: 8.4, fs: 11.2, chev: 0.617 }}
                 className="border-[1.5px] border-white bg-white text-black"
               >
-                Register to Visit
+                Register Your Interest
               </Button>
             ),
           },

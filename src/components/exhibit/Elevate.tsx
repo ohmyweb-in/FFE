@@ -10,7 +10,7 @@ export default function Elevate() {
       <div className="flex flex-col gap-[32px] rounded-[24px] bg-linear-to-r from-mint to-page p-[20px] md:p-[40px] lg:rounded-[32px] xl:flex-row xl:items-center xl:gap-[48px] xl:py-[40px] xl:pr-[32px] xl:pl-[48px]">
         <div className="flex min-w-0 flex-1 flex-col items-start gap-[14px]" data-reveal>
           <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[36px] md:leading-[44px] lg:text-[38px] lg:leading-[46px]">
-            Elevate your presence.
+            Elevate your presence
           </h2>
           <p className="text-[17px] leading-[24px] font-medium text-black md:text-[18px] md:leading-[26px]">Looking to go beyond your exhibition stand?</p>
           <p className="text-[15px] leading-[24px] font-medium text-body">

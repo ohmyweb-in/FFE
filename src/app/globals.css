@@ -16,6 +16,8 @@
   --color-field: #cdcdcd;
   --font-sans: var(--font-outfit);
   --font-display: var(--font-fredoka);
+  /* 1440 = the Figma frame width. */
+  --breakpoint-3xl: 90rem;
 }
 
 :root {
@@ -378,6 +380,11 @@ body {
   .modal::backdrop {
     background: rgb(3 41 26 / 0.45);
     backdrop-filter: blur(2px);
+  }
+  /* Launch popup (1138:1400): light brand-green wash, no blur. */
+  .launch-modal::backdrop {
+    background: rgb(40 174 61 / 0.2);
+    backdrop-filter: none;
   }
   html:has(.modal[open]) {
     overflow: hidden;

@@ -29,7 +29,7 @@ export default function Connects() {
         <div className="flex flex-col items-start gap-[14px] xl:w-[760px] xl:shrink-0" data-reveal>
           <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">The bigger picture</p>
           <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[40px] md:leading-[46px] lg:text-[42px] lg:leading-[48px]">
-            Where the ecosystem connects.
+            Where the ecosystem connects
           </h2>
           <div className="flex flex-col gap-[12px] text-[15px] leading-[23px] font-medium text-body">
             <p>

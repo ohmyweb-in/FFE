@@ -65,7 +65,7 @@ export default function Ecosystem() {
         <div className="pl-[2px] md:pl-0 lg:pl-[6px]" data-reveal>
           <p className="eyebrow text-accent md:text-brand">About fresh food expo apac</p>
           <h2 className="h-section mt-[28px] max-w-[354px] leading-[38.2px] md:mt-[20px] md:max-w-[825px] md:leading-[1.09] lg:mt-[28px] lg:leading-[52.2px]">
-            Connecting the fresh food ecosystem.
+            Connecting the fresh food ecosystem
           </h2>
           <p className="text-lead mt-[28px] max-w-[354px] text-[18px] text-forest md:mt-[24px] md:max-w-[615px] lg:mt-[32px]">
             One Platform. Fresh Food, Agri & Fresh Technology, Logistics & Distribution.

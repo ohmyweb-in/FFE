@@ -8,7 +8,7 @@ import EventIntro from "@/components/about/EventIntro";
 import AboutSiaw from "@/components/about/AboutSiaw";
 import WhyDifferent from "@/components/about/WhyDifferent";
 import SourceToMarket from "@/components/about/SourceToMarket";
-import FruitLogistica from "@/components/about/FruitLogistica";
+import FruitLogistica, { GrueneWoche } from "@/components/about/FruitLogistica";
 import WhoFor from "@/components/about/WhoFor";
 import BackedBy from "@/components/about/BackedBy";
 import BePartOf from "@/components/about/BePartOf";
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "Fresh Food Expo APAC is a premier B2B trade fair connecting the fresh food ecosystem across the source-to-market value chain. 16–18 November 2027, Sands Expo & Convention Centre, Singapore.",
 };
 
-/** Figma 736:2133 (About_Us_Desktop_v2). Sections sit 46px apart, as in the frame. */
+/** Figma 1138:1437 (About_Us, was 736:2133). Sections sit 46px apart, as in the frame. */
 export default function AboutPage() {
   return (
     <>
@@ -35,6 +35,7 @@ export default function AboutPage() {
         <WhyDifferent />
         <SourceToMarket />
         <FruitLogistica />
+        <GrueneWoche />
         <WhoFor />
         <BackedBy />
         <BePartOf />

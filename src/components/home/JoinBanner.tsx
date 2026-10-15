@@ -6,7 +6,7 @@ import chevronWhite from "@/assets/chevron-white.svg";
 import { Button, DateVenue } from "../ui";
 
 type Props = {
-  /** Section margins + phone/desktop height (the homepage default keeps its mobile order). */
+  /** Section margins + phone/desktop height. */
   layout?: string;
   /** Optional line above the title (Our Story: eyebrow + rule). */
   eyebrow?: ReactNode;
@@ -28,7 +28,7 @@ type Props = {
 };
 
 export default function JoinBanner({
-  layout = "mt-[53px] h-[760px] max-md:order-1 md:mt-16 lg:mt-[62px] lg:h-[495px]",
+  layout = "mt-[53px] h-[760px] md:mt-16 lg:mt-[62px] lg:h-[495px]",
   eyebrow,
   title,
   titleCls = "",
@@ -65,7 +65,7 @@ export default function JoinBanner({
             {title ?? (
               <>
                 <span className="md:block">Join Asia Pacific’s </span>
-                <span className="md:block">Fresh Food Ecosystem.</span>
+                <span className="md:block">Fresh Food Ecosystem</span>
               </>
             )}
           </h2>
@@ -95,14 +95,14 @@ export default function JoinBanner({
               <Button
                 href="/register-to-visit"
                 chevron={chevronWhite}
-                w={220}
+                w={255}
                 h={52}
-                pl={34}
-                gap={19.66}
-                m={{ w: 178, h: 43, pl: 25, gap: 9, fs: 15, chev: 0.828 }}
+                pl={31}
+                gap={13.66}
+                m={{ w: 202, h: 43, pl: 25, gap: 9, fs: 15, chev: 0.828 }}
                 className="border border-white text-white hover:bg-white/10"
               >
-                Register to Visit
+                Register Your Interest
               </Button>
             </div>
           )}

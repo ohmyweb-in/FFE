@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import RevealObserver from "@/components/RevealObserver";
 import Footer from "@/components/home/Footer";
 import PageHero from "@/components/PageHero";
+import MediaEnquiries from "@/components/news/MediaEnquiries";
 import NewsList from "@/components/news/NewsList";
 import PressPhotos from "@/components/news/PressPhotos";
 import StayUpdated from "@/components/news/StayUpdated";
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
     "The latest announcements, industry developments, partnerships and programme updates from Fresh Food Expo APAC, plus press photos and videos.",
 };
 
-/** Figma 736:3027 (News_Desktop). */
+/** Figma 1138:2540 (News & Press, was 736:3027). */
 export default function NewsPage() {
   return (
     <>
@@ -30,6 +31,7 @@ export default function NewsPage() {
         >
           Stay up to date with the latest announcements, industry developments, partnerships and programme updates from Fresh Food Expo APAC.
         </PageHero>
+        <MediaEnquiries />
         <NewsList />
         <PressPhotos />
         <StayUpdated />

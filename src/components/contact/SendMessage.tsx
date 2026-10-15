@@ -4,12 +4,12 @@ import dots from "@/assets/contact/dots.svg";
 import venue from "@/assets/about/produce.jpg";
 import EnquiryForm from "./EnquiryForm";
 
-const EMAIL = "marketing@freshfoodexpoapac.com";
+const EMAIL = "visitor@freshfoodexpoapac.com";
 
 /** Figma 736:2772: white card, form (flex-1, 52px padding) + 440px "Other ways to reach us" panel. */
 export default function SendMessage() {
   return (
-    <section id="enquiry" className="untrim container-narrow mt-[48px] lg:mt-[65px]">
+    <section id="enquiry" className="untrim container-narrow mt-[48px] lg:mt-[50px]">
       <div className="relative flex flex-col overflow-hidden rounded-[24px] bg-white lg:flex-row lg:rounded-[32px]" data-reveal>
         <div className="min-w-0 flex-1 px-[22px] py-[32px] md:p-[40px] xl:p-[52px]">
           <h2 className="font-display text-[28px] leading-[34px] font-semibold text-forest md:text-[36px] md:leading-[42px]">Send Us a Message</h2>

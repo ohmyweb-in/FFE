@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "Fresh Food Expo APAC is organised by Messe Berlin Asia Pacific, the Singapore-based subsidiary of Messe Berlin, one of the world’s leading trade fair companies since 1822.",
 };
 
-/** Figma 781:1707 (Messe Berlin). */
+/** Figma 1138:3908 (Messe Berlin). */
 export default function MesseBerlinPage() {
   return (
     <>

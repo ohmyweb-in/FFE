@@ -13,8 +13,8 @@ import leaf from "@/assets/who/t-leaf.svg";
 import snow from "@/assets/who/t-snow.svg";
 import box from "@/assets/who/t-box.svg";
 import produce from "@/assets/siaw/card-fresh.jpg";
-import tech from "@/assets/siaw/card-agri.jpg";
-import networking from "@/assets/eco-logistics.jpg";
+import tech from "@/assets/why/tech-packing.jpg";
+import networking from "@/assets/why/networking.jpg";
 
 const i = (n: number) => ({ "--i": n }) as CSSProperties;
 // Rows span x 53–1387 at 1440.
@@ -103,7 +103,7 @@ export function Products() {
       </Photo>
       <Body
         className="lg:pr-[19px]"
-        title="Discover new products and suppliers."
+        title="Discover new products and suppliers"
         lead="Connect directly with growers, producers, exporters and suppliers offering:"
         items={PRODUCTS}
         close="Identify new sourcing opportunities, compare suppliers and build relationships that support your business."
@@ -118,13 +118,14 @@ export function Technologies() {
     <section className={`untrim mt-[48px] flex flex-col gap-[24px] lg:mt-[67px] lg:flex-row lg:items-start lg:gap-[30px] ${ROW}`}>
       <Body
         className="lg:pt-px"
-        title="Discover technologies and supply chain solutions."
+        title="Discover technologies and supply chain solutions"
         lead="Explore technologies and services that help maintain freshness, improve efficiency and move fresh food safely to market."
         items={TECH}
         close="Meet solution providers and discover practical ways to strengthen your operations and supply chain."
       />
       <Photo className="aspect-[378/230] max-lg:order-first lg:w-[378px]">
-        <Image src={tech} alt="Robotic arm tending leafy greens in a vertical farm" placeholder="blur" sizes="(min-width: 1024px) 378px, 100vw" className="size-full object-cover" />
+        {/* Figma 1138:4607 fill: 116.5% × 100% at (−8.18%, −0.15%), the photo's true ratio. */}
+        <Image src={tech} alt="Packaged fresh chicken moving along a packing line conveyor" placeholder="blur" sizes="(min-width: 1024px) 440px, 100vw" style={crop(116.5, 100, -8.18, -0.15)} />
       </Photo>
     </section>
   );
@@ -135,11 +136,11 @@ export function Connections() {
   return (
     <section className={`untrim mt-[48px] flex flex-col gap-[24px] lg:mt-[60px] lg:flex-row lg:items-center lg:gap-[35px] lg:pl-[13px] ${ROW}`}>
       <Photo className="aspect-[322/187] lg:w-[322px]">
-        {/* Fill 126.92% × 122.99% at (−13.46%, 0): the photo's true ratio. */}
-        <Image src={networking} alt="Refrigerated truck being loaded with fresh produce at a cold storage facility" placeholder="blur" sizes="(min-width: 1024px) 410px, 100vw" style={crop(126.92, 122.99, -13.46, 0)} />
+        {/* Figma 1138:4687 fill: 135.4% × 137.17% at (−6.21%, −9.94%), the photo's true ratio. */}
+        <Image src={networking} alt="Two visitors talking on the exhibition floor" placeholder="blur" sizes="(min-width: 1024px) 440px, 100vw" style={crop(135.4, 137.17, -6.21, -9.94)} />
       </Photo>
       <div className="flex max-w-[794px] min-w-0 flex-1 flex-col gap-[14px] lg:px-[16px]" data-reveal style={i(1)}>
-        <h2 className={H2}>Build valuable business connections.</h2>
+        <h2 className={H2}>Build valuable business connections</h2>
         <p className={P}>Meet suppliers, partners and industry decision-makers from across the fresh food ecosystem.</p>
         <p className={P}>
           Use Fresh Food Expo APAC to source new products, discover new solutions, exchange market insights and build commercial relationships across Asia

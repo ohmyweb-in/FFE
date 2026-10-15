@@ -1,24 +1,46 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import poster from "@/assets/popup-poster.jpg";
-import calendar from "@/assets/about/icon-calendar.svg";
-import pin from "@/assets/about/icon-pin.svg";
+import calendar from "@/assets/popup/icon-calendar.png";
+import pin from "@/assets/popup/icon-pin.png";
+import closeIcon from "@/assets/popup/icon-close.png";
+import gwMark from "@/assets/popup/gw-mark.svg";
+import gwText from "@/assets/popup/gw-text.svg";
+import flLogo from "@/assets/popup/fruit-logistica.svg";
+import chevronSmWhite from "@/assets/chevron-sm-white.svg";
+import chevronSmAccent from "@/assets/contact/chevron-sm-accent.svg";
+import { Button } from "./ui";
 
 // Pages that already are the call to action.
 const SKIP = ["/register-to-visit", "/apply-to-exhibit"];
 
+// Figma 1138:857 / 1138:858: 240×100 and 224×100 cards, 207×39 and 176×39 pills.
 const OPTIONS = [
-  { q: "Planning to visit?", cta: "Register to Visit", href: "/register-to-visit", cls: "bg-brand text-white" },
-  { q: "Looking to exhibit?", cta: "Book Your Booth", href: "/apply-to-exhibit", cls: "border-[1.5px] border-accent bg-white text-accent hover:bg-mint" },
+  {
+    q: "Planning to visit?",
+    cta: "Register Your Interest",
+    href: "/register-to-visit",
+    chevron: chevronSmWhite,
+    box: { w: 207, h: 39, pl: 21, gap: 15 },
+    cls: "border-[1.5px] border-accent bg-accent text-white",
+  },
+  {
+    q: "Looking to exhibit?",
+    cta: "Book Your Booth",
+    href: "/apply-to-exhibit",
+    chevron: chevronSmAccent,
+    box: { w: 176, h: 39, pl: 27, gap: 10 },
+    cls: "border-[1.5px] border-accent bg-white text-accent hover:bg-mint",
+  },
 ];
 
 /**
- * Registration popup, opened on every full page load (client-side navigation keeps the layout, so it
- * doesn’t reappear while browsing). Native <dialog>: Esc, backdrop click and the close button dismiss it.
+ * Registration popup (Figma 1138:788), opened on every full page load (client-side navigation keeps the
+ * layout, so it doesn’t reappear while browsing). Native <dialog>: Esc, backdrop click and the close
+ * button dismiss it.
  */
 export default function LaunchPopup() {
   const ref = useRef<HTMLDialogElement>(null);
@@ -47,7 +69,7 @@ export default function LaunchPopup() {
       aria-labelledby="launch-popup-title"
       tabIndex={-1}
       onClick={(e) => e.target === e.currentTarget && close()}
-      className="modal m-auto max-h-[calc(100dvh-24px)] w-[calc(100%-24px)] max-w-[1040px] overflow-y-auto rounded-[24px] bg-transparent outline-none"
+      className="modal launch-modal m-auto max-h-[calc(100dvh-24px)] w-[calc(100%-24px)] max-w-[1299px] overflow-y-auto rounded-[20px] bg-transparent outline-none lg:rounded-[30px]"
     >
       {/* Zero-height sticky row: the close button stays in view when the popup scrolls on short phones. */}
       <div className="sticky top-0 z-10 h-0">
@@ -55,54 +77,73 @@ export default function LaunchPopup() {
           type="button"
           onClick={close}
           aria-label="Close"
-          className="absolute top-[10px] right-[10px] grid size-[44px] place-items-center rounded-full bg-white/90 text-ink shadow-[0_6px_16px_-6px_rgb(3_41_26/0.35)] transition-colors duration-(--dur-ui) hover:bg-mint focus-visible:outline-2 focus-visible:outline-forest md:top-[12px] md:right-[12px]"
+          className="absolute top-[10px] right-[10px] grid size-[44px] place-items-center rounded-full bg-white shadow-[0_4px_14px_rgb(0_0_0/0.15)] transition-[background-color,transform] duration-(--dur-ui) hover:scale-105 hover:bg-mint focus-visible:outline-2 focus-visible:outline-forest lg:top-[17px] lg:right-[16px] lg:size-[56px]"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden className="size-[18px]">
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg>
+          <Image src={closeIcon} alt="" className="size-[16px] lg:size-[18px]" />
         </button>
       </div>
 
-      <div className="modal-body grid overflow-hidden rounded-[24px] bg-white lg:grid-cols-[minmax(0,1.12fr)_minmax(0,1fr)] landscape-phone:grid-cols-2">
-        {/* Whole poster, never cropped: its own background is white, so any spare height blends in. */}
-        <div className="flex items-center bg-white">
-          <Image src={poster} alt="Fresh Food Expo APAC 2027 poster" placeholder="blur" sizes="(min-width: 1024px) 550px, 100vw" className="h-auto w-full" />
+      <div className="modal-body grid overflow-hidden rounded-[20px] bg-white lg:grid-cols-[minmax(0,735fr)_minmax(0,564fr)] lg:rounded-[30px] landscape-phone:grid-cols-2">
+        {/* Phones/tablets/1024 band: whole poster (its own background is white). ≥1280: Figma’s cover fill. */}
+        <div className="relative flex items-center bg-white">
+          <Image
+            src={poster}
+            alt="Fresh Food Expo APAC 2027 poster"
+            placeholder="blur"
+            sizes="(min-width: 1024px) 735px, 100vw"
+            className="h-auto w-full xl:absolute xl:inset-0 xl:size-full xl:object-cover xl:object-[25%_50%] 3xl:object-center"
+          />
         </div>
 
-        <div className="untrim flex flex-col gap-[14px] p-[20px] md:gap-[18px] md:p-[32px] lg:py-[36px] landscape-phone:gap-[12px]! landscape-phone:p-[20px]!">
-          <p className="inline-flex items-center gap-[8px] self-start rounded-full bg-mint px-[14px] py-[6px] text-[12px] leading-[18px] font-semibold tracking-[0.02em] text-forest uppercase md:text-[13px]">
-            <span className="size-[8px] animate-pulse rounded-full bg-accent" aria-hidden />
+        <div className="flex flex-col p-[20px] pt-[22px] md:p-[32px] lg:py-[36px] lg:pr-[32px] lg:pl-[28px] xl:pt-[45px] xl:pr-[55px] xl:pb-[52px] xl:pl-[31px] landscape-phone:p-[20px]!">
+          <p className="inline-flex h-[27px] items-center gap-[7px] self-start rounded-full bg-mint pr-[14px] pl-[16px] text-[12px] font-semibold text-forest uppercase">
+            <span className="size-[10px] animate-pulse rounded-full bg-accent" aria-hidden />
             Registration is now open!
           </p>
-          <h2 id="launch-popup-title" className="font-display text-[23px] leading-[29px] font-semibold text-forest md:text-[30px] md:leading-[36px] landscape-phone:text-[22px]! landscape-phone:leading-[28px]!">
-            Be Part of Asia Pacific’s Fresh Food Marketplace!
+
+          <h2
+            id="launch-popup-title"
+            className="mt-[22px] max-w-[429px] pr-[40px] font-display text-[26px] leading-[32px] font-semibold text-forest md:mt-[29px] md:pr-0 md:text-[34px] md:leading-[42px] xl:text-[40px] xl:leading-[49.2px] landscape-phone:mt-[16px]! landscape-phone:text-[22px]! landscape-phone:leading-[28px]!"
+          >
+            Be Part of Asia Pacific’s Fresh Food Ecosystem!
           </h2>
 
-          <ul className="grid gap-[10px] sm:grid-cols-2 md:gap-[12px] landscape-phone:grid-cols-1!">
+          {/* Figma 1228:243: 374×58 mint strip. */}
+          <div className="mt-[22px] flex h-[50px] items-center gap-[10px] self-start rounded-[10px] bg-mint pr-[12px] pl-[10px] sm:h-[58px] sm:gap-0 sm:pr-[14px] sm:pl-[12px] md:mt-[29px] landscape-phone:mt-[16px]!">
+            <p className="font-display text-[15px] font-semibold text-forest uppercase sm:mr-[17px] sm:w-[134px] sm:text-[20px]">Powered By:</p>
+            <span className="relative aspect-[94/30] w-[75px] shrink-0 sm:w-[94px]" role="img" aria-label="Grüne Woche">
+              <Image src={gwMark} alt="" className="absolute top-[4.43%] left-0 h-auto w-[29.9%]" />
+              <Image src={gwText} alt="" className="absolute top-0 left-[38.92%] h-auto w-[61.08%]" />
+            </span>
+            <Image src={flLogo} alt="Fruit Logistica" className="h-auto w-[67px] shrink-0 sm:ml-[19px] sm:w-[84px]" />
+          </div>
+
+          <ul className="mt-[18px] grid gap-[12px] sm:grid-cols-[240fr_224fr] sm:gap-[14px] md:mt-[23px] lg:grid-cols-1 xl:grid-cols-[240fr_224fr] landscape-phone:grid-cols-1! landscape-phone:mt-[14px]!">
             {OPTIONS.map((o) => (
-              <li key={o.cta} className="flex flex-col items-start gap-[10px] rounded-[18px] bg-mint/60 p-[14px] md:gap-[12px] md:p-[16px] landscape-phone:flex-row! landscape-phone:items-center! landscape-phone:justify-between landscape-phone:p-[12px]!">
-                <p className="text-[13px] leading-[17px] font-semibold tracking-[0.04em] text-body uppercase">{o.q}</p>
-                <Link href={o.href} onClick={close} className={`pill shrink-0 whitespace-nowrap ${o.cls} md:h-[44px]! md:px-[20px]! md:text-[16px]!`}>
-                  <span>
-                    {o.cta}
-                    {"\u2060"}
-                    <span aria-hidden className="pill-chev ml-[10px]">
-                      ›
-                    </span>
-                  </span>
-                </Link>
+              <li key={o.cta} className="flex flex-col items-start gap-[14px] rounded-[20px] bg-[#edf6ee] px-[17px] pt-[20px] pb-[17px] landscape-phone:flex-row! landscape-phone:items-center! landscape-phone:justify-between landscape-phone:py-[12px]!">
+                <p className="text-[14px] font-semibold text-body uppercase">{o.q}</p>
+                <Button
+                  href={o.href}
+                  chevron={o.chevron}
+                  {...o.box}
+                  fs={15}
+                  m={{ ...o.box, fs: 15 }}
+                  className={`shrink-0 tracking-[0.02em] ${o.cls}`}
+                >
+                  {o.cta}
+                </Button>
               </li>
             ))}
           </ul>
 
           {/* Phones (and phones held sideways): the poster already shows the date and venue. */}
-          <ul className="mt-auto hidden flex-col gap-[8px] border-t border-black/10 pt-[16px] text-[15px] leading-[21px] font-medium text-body md:flex landscape-phone:hidden!">
-            <li className="flex items-center gap-[10px]">
-              <Image src={calendar} alt="" className="size-[20px] shrink-0" />
-              16–18 November 2027
+          <ul className="mt-[19px] hidden flex-col gap-[12px] border-t border-[#e5e5e5] pt-[32px] text-[22px] leading-[31px] font-medium tracking-[0.02em] text-body md:flex lg:mt-auto lg:pt-[28px] xl:mt-[19px] xl:pt-[32px] landscape-phone:hidden!">
+            <li className="flex h-[23px] items-center gap-[11px]">
+              <Image src={calendar} alt="" className="size-[23px] shrink-0" />
+              16-18 Nov. 2027
             </li>
-            <li className="flex items-center gap-[10px]">
-              <Image src={pin} alt="" className="size-[20px] shrink-0" />
+            <li className="flex min-h-[23px] items-center gap-[11px] xl:h-[23px] xl:whitespace-nowrap">
+              <Image src={pin} alt="" className="size-[23px] shrink-0" />
               Sands Expo &amp; Convention Centre, Singapore
             </li>
           </ul>

@@ -10,7 +10,7 @@ import dots from "@/assets/contact/dots.svg";
 import venue from "@/assets/about/produce.jpg";
 import ApplyForm from "./ApplyForm";
 
-const EMAIL = "marketing@freshfoodexpoapac.com";
+const EMAIL = "exhibitor@freshfoodexpoapac.com";
 
 const WHY = [
   { icon: users, title: "Meet new buyers", text: "Connect with importers, distributors, retailers and sourcing professionals." },
@@ -37,7 +37,7 @@ function RuleHeading({ className, children }: { className: string; children: str
  */
 export default function Enquiry() {
   return (
-    <section id="enquiry" className="untrim mx-auto mt-[32px] flex w-[min(1360px,100%-2*var(--gutter))] flex-col gap-[24px] md:mt-[40px] xl:flex-row xl:items-stretch">
+    <section id="enquiry" className="untrim mx-auto mt-[32px] flex w-[min(1360px,100%-2*var(--gutter))] flex-col gap-[24px] md:mt-[40px] lg:mt-[45px] xl:flex-row xl:items-stretch">
       <div className="min-w-0 flex-1 rounded-[24px] bg-white px-[22px] py-[32px] md:rounded-[28px] md:p-[40px]" data-reveal>
         <div className="mb-[20px]">
           <RuleHeading className="text-[28px] leading-[34px] md:text-[34px] md:leading-[40px]">Enquiry Form</RuleHeading>

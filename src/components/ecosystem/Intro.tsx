@@ -27,7 +27,7 @@ export default function Intro() {
 
       <div className="flex flex-col items-start gap-[25px] xl:w-[760px] xl:shrink-0" data-reveal style={{ "--i": 1 } as CSSProperties}>
         <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[40px] md:leading-[46px] lg:text-[42px] lg:leading-[48px]">
-          The <span className="text-accent">fresh food industry</span> depends on more than the product itself.
+          The <span className="text-accent">fresh food industry</span> depends on more than the product itself
         </h2>
         <div className="flex flex-col gap-[12px] text-[15px] leading-[23px] font-medium text-body">
           <p className="max-w-[684px]">

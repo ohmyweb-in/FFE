@@ -51,7 +51,7 @@ export default function Showcase() {
 
       <div className="relative flex flex-col items-start gap-[22px]" data-reveal>
         <h2 className="font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[36px] md:leading-[44px] lg:text-[38px] lg:leading-[46px]">
-          Showcase your products and solutions.
+          Showcase your products and solutions
         </h2>
         <p className="text-[17px] leading-[24px] font-medium text-black md:text-[18px] md:leading-[26px]">
           Fresh Food Expo APAC brings together three key areas of the fresh food ecosystem:

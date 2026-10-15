@@ -124,10 +124,11 @@ function MegaPanel({ s, i, on }: { s: NavSection; i: number; on: boolean }) {
                 </li>
               ))}
             </ul>
-            <div className="mt-auto flex items-center justify-between gap-4 border-t border-forest/10 px-4 pt-3">
-              <p className="flex items-center gap-2 text-[13px] font-medium text-body/80 [text-box:normal]!">
-                <span className="size-[6px] rounded-full bg-accent" aria-hidden />
-                16–18 November 2027 · Sands Expo, Singapore
+            <div className="mt-auto flex items-center justify-between gap-3 border-t border-forest/10 px-4 pt-3">
+              {/* Figma 1138:1433: 7px dot, 12px #727272 copy. */}
+              <p className="flex min-w-0 items-center gap-[6px] text-[12px] font-medium tracking-[0.02em] text-[#727272] [text-box:normal]!">
+                <span className="size-[7px] shrink-0 rounded-full bg-accent" aria-hidden />
+                16-18 November 2027 | Sands Expo &amp; Convention Centre, Singapore
               </p>
               <Pill href={s.cta.href} className="bg-brand text-white md:h-[40px]! md:px-[18px]! md:text-[15px]!">
                 {s.cta.label}

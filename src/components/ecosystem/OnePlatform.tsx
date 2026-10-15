@@ -27,7 +27,7 @@ const PILLARS: Pillar[] = [
     h: "xl:h-[536px]",
   },
   {
-    title: "Fresh Technology",
+    title: "Agri & Fresh Technology",
     lead: "Protecting quality and extending freshness.",
     desc: "Technologies and solutions that support the handling, cooling, preservation, storage and packaging of fresh food.",
     tags: ["AgriTech", "Cooling", "Preservation", "Packaging"],
@@ -63,7 +63,7 @@ export default function OnePlatform() {
           <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">The fresh food ecosystem</p>
           <h2 className="max-w-[882px] font-display text-[30px] leading-[36px] font-semibold text-forest md:text-[40px] md:leading-[46px] lg:text-[42px] lg:leading-[48px]">
             One platform.
-            <br /> Connecting <span className="text-accent">fresh food</span> from source to market.
+            <br /> Connecting <span className="text-accent">fresh food</span> from source to market
           </h2>
           <p className="text-[17px] leading-[23px] font-medium text-body md:text-[18px]">
             Fresh Food Expo APAC is built around three interconnected pillars of the fresh food value chain.

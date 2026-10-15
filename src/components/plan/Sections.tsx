@@ -39,7 +39,7 @@ export function Venue() {
         <div className="flex min-w-0 flex-1 flex-col items-start gap-[16px]" data-reveal style={i(1)}>
           <RuleEyebrow>Getting to the venue</RuleEyebrow>
           <h2 className="font-display text-[28px] leading-[34px] font-semibold text-forest md:text-[32px] md:leading-[40px]">
-            Sands Expo &amp; Convention Centre <span className="whitespace-nowrap">(Hall D)</span>
+            Sands Expo &amp; Convention Centre <span className="whitespace-nowrap">(Hall F)</span>
           </h2>
           <p className="text-[15px] leading-[24px] font-medium text-black md:text-[16px] md:leading-[25px]">
             Located in the heart of Singapore’s Marina Bay precinct, Sands Expo &amp; Convention Centre is one of Asia’s premier venues for

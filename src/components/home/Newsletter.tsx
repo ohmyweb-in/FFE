@@ -18,8 +18,7 @@ const pct = (l: number, t: number, w: number, h: number): CSSProperties => ({
 
 export default function Newsletter() {
   return (
-    // Phones follow the mobile frame’s order (Partners → Join → Newsletter), see page.tsx.
-    <div className="relative max-md:order-1">
+    <div className="relative">
       {/* Figma 359:166 — the leaf asset flipped horizontally, as in the design. */}
       <Image src={leafOutline} alt="" aria-hidden className="pointer-events-none absolute top-[-165px] left-[-7px] hidden max-w-none -scale-x-100 lg:block" />
 

@@ -19,7 +19,7 @@ export default function About() {
           distribution solutions that help preserve quality, maintain freshness and move products efficiently to market.
           <br />
           <br />
-          Building on the global expertise and industry network behind FRUIT LOGISTICA, Fresh Food Expo APAC brings
+          Building on the global expertise and industry network behind FRUIT LOGISTICA and Grüne Woche, Fresh Food Expo APAC brings
           together fresh food, agri and fresh technology, logistics and distribution within one regional platform
         </p>
         <div className="mt-[18px] flex flex-wrap gap-[7px] md:mt-[32px] md:gap-[12px] lg:ml-px">

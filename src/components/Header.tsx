@@ -13,6 +13,7 @@ import searchIcon from "@/assets/icon-search.png";
 import { Button, Pill, crop } from "./ui";
 import { NAV, type NavSection } from "./nav";
 
+// FFE MENA link hidden at client request (kept in place so the utility links stay right-aligned); drop `invisible` to restore.
 const SITE = "FFE MENA";
 const UTIL = [
   { label: "Newsletter", href: "/subscribe" },
@@ -41,7 +42,7 @@ function TopBar() {
   return (
     <div className="bg-forest font-medium tracking-[0.02em] text-white">
       <div className="container-page flex h-[44px] items-center justify-between text-[14px] lg:hidden">
-        <a href="#" className="flex h-[44px] items-center uppercase">
+        <a href="#" aria-hidden tabIndex={-1} className="invisible flex h-[44px] items-center uppercase">
           {SITE}
         </a>
         <div className="-mr-[12px] flex items-center">
@@ -56,7 +57,7 @@ function TopBar() {
       </div>
 
       <div className="container-page hidden h-[49px] items-center justify-between text-[15px] lg:flex">
-        <a href="#" className="footer-link uppercase hover:text-white/70">
+        <a href="#" aria-hidden tabIndex={-1} className="footer-link invisible uppercase hover:text-white/70">
           {SITE}
         </a>
         <ul className="flex items-center gap-[18px]">

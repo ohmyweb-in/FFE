@@ -12,6 +12,7 @@ import hero from "@/assets/siaw/hero.jpg";
 import chevronAccent from "@/assets/chevron-accent.svg";
 
 // Long CTA on phones: full width, 20px sides, 13px top/bottom, balanced two lines.
+const SIAW_SITE = "https://sginternationalagrifoodweek.com.sg/";
 const MOB = "max-md:w-full max-md:px-[20px] max-md:py-[13px] max-md:leading-[22px] max-md:text-balance";
 
 export const metadata: Metadata = {
@@ -40,10 +41,10 @@ export default function SiawPage() {
           cta={
             <>
               {/* Phones: full-width pill, two balanced lines, chevron after the last word. */}
-              <Pill href="#our-role" className={`bg-white text-accent md:hidden ${MOB} max-[389px]:px-[16px]! max-[389px]:text-[15px]!`}>
+              <Pill href={SIAW_SITE} className={`bg-white text-accent md:hidden ${MOB} max-[389px]:px-[16px]! max-[389px]:text-[15px]!`}>
                 Discover Singapore International Agri{"\u2011"}Food Week
               </Pill>
-              <Button href="#our-role" chevron={chevronAccent} w={497} h={52} pl={33} gap={9} className="bg-white text-accent max-md:hidden">
+              <Button href={SIAW_SITE} chevron={chevronAccent} w={497} h={52} pl={33} gap={9} className="bg-white text-accent max-md:hidden">
                 Discover Singapore International Agri-Food Week
               </Button>
             </>

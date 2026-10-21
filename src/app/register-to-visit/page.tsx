@@ -4,7 +4,8 @@ import Header from "@/components/Header";
 import RevealObserver from "@/components/RevealObserver";
 import Footer from "@/components/home/Footer";
 import PageHero, { HeroCtas } from "@/components/PageHero";
-import { AllAccess, HostedBuyers, StayUpToDate } from "@/components/register/Sections";
+import { StayUpToDate } from "@/components/register/Sections";
+import { Pill } from "@/components/ui";
 import hero from "@/assets/visit/hero.jpg";
 import calendar from "@/assets/exhibit/icon-calendar.svg";
 import pin from "@/assets/exhibit/icon-pin.svg";
@@ -52,10 +53,14 @@ export default function RegisterToVisitPage() {
         />
 
         <StayUpToDate />
-        <AllAccess />
-        <HostedBuyers />
+        <div className="mt-[32px] flex justify-center px-(--gutter)" data-reveal>
+          <Pill href="/register-to-visit/form" className="bg-brand text-white">
+            Register Your Interest
+          </Pill>
+        </div>
+        {/* AllAccess and HostedBuyers (register/Sections) hidden at client request; re-add here to restore. */}
       </main>
-      {/* Footer content (793:4144) sits 30px into its frame, 24px below the Hosted Buyers section. */}
+      {/* Footer content (793:4144) sits 30px into its frame, 24px below the last section. */}
       <Footer mt="mt-[48px] lg:mt-[78px]" />
       <RevealObserver />
     </>

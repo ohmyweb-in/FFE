@@ -22,7 +22,7 @@ const ITEMS: Item[] = [
   },
   {
     title: "Built on Global Industry Expertise",
-    body: "Fresh Food Expo APAC is brought to you by Messe Berlin, the organiser behind FRUIT LOGISTICA, the leading trade show for the global fresh produce business.",
+    body: "Fresh Food Expo APAC is brought to you by Messe Berlin Asia Pacific, the organiser behind FRUIT LOGISTICA and Grüne Woche.",
     cta: (
       <Button href="/messe-berlin" chevron={chevronSmWhite} w={128} h={40} pl={22} gap={9.39} fs={15} className="border border-accent bg-accent text-white">
         Organiser

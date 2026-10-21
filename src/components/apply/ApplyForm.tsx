@@ -14,9 +14,7 @@ const inter = Inter({ subsets: ["latin"], weight: "400" });
 const PARTICIPATION = [
   "Exhibition Stand – Space Only",
   "Exhibition Stand – Shell Scheme",
-  "Country / Regional Pavilion",
   "Sponsorship & Branding",
-  "Not Sure Yet – Please Advise",
 ];
 
 // Company Business Activity (1143:5692): fresh food, technology, then logistics and services.

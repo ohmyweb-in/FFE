@@ -19,7 +19,7 @@ const PILLARS: Pillar[] = [
     title: "Fresh Food",
     lead: "Where fresh food begins.",
     desc: "Fresh food products supplied by growers, producers, farms, fisheries, exporters and suppliers from across Asia Pacific and global markets.",
-    tags: ["Fruits & Vegetables", "Meat & Poultry", "Seafood", "Eggs & Dairy"],
+    tags: ["Fruit & Vegetables", "Meat & Poultry", "Seafood", "Eggs & Dairy"],
     img: imgFresh,
     alt: "Worker sorting fresh vegetables at a packing station",
     pos: "object-center",

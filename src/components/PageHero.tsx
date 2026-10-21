@@ -37,12 +37,13 @@ type Props = {
    * "story" = Our Story 786:3140: 342px panel, no eyebrow, title cap top 59, 1016/538px fades, eco copy + curve.
    * "exhibit" = Why Exhibit 786:3081: 380px panel, no eyebrow, 18/26 copy, date block + CTAs passed in `cta`.
    * "apply" = Apply to Exhibit 786:3263: 246px panel (30px radius), three-line title only, exhibit curve.
+   * "applyLong" = "apply" grown by one 48px title line (Apply to Exhibit with the full event name).
    * "plan" = Plan Your Visit 793:4215: 338px panel (30px radius), one 325px fade, one-line copy, date block + CTAs via `cta`.
    * "register" = Register as a Trade Visitor 793:4301: 404px panel (360px since the 30px sub line was dropped), title only; sub, date block + CTAs via `cta`; taller curve.
    * "why" = Why Visit 869:777: 316px panel (30px radius), title only; date block + CTAs via `cta`; exhibit curve.
    * "contact" = Contact Us 483:211: 298px panel, eyebrow + title only, image 78 curve at top 118.
    */
-  size?: "default" | "compact" | "tall" | "siaw" | "eco" | "story" | "exhibit" | "apply" | "plan" | "register" | "why" | "contact";
+  size?: "default" | "compact" | "tall" | "siaw" | "eco" | "story" | "exhibit" | "apply" | "applyLong" | "plan" | "register" | "why" | "contact";
 };
 
 type Size = { panel: string; curve: string; content: string; desc: string; date: string; ctas: string; title?: string; descType?: string; fades?: string[]; curveSrc?: StaticImageData };
@@ -113,6 +114,18 @@ const SIZES: Record<NonNullable<Props["size"]>, Size> = {
   apply: {
     panel: "lg:h-[246px] lg:rounded-[30px]!",
     curve: "top-[93px] h-[157.316px] w-[196.841px]",
+    curveSrc: exhibitCurve,
+    content: "lg:pt-[59px] lg:pl-[13px]",
+    title: "mt-0! lg:text-[45px]! lg:leading-[48px]!",
+    desc: "",
+    date: "",
+    ctas: "",
+    fades: ["left-[16.34%] w-[72.83%]", "left-[16.34%] w-[38.57%]"],
+  },
+  // "apply" + one 48px title line; the curve moves down with the bottom edge.
+  applyLong: {
+    panel: "lg:h-[294px] lg:rounded-[30px]!",
+    curve: "top-[141px] h-[157.316px] w-[196.841px]",
     curveSrc: exhibitCurve,
     content: "lg:pt-[59px] lg:pl-[13px]",
     title: "mt-0! lg:text-[45px]! lg:leading-[48px]!",

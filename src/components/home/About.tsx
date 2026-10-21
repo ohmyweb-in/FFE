@@ -12,7 +12,7 @@ export default function About() {
       <div className="min-w-0 lg:basis-[586px] lg:pt-[18.61px]" data-reveal>
         <h2 className="h-section max-w-[295px] md:max-w-[549px]">
           <span className="md:block">About </span>
-          <span className="text-accent md:block">Fresh Food Expo Asia Pacific</span>
+          <span className="text-accent md:block">Fresh Food Expo Asia Pacific <span className="whitespace-nowrap">(FFE APAC)</span></span>
         </h2>
         <p className="text-lead mt-[24px] ml-[2px] max-w-[586px] md:mt-[28px] md:ml-0 lg:mt-[38px]">
           Fresh Food Expo Asia Pacific (FFE APAC) is a premier B2B trade fair connecting fresh food with the technologies, logistics and

@@ -22,17 +22,19 @@ export default function ApplyToExhibitPage() {
       <Header />
       <main className="overflow-x-clip">
         <PageHero
-          size="apply"
+          size="applyLong"
           title={
             <>
               Let’s Discuss Your <br className="max-lg:hidden" />
               Participation at <br className="max-lg:hidden" />
-              FFE APAC
+              Fresh Food Expo <br className="max-lg:hidden" />
+              Asia Pacific <span className="whitespace-nowrap">(FFE APAC)</span>
             </>
           }
           img={hero}
           // Figma fill is 92.41% × 310.08% (5% taller than the photo); kept at its true ratio, same width, left edge and vertical centre.
-          imgBox="lg:top-[-131.96%] lg:left-[16.36%] lg:h-[294.75%]! lg:w-[92.41%] lg:max-w-none"
+          // Same 725px photo box as the 246px panel (top −131.96%, h 294.75%), rescaled to 294px and kept centred.
+          imgBox="lg:top-[-102.25%] lg:left-[16.36%] lg:h-[246.63%]! lg:w-[92.41%] lg:max-w-none"
           curveLeft={3.39}
         />
 

@@ -23,8 +23,11 @@ export default function SubscribePage() {
           eyebrow="Stay connected"
           title={
             <>
-              Join the FFE APAC <br className="hidden lg:block" />
-              community
+              Join the Fresh Food Expo <br className="hidden lg:block" />
+              {/* Up to 7px wider than the title box around 1024, so it stays one line on desktop. */}
+              <span className="lg:whitespace-nowrap">
+                Asia Pacific <span className="whitespace-nowrap">(FFE APAC)</span> community
+              </span>
             </>
           }
           img={hero}

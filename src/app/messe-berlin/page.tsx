@@ -32,9 +32,9 @@ export default function MesseBerlinPage() {
           <ShowCards className="mt-[26px] md:mt-8 lg:mt-[41px]" />
         </section>
 
-        {/* Join banner (781:2638): 470px, eyebrow + two-line title, hero CTAs; 53.06px below the cards. */}
+        {/* Join banner (781:2638): 470px in Figma + 52px for the third title line of the full event name; eyebrow + title, hero CTAs; 53.06px below the cards. */}
         <JoinBanner
-          layout="mt-[48px] h-[780px] lg:mt-[53.06px] lg:h-[470px]"
+          layout="mt-[48px] h-[780px] lg:mt-[53.06px] lg:h-[522px]"
           imgCls="lg:top-[-18.62%] lg:left-[23.7%] lg:h-[127.23%] lg:w-[78.64%]"
           inner="lg:pt-[56px] lg:pb-0 lg:pl-[14.5px]"
           eyebrow={

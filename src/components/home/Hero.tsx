@@ -6,9 +6,8 @@ import heroCurveMobile from "@/assets/hero-curve-mobile.svg";
 import sliderDots from "@/assets/slider-dots.svg";
 import chevronSmBrand from "@/assets/chevron-sm-brand.svg";
 import chevronSmWhite from "@/assets/chevron-sm-white.svg";
-import gwMark from "@/assets/logo-gruene-woche-mark.svg";
-import gwText from "@/assets/logo-gruene-woche-text.svg";
-import flLogo from "@/assets/logo-fruit-logistica.svg";
+import gwLogo from "@/assets/popup/gruene-woche.png";
+import flLogo from "@/assets/popup/fruit-logistica.png";
 import { Button, DateVenue } from "../ui";
 
 const i = (n: number) => ({ "--i": n }) as CSSProperties;
@@ -86,14 +85,12 @@ export default function Hero() {
         </div>
 
         {/* Powered by (1138:145, 266×109): white tab in the card’s bottom-right corner. */}
-        <div className="load-in absolute right-0 bottom-0 w-[266px] rounded-tl-[30px] bg-white pt-[27px] pb-[19px] pl-[31px]" style={i(5)}>
-          <p className="font-display text-[20px] leading-[normal] font-semibold text-[#00966f] uppercase">Powered By:</p>
-          <div className="mt-[19px] flex items-center gap-[29px]">
-            <span className="relative block h-[30px] w-[94px] shrink-0" role="img" aria-label="Grüne Woche">
-              <Image src={gwMark} alt="" className="absolute top-[1.33px] left-0" />
-              <Image src={gwText} alt="" className="absolute top-0 left-[36.58px]" />
-            </span>
-            <Image src={flLogo} alt="Fruit Logistica" className="mt-px shrink-0" />
+        {/* Logos 1269:434 / 1269:435: 47px-tall tiles, 9px apart. */}
+        <div className="load-in absolute right-0 bottom-0 w-[266px] rounded-tl-[30px] bg-white pt-[27px] pb-[11px] pl-[28px]" style={i(5)}>
+          <p className="ml-[3px] font-display text-[20px] leading-[normal] font-semibold text-[#00966f] uppercase">Powered By:</p>
+          <div className="mt-[11px] flex items-center gap-[9px]">
+            <Image src={gwLogo} alt="Grüne Woche" className="h-[47px] w-auto shrink-0" />
+            <Image src={flLogo} alt="Fruit Logistica" className="h-[47px] w-auto shrink-0" />
           </div>
         </div>
 

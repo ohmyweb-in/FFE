@@ -12,9 +12,9 @@ import WhoFor from "@/components/ecosystem/WhoFor";
 import hero from "@/assets/ecosystem/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "Fresh Food Ecosystem | Fresh Food Expo APAC",
+  title: "Fresh Food Ecosystem | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
-    "From fresh food to technology, logistics and distribution, Fresh Food Expo APAC connects the businesses and solutions that bring fresh food to market.",
+    "From fresh food to technology, logistics and distribution, Fresh Food Expo Asia Pacific (FFE APAC) connects the businesses and solutions that bring fresh food to market.",
 };
 
 /** Figma 1138:2024 (Ecosystem_Desktop, was 450:3745). Sections sit 67px apart; the intro (793:4477) was slotted in at 40.32 / 20.63. */
@@ -33,7 +33,7 @@ export default function EcosystemPage() {
           curveLeft={-20.98}
           stayHref="/subscribe"
         >
-          From fresh food to technology, logistics and distribution, Fresh Food Expo APAC connects the businesses and solutions that bring fresh food to
+          From fresh food to technology, logistics and distribution, Fresh Food Expo Asia Pacific (FFE APAC) connects the businesses and solutions that bring fresh food to
           market.
         </PageHero>
         <Intro />

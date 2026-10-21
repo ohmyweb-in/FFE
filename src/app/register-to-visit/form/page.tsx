@@ -4,16 +4,15 @@ import RevealObserver from "@/components/RevealObserver";
 import Footer from "@/components/home/Footer";
 import PageHero from "@/components/PageHero";
 import hero from "@/assets/visit/hero.jpg";
+import VisitorForm from "@/components/register/VisitorForm";
 
 export const metadata: Metadata = {
-  title: "Visitor Registration | Fresh Food Expo APAC",
+  title: "Visitor Registration | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Register as a trade visitor to Fresh Food Expo APAC. 16–18 November 2027, Sands Expo & Convention Centre, Singapore.",
 };
 
-const FORM = "https://forms.cloud.microsoft/r/M2XNWa49UM";
-
-/** No Figma frame: Apply to Exhibit hero + a white card holding the Microsoft Forms embed. */
+/** No Figma frame: Apply to Exhibit hero + its enquiry card holding the visitor form (rebuilt from the Microsoft Form). */
 export default function VisitorFormPage() {
   return (
     <>
@@ -32,17 +31,10 @@ export default function VisitorFormPage() {
           curveLeft={3.39}
         />
 
-        {/* Full-bleed on phones: Microsoft swaps the form for a "Fill in the form" button when the frame is under ~330px wide. */}
-        <section className="mx-auto mt-[32px] overflow-hidden bg-white sm:w-[min(1360px,100%-2*var(--gutter))] sm:rounded-[24px] md:mt-[40px] md:rounded-[28px]" data-reveal>
-          {/* ponytail: MS Forms can't auto-size cross-origin and runs ~13000px, so the iframe fills the screen under the sticky header and scrolls inside. */}
-          <iframe src={`${FORM}?embed=true`} title="Trade visitor registration form" className="block h-[max(520px,calc(100svh-var(--header-h)-24px))] w-full border-0" allowFullScreen />
+        {/* Apply to Exhibit's enquiry card (781:1521), full row width. */}
+        <section className="untrim mx-auto mt-[32px] w-[min(1360px,100%-2*var(--gutter))] scroll-mt-[calc(var(--header-h)+16px)] rounded-[24px] bg-white px-[22px] py-[32px] md:mt-[40px] md:rounded-[28px] md:p-[40px] lg:mt-[45px] xl:px-[56px] xl:py-[48px]" data-reveal>
+          <VisitorForm />
         </section>
-        <p className="untrim mx-auto mt-[16px] w-[min(1360px,100%-2*var(--gutter))] text-center text-[15px] leading-[22px] font-medium text-body">
-          Trouble viewing the form?{" "}
-          <a href={FORM} target="_blank" rel="noopener" className="font-semibold text-accent underline underline-offset-4">
-            Open it in a new tab
-          </a>
-        </p>
       </main>
       <Footer mt="mt-[64px] lg:mt-[112px]" />
       <RevealObserver />

@@ -11,7 +11,7 @@ import calendar from "@/assets/exhibit/icon-calendar.svg";
 import pin from "@/assets/exhibit/icon-pin.svg";
 
 export const metadata: Metadata = {
-  title: "Plan Your Visit | Fresh Food Expo APAC",
+  title: "Plan Your Visit | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Make the most of your time at Fresh Food Expo APAC: getting to Sands Expo & Convention Centre, visa information, useful tips and where to stay in Singapore. 16–18 November 2027.",
 };
@@ -49,7 +49,7 @@ export default function PlanYourVisitPage() {
             </>
           }
         >
-          Make the most of your time at Fresh Food Expo APAC.
+          Make the most of your time at Fresh Food Expo Asia Pacific (FFE APAC).
         </PageHero>
 
         <Venue />

@@ -90,7 +90,7 @@ export default function EnquiryForm() {
         <label className="flex cursor-pointer items-start gap-[14px]">
           <input type="checkbox" name="marketingConsent" className={checkbox} />
           <span>
-            By submitting this form, I consent to the organisers of Fresh Food Expo APAC collecting, using, processing and/or disclosing my personal
+            By submitting this form, I consent to the organisers of Fresh Food Expo Asia Pacific (FFE APAC) collecting, using, processing and/or disclosing my personal
             information for communications and activities relating to its affiliates, partners and related events, including event updates, industry
             news, products and services, promotions, and other marketing communications.
           </span>

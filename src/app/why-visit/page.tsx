@@ -8,7 +8,7 @@ import { Connections, Intro, Products, Technologies } from "@/components/why/Sec
 import hero from "@/assets/about/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "Why Visit | Fresh Food Expo APAC",
+  title: "Why Visit | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Fresh Food Expo APAC brings together suppliers, solution providers and industry professionals in one dedicated B2B platform – giving visitors direct access to new products, partners and commercial opportunities.",
 };
@@ -34,7 +34,7 @@ export default function WhyVisitPage() {
         />
 
         <Intro>
-          Fresh Food Expo APAC brings together suppliers, solution providers and industry professionals in one dedicated B2B platform – giving visitors direct
+          Fresh Food Expo Asia Pacific (FFE APAC) brings together suppliers, solution providers and industry professionals in one dedicated B2B platform – giving visitors direct
           access to new products, partners and commercial opportunities.
         </Intro>
         <Products />

@@ -9,7 +9,7 @@ import Agenda from "@/components/programme/Agenda";
 import StayUpdated from "@/components/news/StayUpdated";
 
 export const metadata: Metadata = {
-  title: "Conference Programme | Fresh Food Expo APAC",
+  title: "Conference Programme | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "The Fresh Food Expo APAC 2027 conference agenda: keynotes, panels and presentations on the future of fresh food across Asia Pacific.",
 };

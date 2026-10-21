@@ -28,9 +28,9 @@ import snow from "@/assets/who/l-snow.svg";
 import network from "@/assets/who/l-network.svg";
 
 export const metadata: Metadata = {
-  title: "Who Should Exhibit | Fresh Food Expo APAC",
+  title: "Who Should Exhibit | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
-    "If your business plays a role in bringing fresh food from source to buyer, Fresh Food Expo APAC provides a dedicated platform to connect with buyers, partners and industry decision-makers across Asia Pacific.",
+    "If your business plays a role in bringing fresh food from source to buyer, Fresh Food Expo Asia Pacific (FFE APAC) provides a dedicated platform to connect with buyers, partners and industry decision-makers across Asia Pacific.",
 };
 
 /** Figma 1142:5034 (Who_Should_Exhibit; hero as 1053:242). Intro 42px under the hero, cards 24px apart. */
@@ -54,7 +54,7 @@ export default function WhoShouldExhibitPage() {
         />
 
         <Intro>
-          If your business plays a role in bringing fresh food from source to buyer, Fresh Food Expo APAC provides a dedicated platform to connect with buyers,
+          If your business plays a role in bringing fresh food from source to buyer, Fresh Food Expo Asia Pacific (FFE APAC) provides a dedicated platform to connect with buyers,
           partners and industry decision-makers across Asia Pacific.
         </Intro>
 

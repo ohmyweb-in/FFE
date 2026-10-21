@@ -73,7 +73,7 @@ export default function SubscribeForm() {
               className="checkbox size-[22px] rounded-[5px] border-[1.5px] border-[#a8a8a8] bg-white checked:border-accent checked:bg-accent"
             />
             <span>
-              By submitting this form, I consent to the organisers of <b className="font-semibold">Fresh Food Expo APAC</b> collecting, using, processing
+              By submitting this form, I consent to the organisers of <b className="font-semibold">Fresh Food Expo Asia Pacific (FFE APAC)</b> collecting, using, processing
               and/or disclosing my personal information for communications and activities relating to its affiliates, partners and related events,
               including event updates, industry news, products and services, promotions, and other marketing communications.
             </span>

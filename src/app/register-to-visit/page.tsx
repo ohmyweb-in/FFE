@@ -11,7 +11,7 @@ import calendar from "@/assets/exhibit/icon-calendar.svg";
 import pin from "@/assets/exhibit/icon-pin.svg";
 
 export const metadata: Metadata = {
-  title: "Register to Visit | Fresh Food Expo APAC",
+  title: "Register to Visit | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Register as a trade visitor to Fresh Food Expo APAC, Asia Pacific’s premier trade fair for fresh food. 16–18 November 2027, Sands Expo & Convention Centre, Singapore.",
 };

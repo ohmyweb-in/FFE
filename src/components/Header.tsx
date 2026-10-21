@@ -246,24 +246,25 @@ export default function Header() {
                 })}
               </ul>
             </nav>
-            <Button href="/contact" chevron={chevronContact} w={162} h={47} pl={25} gap={13} className="bg-brand text-white">
-              Contact Us
+            {/* Figma 1138:191: 246×47. */}
+            <Button href="/register-to-visit" chevron={chevronContact} w={246} h={47} pl={24} gap={13} className="bg-brand text-white">
+              Register Your Interest
             </Button>
           </div>
 
-          {/* Below lg (Figma 318:2092 / 318:2089): Contact pill + 47px ringed menu button. */}
-          <div className="flex items-center gap-[13px] lg:hidden">
+          {/* Below lg (Figma 318:2092 / 318:2089): Register pill + 47px ringed menu button. */}
+          <div className="flex items-center gap-[13px] max-[379px]:gap-[8px] lg:hidden">
             <Button
-              href="/contact"
+              href="/register-to-visit"
               chevron={chevronContact}
-              w={162}
+              w={246}
               h={47}
-              pl={25}
+              pl={24}
               gap={13}
-              m={{ w: 134, h: 43, pl: 22, gap: 6, fs: 15, chev: 0.916 }}
+              m={{ w: 166, h: 43, pl: 13, gap: 5, fs: 13, chev: 0.916 }}
               className="bg-accent text-white"
             >
-              Contact Us
+              Register Your Interest
             </Button>
             <button
               type="button"

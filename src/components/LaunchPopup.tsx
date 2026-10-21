@@ -7,9 +7,8 @@ import poster from "@/assets/popup-poster.jpg";
 import calendar from "@/assets/popup/icon-calendar.png";
 import pin from "@/assets/popup/icon-pin.png";
 import closeIcon from "@/assets/popup/icon-close.png";
-import gwMark from "@/assets/popup/gw-mark.svg";
-import gwText from "@/assets/popup/gw-text.svg";
-import flLogo from "@/assets/popup/fruit-logistica.svg";
+import gwLogo from "@/assets/popup/gruene-woche.png";
+import flLogo from "@/assets/popup/fruit-logistica.png";
 import chevronSmWhite from "@/assets/chevron-sm-white.svg";
 import chevronSmAccent from "@/assets/contact/chevron-sm-accent.svg";
 import { Button } from "./ui";
@@ -109,14 +108,11 @@ export default function LaunchPopup() {
             Be Part of Asia Pacific’s Fresh Food Ecosystem!
           </h2>
 
-          {/* Figma 1228:243: 374×58 mint strip. */}
-          <div className="mt-[14px] flex h-[46px] items-center gap-[10px] self-start rounded-[10px] bg-mint pr-[12px] pl-[10px] sm:mt-[22px] sm:h-[58px] sm:gap-0 sm:pr-[14px] sm:pl-[12px] md:mt-[29px] landscape-phone:mt-[16px]!">
-            <p className="font-display text-[15px] font-semibold text-forest uppercase sm:mr-[17px] sm:w-[134px] sm:text-[20px]">Powered By:</p>
-            <span className="relative aspect-[94/30] w-[75px] shrink-0 sm:w-[94px]" role="img" aria-label="Grüne Woche">
-              <Image src={gwMark} alt="" className="absolute top-[4.43%] left-0 h-auto w-[29.9%]" />
-              <Image src={gwText} alt="" className="absolute top-0 left-[38.92%] h-auto w-[61.08%]" />
-            </span>
-            <Image src={flLogo} alt="Fruit Logistica" className="h-auto w-[67px] shrink-0 sm:ml-[19px] sm:w-[84px]" />
+          {/* Figma 1228:243: 374×58 mint strip; 1269:429 / 1269:428: 40px-tall logo tiles. */}
+          <div className="mt-[14px] flex h-[46px] items-center gap-[4px] self-start rounded-[10px] bg-mint pr-[10px] pl-[10px] sm:mt-[22px] sm:h-[58px] sm:gap-[5px] sm:pr-[29px] sm:pl-[12px] md:mt-[29px] landscape-phone:mt-[16px]!">
+            <p className="mr-[6px] font-display text-[15px] font-semibold text-forest uppercase sm:mr-[12px] sm:w-[134px] sm:text-[20px]">Powered By:</p>
+            <Image src={gwLogo} alt="Grüne Woche" className="h-[32px] w-auto shrink-0 sm:h-[40px]" />
+            <Image src={flLogo} alt="Fruit Logistica" className="h-[32px] w-auto shrink-0 sm:h-[40px]" />
           </div>
 
           <ul className="mt-[14px] grid gap-[8px] sm:mt-[18px] sm:grid-cols-[240fr_224fr] sm:gap-[14px] md:mt-[23px] lg:grid-cols-1 xl:grid-cols-[240fr_224fr] landscape-phone:grid-cols-1! landscape-phone:mt-[14px]!">

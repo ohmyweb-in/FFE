@@ -10,7 +10,7 @@ import VisitorGroups from "@/components/visit/VisitorGroups";
 import hero from "@/assets/visit/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "Who Should Visit | Fresh Food Expo APAC",
+  title: "Who Should Visit | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Fresh Food Expo APAC is designed for buyers, sourcing professionals and industry decision-makers looking for fresh food products, technologies and logistics solutions from across Asia Pacific and global markets.",
 };
@@ -37,7 +37,7 @@ export default function WhoShouldVisitPage() {
         />
 
         <Intro>
-          Fresh Food Expo APAC is designed for buyers, sourcing professionals and industry decision-makers looking for fresh food products, technologies and
+          Fresh Food Expo Asia Pacific (FFE APAC) is designed for buyers, sourcing professionals and industry decision-makers looking for fresh food products, technologies and
           logistics solutions from across Asia Pacific and global markets.
         </Intro>
 

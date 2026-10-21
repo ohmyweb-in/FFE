@@ -12,7 +12,7 @@ import RuleEyebrow from "@/components/story/RuleEyebrow";
 import hero from "@/assets/about/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "Our Story | Fresh Food Expo APAC",
+  title: "Our Story | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Fresh Food Expo APAC was created to build stronger connections across the fresh food ecosystem: a dedicated regional platform where fresh food, technology, logistics, distribution and markets come together.",
 };
@@ -32,7 +32,7 @@ export default function OurStoryPage() {
           curveLeft={-20.98}
           stayHref="/subscribe"
         >
-          Fresh Food Expo APAC was created with a clear purpose: to build stronger connections across the fresh food ecosystem and create a dedicated
+          Fresh Food Expo Asia Pacific (FFE APAC) was created with a clear purpose: to build stronger connections across the fresh food ecosystem and create a dedicated
           regional platform where fresh food, technology, logistics, distribution and markets come together.
         </PageHero>
         <StoryIntro />

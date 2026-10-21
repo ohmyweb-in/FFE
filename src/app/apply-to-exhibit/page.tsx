@@ -8,7 +8,7 @@ import Enquiry from "@/components/apply/Enquiry";
 import hero from "@/assets/apply/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "Apply to Exhibit | Fresh Food Expo APAC",
+  title: "Apply to Exhibit | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Secure your stand at Fresh Food Expo APAC. Complete the enquiry form and our sales team will contact you within three business days. 16–18 November 2027, Sands Expo & Convention Centre, Singapore.",
 };

@@ -24,8 +24,8 @@ export default function Home() {
         <JoinBanner date="16-18 Nov. 2027" />
         <Newsletter />
       </main>
-      {/* Footer logo 98px below the newsletter collage (Figma 1138:140). */}
-      <Footer mt="mt-[47px] md:mt-20 lg:mt-[90px]" />
+      {/* Partners label 112px below the newsletter collage (Figma 1138:140). */}
+      <Footer mt="mt-[47px] md:mt-20 lg:mt-[112px]" />
       <RevealObserver />
     </>
   );

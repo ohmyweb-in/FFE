@@ -7,7 +7,7 @@ const outfit = Outfit({ variable: "--font-outfit", subsets: ["latin"] });
 const fredoka = Fredoka({ variable: "--font-fredoka", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Fresh Food Expo APAC | Asia Pacific's Premier Trade Fair for Fresh Food",
+  title: "Fresh Food Expo Asia Pacific (FFE APAC) | Asia Pacific's Premier Trade Fair for Fresh Food",
   description:
     "Connecting Fresh Food, Technology, Logistics & Distribution from Farm to Fork. 17-18 Nov. 2027, Sands Expo & Convention Centre, Singapore.",
 };

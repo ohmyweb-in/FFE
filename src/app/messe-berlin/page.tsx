@@ -9,7 +9,7 @@ import RuleEyebrow from "@/components/story/RuleEyebrow";
 import { MesseAsia, MesseBerlin, Portfolio } from "@/components/messe/Sections";
 
 export const metadata: Metadata = {
-  title: "Messe Berlin | Fresh Food Expo APAC",
+  title: "Messe Berlin | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Fresh Food Expo APAC is organised by Messe Berlin Asia Pacific, the Singapore-based subsidiary of Messe Berlin, one of the world’s leading trade fair companies since 1822.",
 };
@@ -45,7 +45,7 @@ export default function MesseBerlinPage() {
           title={
             <>
               Join us at <br className="max-md:hidden" />
-              Fresh Food Expo APAC 2027
+              Fresh Food Expo Asia Pacific (FFE APAC) 2027
             </>
           }
           titleCls="md:max-w-[730px]! lg:ml-[4.5px]"

@@ -7,7 +7,7 @@ import SubscribeSection from "@/components/subscribe/SubscribeSection";
 import hero from "@/assets/subscribe/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "Subscribe | Fresh Food Expo APAC",
+  title: "Subscribe | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Join the FFE APAC community: be the first to know about new exhibitors, programme announcements, networking opportunities and industry news.",
 };

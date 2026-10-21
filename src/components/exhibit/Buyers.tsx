@@ -39,7 +39,7 @@ export default function Buyers() {
           Meet professionals responsible for sourcing, procurement, distribution and purchasing across the fresh food industry.
         </p>
         <div className="flex w-full flex-col gap-[14px] rounded-[22px] bg-linear-to-r from-mint to-[#eef6ef] px-[16px] py-[20px]">
-          <p className="text-[17px] leading-[22px] font-semibold text-accent">Fresh Food Expo APAC brings together:</p>
+          <p className="text-[17px] leading-[22px] font-semibold text-accent">Fresh Food Expo Asia Pacific (FFE APAC) brings together:</p>
           <ul className="grid gap-x-[10px] gap-y-[14px] min-[400px]:grid-cols-2 md:grid-cols-4">
             {BUYERS.map((b) => (
               <li key={b.label} className="flex h-[64px] items-center gap-[12px] rounded-[14px] bg-white px-[14px] py-[12px]">

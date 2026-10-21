@@ -24,7 +24,7 @@ const Lines = ({ lines }: { lines: string[] }) =>
   ));
 
 const BENEFITS: { icon: StaticImageData; title: string[]; text: string[] }[] = [
-  { icon: bell, title: ["Priority notification", "when visitor registration", "opens"], text: ["Be among the first to know when visitor registration for", "Fresh Food Expo APAC goes live."] },
+  { icon: bell, title: ["Priority notification", "when visitor registration", "opens"], text: ["Be among the first to know when visitor registration for", "Fresh Food Expo Asia Pacific (FFE APAC) goes live."] },
   { icon: megaphone, title: ["Exhibitor and product", "announcements"], text: ["Discover the fresh food suppliers, technologies and solutions joining the event."] },
   { icon: users, title: ["Conference and", "programme updates"], text: ["Stay informed about speakers, sessions, site visits and other programme highlights."] },
   { icon: news, title: ["Event news and", "visitor opportunities"], text: ["Receive the latest announcements and opportunities to make the most of your visit."] },

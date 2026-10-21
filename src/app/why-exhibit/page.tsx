@@ -11,7 +11,7 @@ import Elevate from "@/components/exhibit/Elevate";
 import hero from "@/assets/exhibit/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "Why Exhibit | Fresh Food Expo APAC",
+  title: "Why Exhibit | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Put your business in front of the buyers, partners and decision-makers shaping Asia Pacific’s fresh food ecosystem. 16–18 November 2027, Sands Expo & Convention Centre, Singapore.",
 };

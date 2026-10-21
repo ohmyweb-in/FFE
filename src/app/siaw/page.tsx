@@ -16,7 +16,7 @@ const SIAW_SITE = "https://sginternationalagrifoodweek.com.sg/";
 const MOB = "max-md:w-full max-md:px-[20px] max-md:py-[13px] max-md:leading-[22px] max-md:text-balance";
 
 export const metadata: Metadata = {
-  title: "SIAW | Fresh Food Expo APAC",
+  title: "SIAW | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Fresh Food Expo APAC is part of Singapore International Agri-Food Week (SIAW) 2027, Singapore’s premier agri-food convention. 16–18 November 2027, Sands Expo & Convention Centre, Singapore.",
 };
@@ -50,7 +50,7 @@ export default function SiawPage() {
             </>
           }
         >
-          Fresh Food Expo APAC is part of Singapore International Agri-Food Week (SIAW) 2027, Singapore’s premier agri-food convention bringing
+          Fresh Food Expo Asia Pacific (FFE APAC) is part of Singapore International Agri-Food Week (SIAW) 2027, Singapore’s premier agri-food convention bringing
           together government, industry, innovation and business for a more sustainable, resilient and connected agri-food system across Asia.
         </PageHero>
         <BiggerPicture />

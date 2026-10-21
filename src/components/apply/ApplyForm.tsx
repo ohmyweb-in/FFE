@@ -50,15 +50,15 @@ const ACTIVITY = [
   ],
 ];
 
-const Field = (p: { label: string; required?: boolean; className?: string; children: React.ReactNode }) => (
+export const Field = (p: { label: string; required?: boolean; className?: string; children: React.ReactNode }) => (
   <FormField gap={8} labelCls="text-[15px] leading-[19px]" {...p} />
 );
 
 // Input (Figma 445:2792 instance): 48px, 10px radius, 15/23 text.
-const input = "input h-[48px] rounded-[10px] text-[15px]";
+export const input = "input h-[48px] rounded-[10px] text-[15px]";
 // Taller on phones so the long goals placeholder (3–4 lines there) isn’t clipped.
 const textarea = `${input} h-[120px] min-h-[96px] resize-y items-start pt-[14px] md:h-[96px]`;
-const checkbox = "checkbox mt-0 size-[20px] rounded-[4px] border-[1.5px] border-[#8a8a8a] bg-white checked:border-accent checked:bg-accent";
+export const checkbox = "checkbox mt-0 size-[20px] rounded-[4px] border-[1.5px] border-[#8a8a8a] bg-white checked:border-accent checked:bg-accent";
 
 function Select({ name, placeholder, options }: { name: string; placeholder: string; options: string[] }) {
   return (
@@ -163,7 +163,7 @@ export default function ApplyForm() {
         <label className="flex cursor-pointer items-start gap-[14px]">
           <input type="checkbox" name="marketingConsent" className={checkbox} />
           <span>
-            By submitting this form, I consent to the organisers of Fresh Food Expo APAC collecting, using, processing and/or disclosing my personal
+            By submitting this form, I consent to the organisers of Fresh Food Expo Asia Pacific (FFE APAC) collecting, using, processing and/or disclosing my personal
             information for communications and activities relating to its affiliates, partners and related events, including event updates, industry
             news, products and services, promotions, and other marketing communications.
           </span>

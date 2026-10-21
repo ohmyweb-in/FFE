@@ -10,7 +10,7 @@ import JoinPanel from "@/components/contact/JoinPanel";
 import hero from "@/assets/contact/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Fresh Food Expo APAC",
+  title: "Contact Us | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "Get in touch with the Fresh Food Expo APAC team about exhibiting, sponsorship, partnerships or general enquiries. We reply within three business days.",
 };

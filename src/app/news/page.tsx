@@ -10,7 +10,7 @@ import StayUpdated from "@/components/news/StayUpdated";
 import hero from "@/assets/about/hero.jpg";
 
 export const metadata: Metadata = {
-  title: "News & Press | Fresh Food Expo APAC",
+  title: "News & Press | Fresh Food Expo Asia Pacific (FFE APAC)",
   description:
     "The latest announcements, industry developments, partnerships and programme updates from Fresh Food Expo APAC, plus press photos and videos.",
 };
@@ -29,7 +29,7 @@ export default function NewsPage() {
           imgBox="lg:top-[-0.09%] lg:left-[36.93%] lg:w-[63.04%]"
           stayHref="/subscribe"
         >
-          Stay up to date with the latest announcements, industry developments, partnerships and programme updates from Fresh Food Expo APAC.
+          Stay up to date with the latest announcements, industry developments, partnerships and programme updates from Fresh Food Expo Asia Pacific (FFE APAC).
         </PageHero>
         <MediaEnquiries />
         <NewsList />

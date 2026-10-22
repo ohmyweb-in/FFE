@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy:preview": "next build && printf 'User-agent: *\\nDisallow: /\\n' > out/robots.txt && npx -y @bunny.net/cli@0.19.0 sites deploy out --site ffe-preview --no-spa --no-link",
-    "deploy:coming-soon": "npx -y @bunny.net/cli@0.19.0 sites deploy coming-soon --site ffe --spa --no-link",
-    "deploy:live": "next build && npx -y @bunny.net/cli@0.19.0 sites deploy out --site ffe --no-spa --no-link"
+    "deploy:preview": "next build && printf 'User-agent: *\\nDisallow: /\\n' > out/robots.txt && npx -y @bunny.net/cli@0.20.2 sites deploy out --site ffe-preview --no-spa --no-link",
+    "deploy:coming-soon": "npx -y @bunny.net/cli@0.20.2 sites deploy coming-soon --site ffe --spa --no-link",
+    "deploy:live": "next build && npx -y @bunny.net/cli@0.20.2 sites deploy out --site ffe --no-spa --no-link"
   },
   "dependencies": {
     "next": "16.3.7",

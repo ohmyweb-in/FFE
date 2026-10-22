@@ -19,10 +19,10 @@ Needs `BUNNYNET_API_KEY` in the environment (or `npx @bunny.net/cli login` once)
 npm run deploy:preview      # build + publish the full site to the preview (adds a Disallow robots.txt)
 npm run deploy:coming-soon  # publish coming-soon/ to the live domain (any path shows it)
 npm run deploy:live         # build + publish the full site to the live domain (after client sign-off)
-npx -y @bunny.net/cli@0.19.0 sites deployments publish --previous --site ffe   # instant rollback
+npx -y @bunny.net/cli@0.20.2 sites deployments publish --previous --site ffe   # instant rollback
 ```
 
-Form script: `npx -y @bunny.net/cli@0.19.0 scripts deploy bunny/contact-form.ts 95863`.
+Form script: `npx -y @bunny.net/cli@0.20.2 scripts deploy bunny/contact-form.ts 95863`.
 Its env (Bunny dashboard → Edge Scripting → ffe-contact → Env):
 `ZEPTOMAIL_TOKEN` (secret, ZeptoMail Send Mail token), `TURNSTILE_SECRET` (secret, Cloudflare Turnstile secret key),
 `MAILCHIMP_API_KEY` (secret, Mailchimp API key, us11), `MAIL_FROM` (`noreply@freshfoodexpoapac.com`), `ALLOWED_ORIGINS` (sites allowed to post).
@@ -43,7 +43,7 @@ Turnstile: the widget (Cloudflare dashboard → Turnstile) must list every hostn
 
 ## SSL
 
-Once the `www` CNAME is live, run `npx -y @bunny.net/cli@0.19.0 sites domains ssl www.freshfoodexpoapac.com ffe` (done 9 Oct 2026; redirect.pizza issues its own cert for the bare domain).
+Once the `www` CNAME is live, run `npx -y @bunny.net/cli@0.20.2 sites domains ssl www.freshfoodexpoapac.com ffe` (done 9 Oct 2026; redirect.pizza issues its own cert for the bare domain).
 
 ## Search engines
 
@@ -68,7 +68,7 @@ both sites serve a `robots.txt` with `Disallow: /`. Nothing is indexable until l
 - **Turnstile from China** is untested. If `challenges.cloudflare.com` is blocked there, no form can be sent.
 - **`ffe-contact.bunny.run` from China** is untested. If it's blocked, add a custom hostname
   (e.g. `forms.freshfoodexpoapac.com`) to the script's pull zone and update `ENDPOINT`.
-- **Bunny Sites is a preview CLI feature.** The CLI is pinned (0.19.0); underneath it's an ordinary
+- **Bunny Sites is a preview CLI feature.** The CLI is pinned (0.20.2; 0.19.0 stopped finding the sites on 22 Oct 2026); underneath it's an ordinary
   storage zone + pull zone, manageable from the dashboard if the CLI changes.
 - **Accidental `deploy:live` before sign-off** publishes the full site. Undo with
   `sites deployments publish --previous --site ffe`; the noindex rule keeps it out of search meanwhile.

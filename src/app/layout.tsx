@@ -9,7 +9,7 @@ const fredoka = Fredoka({ variable: "--font-fredoka", subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Fresh Food Expo Asia Pacific (FFE APAC) | Asia Pacific's Premier Trade Fair for Fresh Food",
   description:
-    "Connecting Fresh Food, Technology, Logistics & Distribution from Farm to Fork. 17-18 Nov. 2027, Sands Expo & Convention Centre, Singapore.",
+    "Connecting Fresh Food, Technology, Logistics & Distribution from Farm to Fork. 16-18 Nov. 2027, Sands Expo & Convention Centre, Singapore.",
 };
 
 export const viewport: Viewport = { themeColor: "#f4f8f4" };

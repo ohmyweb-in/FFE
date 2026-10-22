@@ -26,7 +26,7 @@ type Post = {
 
 const POSTS: Post[] = [
   {
-    title: "Fresh Food Expo APAC to Take Place on 17–18 November 2027 in Singapore",
+    title: "Fresh Food Expo APAC to Take Place on 16–18 November 2027 in Singapore",
     excerpt: "Fresh Food Expo APAC will be held at Sands Expo & Convention Centre, bringing together the fresh food ecosystem across Asia Pacific.",
     date: "12 SEP 2026",
     category: "Announcements",

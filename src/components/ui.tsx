@@ -84,7 +84,7 @@ export function Button({ href, children, chevron, w, h, pl, gap, fs = 18, classN
 
 /** Date + venue block with the white rule (hero + join banner). */
 /** `date={false}` = venue row only (Who Should Visit 789:3778: 46px rule, row 12px from its top). */
-export function DateVenue({ className = "", style, date = "17-18 Nov. 2027" }: { className?: string; style?: CSSProperties; date?: string | false }) {
+export function DateVenue({ className = "", style, date = "16-18 Nov. 2027" }: { className?: string; style?: CSSProperties; date?: string | false }) {
   const venue = { icon: location, text: "Sands Expo & Convention Centre, Singapore" };
   const rows = date ? [{ icon: calendar, text: date }, venue] : [venue];
   return (

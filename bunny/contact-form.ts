@@ -75,7 +75,8 @@ async function contact(request: Request, json: (status: number, body: object) =>
     .slice(0, 40)
     .map((k) => {
       let value = form.getAll(k).map((v) => String(v).trim().slice(0, 5000)).filter(Boolean).join(", ");
-      if (k === "phone") value = `${get("dialCode")} ${value}`.trim();
+      // A number typed with its own "+code" wins over the picker.
+      if (k === "phone" && value && !value.startsWith("+")) value = `${get("dialCode")} ${value}`;
       return [label(k), value === "on" ? "Yes" : value];
     });
   if (!form.has("marketingConsent")) rows.push(["Marketing Consent", "No"]);
@@ -116,7 +117,7 @@ async function subscribe(get: (k: string) => string, json: (status: number, body
         COMPANY: f("company"),
         MMERGE10: f("jobTitle"),
         MMERGE11: f("country"),
-        MMERGE7: get("phone") ? f("dialCode") : "",
+        MMERGE7: get("phone") && !get("phone").startsWith("+") ? f("dialCode") : "",
         MMERGE8: f("phone"),
         MMERGE12: "FFE APAC website",
       },

@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import chevronDown from "@/assets/about/icon-chevron-down.svg";
 import { COUNTRIES, FormField, Pill } from "../ui";
 import { SendError, Turnstile, useSend } from "../FormSend";
+import PhoneInput from "../PhoneInput";
 
 const Field = (p: { label: string; required?: boolean; children: ReactNode }) => <FormField gap={7} {...p} />;
 
@@ -52,14 +53,7 @@ export default function CommunityForm() {
           </span>
         </Field>
         <Field label="Contact Number">
-          <span className="input gap-[10px]">
-            <span className="shrink-0 text-field">+65</span>
-            <span className="shrink-0 text-field" aria-hidden>
-              |
-            </span>
-            <input type="hidden" name="dialCode" value="+65" />
-            <input name="phone" type="tel" autoComplete="tel-national" placeholder="Enter contact number" className="h-full min-w-0 flex-1 bg-transparent outline-none placeholder:text-field" />
-          </span>
+          <PhoneInput required={false} placeholder="Enter contact number" />
         </Field>
         {/* Spacer (736:2594) makes this row 100px tall. */}
         <span className="hidden h-[100px] md:block" aria-hidden />

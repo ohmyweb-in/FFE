@@ -25,7 +25,7 @@ npx -y @bunny.net/cli@0.19.0 sites deployments publish --previous --site ffe   #
 Form script: `npx -y @bunny.net/cli@0.19.0 scripts deploy bunny/contact-form.ts 95863`.
 Its env (Bunny dashboard → Edge Scripting → ffe-contact → Env):
 `ZEPTOMAIL_TOKEN` (secret, ZeptoMail Send Mail token), `TURNSTILE_SECRET` (secret, Cloudflare Turnstile secret key),
-`MAIL_FROM` (`noreply@freshfoodexpoapac.com`), `ALLOWED_ORIGINS` (sites allowed to post).
+`MAILCHIMP_API_KEY` (secret, Mailchimp API key, us11), `MAIL_FROM` (`noreply@freshfoodexpoapac.com`), `ALLOWED_ORIGINS` (sites allowed to post).
 
 Where each form's email goes (the `TEAMS` table in the script):
 
@@ -33,7 +33,7 @@ Where each form's email goes (the `TEAMS` table in the script):
 |---|---|
 | Apply to Exhibit | exhibitor@ |
 | Register to Visit | visitor@ |
-| Subscribe, About page community form | marketing@ |
+| Subscribe, About page community form | No email: added to Mailchimp (audience "Messe Berlin Asia Pacific", tag `FFE APAC`, Source "FFE APAC website"). Someone already in the audience keeps their details and is resubscribed and tagged. |
 | Contact Us | by the visitor's "Enquiry Type": General → marketing@, Exhibiting & Sponsorship → exhibitor@, Visitor Registration → visitor@, Conference → conference@, Buyers → buyers@, Media Partnership → media@ |
 
 Turnstile: the widget (Cloudflare dashboard → Turnstile) must list every hostname that shows the forms

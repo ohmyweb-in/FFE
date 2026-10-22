@@ -111,8 +111,8 @@ export default function LaunchPopup() {
           {/* Figma 1228:243: 374×58 mint strip; 1269:429 / 1269:428: 40px-tall logo tiles. */}
           <div className="mt-[14px] flex h-[46px] items-center gap-[4px] self-start rounded-[10px] bg-mint pr-[10px] pl-[10px] sm:mt-[22px] sm:h-[58px] sm:gap-[5px] sm:pr-[29px] sm:pl-[12px] md:mt-[29px] landscape-phone:mt-[16px]!">
             <p className="mr-[6px] font-display text-[15px] font-semibold text-forest uppercase sm:mr-[12px] sm:w-[134px] sm:text-[20px]">Powered By:</p>
-            <Image src={gwLogo} alt="Grüne Woche" className="h-[32px] w-auto shrink-0 sm:h-[40px]" />
             <Image src={flLogo} alt="Fruit Logistica" className="h-[32px] w-auto shrink-0 sm:h-[40px]" />
+            <Image src={gwLogo} alt="Grüne Woche" className="h-[32px] w-auto shrink-0 sm:h-[40px]" />
           </div>
 
           <ul className="mt-[14px] grid gap-[8px] sm:mt-[18px] sm:grid-cols-[240fr_224fr] sm:gap-[14px] md:mt-[23px] lg:grid-cols-1 xl:grid-cols-[240fr_224fr] landscape-phone:grid-cols-1! landscape-phone:mt-[14px]!">

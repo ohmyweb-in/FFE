@@ -89,8 +89,8 @@ export default function Hero() {
         <div className="load-in absolute right-0 bottom-0 w-[266px] rounded-tl-[30px] bg-white pt-[27px] pb-[11px] pl-[28px]" style={i(5)}>
           <p className="ml-[3px] font-display text-[20px] leading-[normal] font-semibold text-[#00966f] uppercase">Powered By:</p>
           <div className="mt-[11px] flex items-center gap-[9px]">
-            <Image src={gwLogo} alt="Grüne Woche" className="h-[47px] w-auto shrink-0" />
             <Image src={flLogo} alt="Fruit Logistica" className="h-[47px] w-auto shrink-0" />
+            <Image src={gwLogo} alt="Grüne Woche" className="h-[47px] w-auto shrink-0" />
           </div>
         </div>
 

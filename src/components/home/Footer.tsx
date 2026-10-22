@@ -8,10 +8,10 @@ import FooterNav from "./FooterNav";
 import Partners from "./Partners";
 
 const SOCIAL = [
-  { label: "LinkedIn", icon: linkedin },
-  { label: "Facebook", icon: facebook },
-  { label: "YouTube", icon: youtube },
-  { label: "Instagram", icon: instagram },
+  { label: "LinkedIn", icon: linkedin, href: "https://www.linkedin.com/showcase/freshfoodexpoapac/" },
+  { label: "Facebook", icon: facebook, href: "https://www.facebook.com/profile.php?id=61595410562693" },
+  { label: "YouTube", icon: youtube, href: "https://www.youtube.com/@FreshFoodExpoAPAC" },
+  { label: "Instagram", icon: instagram, href: "https://www.instagram.com/freshfoodexpo_apac" },
 ];
 
 /** `mt` = gap above the partners strip, which every page shows right before the footer. */
@@ -29,7 +29,9 @@ export default function Footer({ mt = "mt-[47px] md:mt-20 lg:mt-[96px]" }: { mt?
               {SOCIAL.map((s) => (
                 <li key={s.label}>
                   <a
-                    href="#"
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label={s.label}
                     className="tap-y block rounded-md transition-transform duration-(--dur-ui) ease-(--ease-out) hover:-translate-y-[2px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
                   >

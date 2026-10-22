@@ -6,6 +6,7 @@ import calendar from "@/assets/apply/icon-calendar.svg";
 import pin from "@/assets/apply/icon-pin.svg";
 import { checkbox, Field, input } from "../apply/ApplyForm";
 import { Pill } from "../ui";
+import { SendError, Turnstile, useSend } from "../FormSend";
 import CountrySelect from "./CountrySelect";
 
 // Content copied as-is from the Microsoft Form (forms.cloud.microsoft/r/M2XNWa49UM), in its order.
@@ -97,10 +98,10 @@ function Consent({ name, children }: { name: string; children: ReactNode }) {
 
 /**
  * Visitor registration ("Register Your Interest"), rebuilt from the Microsoft Form in the Apply to Exhibit form's design.
- * UI only for now: native validation + the form's confirmation message.
+ * Native validation, emailed to the visitor team, then the form's confirmation message.
  */
 export default function VisitorForm() {
-  const [done, setDone] = useState(false);
+  const [state, onSubmit] = useSend("visit", "visitor", (form) => form.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   // Company Business Activity needs at least one tick (or Other): keep every box required until one is ticked.
   const [activityCount, setActivityCount] = useState(0);
   const [other, setOther] = useState(false);
@@ -112,13 +113,7 @@ export default function VisitorForm() {
   };
   const activityMissing = activityCount === 0 && !other;
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // TODO: store the entry (admin export to Excel comes later).
-    setDone(true);
-    e.currentTarget.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  if (done) {
+  if (state === "done") {
     return (
       <div role="status" className="fade-in flex flex-col items-center gap-[14px] rounded-[20px] bg-mint px-[22px] py-[48px] text-center text-forest md:px-[40px] md:py-[64px]">
         <p className="text-[15px] leading-[19px] font-semibold tracking-[0.02em] text-accent uppercase">Submission Confirmation</p>
@@ -250,8 +245,11 @@ export default function VisitorForm() {
           </Consent>
         </div>
 
+        <Turnstile />
+        <SendError state={state} />
+
         <div>
-          <Pill className="w-[300px] max-w-full bg-accent text-white">Submit</Pill>
+          <Pill className="w-[300px] max-w-full bg-accent text-white">{state === "sending" ? "Sending…" : "Submit"}</Pill>
         </div>
       </form>
     </>

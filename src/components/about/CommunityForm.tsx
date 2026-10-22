@@ -1,23 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type FormEvent, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import chevronDown from "@/assets/about/icon-chevron-down.svg";
-import captcha from "@/assets/about/captcha.png";
-import { COUNTRIES, FormField, Pill, crop } from "../ui";
+import { COUNTRIES, FormField, Pill } from "../ui";
+import { SendError, Turnstile, useSend } from "../FormSend";
 
 const Field = (p: { label: string; required?: boolean; children: ReactNode }) => <FormField gap={7} {...p} />;
 
-/** UI-only subscribe form (Figma 736:2566): native validation + success state, no submission. */
+/** Subscribe form (Figma 736:2566): native validation, emailed to the marketing team, success state. */
 export default function CommunityForm() {
-  const [done, setDone] = useState(false);
+  const [state, onSubmit] = useSend("subscribe", "marketing");
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // TODO: wire to Mailchimp.
-    setDone(true);
-  };
-
-  if (done) {
+  if (state === "done") {
     return (
       <p role="status" className="fade-in flex h-full min-h-[200px] items-center justify-center rounded-[20px] bg-mint px-6 text-center text-[18px] leading-[24px] font-medium text-forest">
         Thanks for subscribing — you’re now part of the FFE APAC community.
@@ -62,6 +57,7 @@ export default function CommunityForm() {
             <span className="shrink-0 text-field" aria-hidden>
               |
             </span>
+            <input type="hidden" name="dialCode" value="+65" />
             <input name="phone" type="tel" autoComplete="tel-national" placeholder="Enter contact number" className="h-full min-w-0 flex-1 bg-transparent outline-none placeholder:text-field" />
           </span>
         </Field>
@@ -70,7 +66,7 @@ export default function CommunityForm() {
       </div>
 
       <label className="flex cursor-pointer items-start gap-[12px]">
-        <input type="checkbox" required className="checkbox mt-px size-[18px] rounded-[4px] border-[1.5px] border-accent bg-white checked:bg-accent" />
+        <input type="checkbox" name="marketingConsent" required className="checkbox mt-px size-[18px] rounded-[4px] border-[1.5px] border-accent bg-white checked:bg-accent" />
         <span className="text-[12px] leading-[17px] font-medium text-body">
           By registering for Fresh Food Expo APAC, you agree to receive event-related communications, including important updates, programme
           information, exhibitor announcements, registration notices and other information relating to the event.
@@ -79,11 +75,9 @@ export default function CommunityForm() {
 
       <div className="flex flex-col gap-[16px] md:flex-row md:items-start md:gap-[28px]">
         <div className="flex flex-col items-start gap-[16px]">
-          {/* Placeholder for the Cloudflare Turnstile widget (image 79). */}
-          <span className="relative block h-[58.712px] w-[267px] max-w-full overflow-hidden" aria-hidden>
-            <Image src={captcha} alt="" sizes="353px" style={crop(131.94, 691.67, -15.45, -182.14)} />
-          </span>
-          <Pill className="bg-accent text-white">Subscribe</Pill>
+          <Turnstile />
+          <SendError state={state} />
+          <Pill className="bg-accent text-white">{state === "sending" ? "Sending…" : "Subscribe"}</Pill>
         </div>
         <div className="flex min-w-0 flex-1 flex-col gap-[8px] text-[12px] leading-[17px] font-medium text-body">
           <p>

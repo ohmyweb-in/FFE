@@ -1,15 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { Inter } from "next/font/google";
-import { useState, type FormEvent } from "react";
 import chevronDown from "@/assets/about/icon-chevron-down.svg";
-import recaptcha from "@/assets/apply/recaptcha.png";
 import { COUNTRIES, FormField, Pill } from "../ui";
 import PhoneInput from "../PhoneInput";
-
-// reCAPTCHA mock label only (Figma uses Inter 14 here).
-const inter = Inter({ subsets: ["latin"], weight: "400" });
+import { PRIVACY, SendError, Turnstile, useSend } from "../FormSend";
 
 const PARTICIPATION = [
   "Exhibition Stand – Space Only",
@@ -76,16 +71,11 @@ function Select({ name, placeholder, options }: { name: string; placeholder: str
   );
 }
 
-/** UI-only enquiry form (Figma 1143:5643): native validation + success state, no submission. */
+/** Exhibitor enquiry form (Figma 1143:5643): native validation, emailed to the exhibitor team, success state. */
 export default function ApplyForm() {
-  const [done, setDone] = useState(false);
+  const [state, onSubmit] = useSend("exhibit", "exhibitor");
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // TODO: wire to the sales team's CRM.
-    setDone(true);
-  };
-
-  if (done) {
+  if (state === "done") {
     return (
       <p
         role="status"
@@ -118,7 +108,7 @@ export default function ApplyForm() {
           <input name="company" required autoComplete="organization" placeholder="Enter your company name" className={input} />
         </Field>
         <Field label="Company Website">
-          <input name="website" type="url" autoComplete="url" placeholder="https://" className={input} />
+          <input name="companyWebsite" type="url" autoComplete="url" placeholder="https://" className={input} />
         </Field>
         <Field label="Country" required>
           <Select name="country" placeholder="Select your country" options={COUNTRIES} />
@@ -172,7 +162,7 @@ export default function ApplyForm() {
           <input type="checkbox" name="termsConsent" required className={checkbox} />
           <span>
             I have read, understood, and agree to the{" "}
-            <a href="#" className="text-accent underline decoration-from-font underline-offset-2 transition-colors duration-(--dur-ui) hover:text-forest">
+            <a href={PRIVACY} target="_blank" rel="noopener" className="text-accent underline decoration-from-font underline-offset-2 transition-colors duration-(--dur-ui) hover:text-forest">
               Terms of Service
             </a>
             . I consent to Messe Berlin Asia Pacific collecting, using, and disclosing my personal data for the purpose of processing my registration
@@ -181,15 +171,11 @@ export default function ApplyForm() {
         </label>
       </div>
 
-      {/* reCAPTCHA (781:1592): static stand-in until the real widget is wired. */}
-      <label className="flex h-[74px] w-[300px] max-w-full cursor-pointer items-center gap-[12px] rounded-[6px] border border-[#d3d3d3] bg-[#f9f9f9] px-[12px] drop-shadow-[0_1px_1.5px_rgb(0_0_0/0.08)]">
-        <input type="checkbox" name="captcha" className="checkbox size-[26px] rounded-[3px] border-2 border-[#c1c1c1] bg-white" />
-        <span className={`${inter.className} min-w-0 flex-1 text-[14px] leading-normal text-black`}>I’m not a robot</span>
-        <Image src={recaptcha} alt="" className="size-[48px] shrink-0" />
-      </label>
+      <Turnstile />
+      <SendError state={state} />
 
       <div>
-        <Pill className="w-[300px] max-w-full bg-accent text-white">Submit Enquiry</Pill>
+        <Pill className="w-[300px] max-w-full bg-accent text-white">{state === "sending" ? "Sending…" : "Submit Enquiry"}</Pill>
       </div>
     </form>
   );

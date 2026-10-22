@@ -8,7 +8,7 @@ DNS, SSL and the domain stay as they are.
 |---|---|---|
 | Live domain (coming-soon page now) | Site `ffe` (storage 1977351, pull zone 6764453, SG) | https://sites-ffe-yla75m.b-cdn.net → www.freshfoodexpoapac.com |
 | Client preview (full site) | Site `ffe-preview` (storage 1977353, pull zone 6764456, SG) | https://sites-ffe-preview-yc7f5d.b-cdn.net |
-| Contact form → email | Edge Script `ffe-contact` (95863, standalone) | https://ffe-contact.bunny.run |
+| All website forms → email | Edge Script `ffe-contact` (95863, standalone) | https://ffe-contact.bunny.run |
 | DNS | biz-era (pridns/secdns.biz-era.net), helpdesk@biz-era.net. Their HQ keeps DNS in-house, so no nameserver change | `www` CNAME → sites-ffe-yla75m.b-cdn.net; bare domain `@` A → 89.106.200.1 (redirect.pizza free plan, 301 → https://www. with path + query; their DNS has no ALIAS and Bunny has no fixed IP); ZeptoMail DKIM TXT + `bounce-zem` CNAME for freshfoodexpoapac.com. Mail (MX/SPF) is Microsoft 365. Don't touch it. |
 
 ## Deploying
@@ -22,10 +22,24 @@ npm run deploy:live         # build + publish the full site to the live domain (
 npx -y @bunny.net/cli@0.19.0 sites deployments publish --previous --site ffe   # instant rollback
 ```
 
-Contact form script: `npx -y @bunny.net/cli@0.19.0 scripts deploy bunny/contact-form.ts 95863`.
+Form script: `npx -y @bunny.net/cli@0.19.0 scripts deploy bunny/contact-form.ts 95863`.
 Its env (Bunny dashboard → Edge Scripting → ffe-contact → Env):
-`ZEPTOMAIL_TOKEN` (secret, ZeptoMail Send Mail token), `CONTACT_TO` (comma-separated inboxes),
+`ZEPTOMAIL_TOKEN` (secret, ZeptoMail Send Mail token), `TURNSTILE_SECRET` (secret, Cloudflare Turnstile secret key),
 `MAIL_FROM` (`noreply@freshfoodexpoapac.com`), `ALLOWED_ORIGINS` (sites allowed to post).
+
+Where each form's email goes (the `TEAMS` table in the script):
+
+| Form | Inbox |
+|---|---|
+| Apply to Exhibit | exhibitor@ |
+| Register to Visit | visitor@ |
+| Subscribe, About page community form | marketing@ |
+| Contact Us | by the visitor's "Enquiry Type": General → marketing@, Exhibiting & Sponsorship → exhibitor@, Visitor Registration → visitor@, Conference → conference@, Buyers → buyers@, Media Partnership → media@ |
+
+Turnstile: the widget (Cloudflare dashboard → Turnstile) must list every hostname that shows the forms
+(www.freshfoodexpoapac.com, the preview host, localhost). Its site key goes in `SITE_KEY` in
+`src/components/FormSend.tsx`, its secret in `TURNSTILE_SECRET`. Cloudflare's test keys (site key
+`1x00000000000000000000AA`, secret `1x0000000000000000000000000000000AA`) always pass.
 
 ## SSL
 
@@ -48,9 +62,10 @@ both sites serve a `robots.txt` with `Disallow: /`. Nothing is indexable until l
 ## Known risks
 
 - **Form spam.** The origin allowlist only stops other websites' browsers; scripts can fake the
-  header. Mitigated by the honeypot, field validation, and a per-IP request limit on the
-  `ffe-contact` pull zone (1/s, burst 5). If spam arrives, add a captcha that works in China
-  (not reCAPTCHA) or a Bunny Shield rate-limit rule.
+  header. Mitigated by Cloudflare Turnstile (checked server-side), the honeypot, field validation,
+  and a per-IP request limit on the `ffe-contact` pull zone (1/s, burst 5). If spam still arrives,
+  add a Bunny Shield rate-limit rule.
+- **Turnstile from China** is untested. If `challenges.cloudflare.com` is blocked there, no form can be sent.
 - **`ffe-contact.bunny.run` from China** is untested. If it's blocked, add a custom hostname
   (e.g. `forms.freshfoodexpoapac.com`) to the script's pull zone and update `ENDPOINT`.
 - **Bunny Sites is a preview CLI feature.** The CLI is pinned (0.19.0); underneath it's an ordinary

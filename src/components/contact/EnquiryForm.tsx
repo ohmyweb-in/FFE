@@ -1,34 +1,46 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type FormEvent } from "react";
 import chevronDown from "@/assets/about/icon-chevron-down.svg";
-import captcha from "@/assets/about/captcha.png";
-import { COUNTRIES, FormField, Pill, crop } from "../ui";
+import { COUNTRIES, FormField, Pill } from "../ui";
 import PhoneInput from "../PhoneInput";
+import { PRIVACY, SendError, Turnstile, useSend } from "../FormSend";
 
 const Field = (p: { label: string; required?: boolean; className?: string; children: React.ReactNode }) => <FormField gap={8} required {...p} />;
 
 const checkbox = "checkbox mt-0 size-[20px] rounded-[5px] border-[1.5px] border-[#a8a8a8] bg-white checked:border-accent checked:bg-accent";
 
-// Bunny Edge Script (bunny/contact-form.ts) that emails the enquiry via ZeptoMail.
-const ENDPOINT = "https://ffe-contact.bunny.run";
+// Enquiry type → team inbox key (addresses live in bunny/contact-form.ts).
+const TOPICS = [
+  ["General Enquiry", "marketing"],
+  ["Exhibiting & Sponsorship", "exhibitor"],
+  ["Visitor Registration", "visitor"],
+  ["Conference", "conference"],
+  ["Buyers", "buyers"],
+  ["Media Partnership", "media"],
+];
+
+const select = (name: string, placeholder: string, options: string[][]) => (
+  <span className="relative block">
+    <select name={name} required defaultValue="" autoComplete={name === "country" ? "country-name" : "off"} className="input cursor-pointer appearance-none pr-[44px] invalid:text-field">
+      <option value="" disabled>
+        {placeholder}
+      </option>
+      {options.map(([label, value = label]) => (
+        <option key={value} value={value} className="text-black">
+          {label}
+        </option>
+      ))}
+    </select>
+    <Image src={chevronDown} alt="" className="pointer-events-none absolute top-[14px] right-[16px] size-[18px]" />
+  </span>
+);
 
 /** Enquiry form (Figma 736:2774): native validation, posts to the Bunny edge script, success state. */
 export default function EnquiryForm() {
-  const [done, setDone] = useState(false);
-  const [state, setState] = useState<"idle" | "sending" | "error">("idle");
+  const [state, onSubmit] = useSend("contact");
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (state === "sending") return;
-    setState("sending");
-    const res = await fetch(ENDPOINT, { method: "POST", body: new FormData(e.currentTarget) }).catch(() => null);
-    if (res?.ok) setDone(true);
-    else setState("error");
-  };
-
-  if (done) {
+  if (state === "done") {
     return (
       <p
         role="status"
@@ -60,27 +72,8 @@ export default function EnquiryForm() {
         <Field label="Company Name">
           <input name="company" required autoComplete="organization" placeholder="Your Company Name" className="input" />
         </Field>
-        <Field label="Country">
-          <span className="relative block">
-            <select
-              name="country"
-              required
-              defaultValue=""
-              autoComplete="country-name"
-              className="input cursor-pointer appearance-none pr-[44px] invalid:text-field"
-            >
-              <option value="" disabled>
-                Select Country
-              </option>
-              {COUNTRIES.map((c) => (
-                <option key={c} className="text-black">
-                  {c}
-                </option>
-              ))}
-            </select>
-            <Image src={chevronDown} alt="" className="pointer-events-none absolute top-[14px] right-[16px] size-[18px]" />
-          </span>
-        </Field>
+        <Field label="Country">{select("country", "Select Country", COUNTRIES.map((c) => [c]))}</Field>
+        <Field label="Enquiry Type">{select("team", "Select Enquiry Type", TOPICS)}</Field>
         <Field label="Please share details that will help the team prepare for your conversation." className="md:col-span-2">
           <textarea name="message" required placeholder="Type your message here…" className="input h-[120px] resize-y items-start pt-[14px]" />
         </Field>
@@ -99,7 +92,7 @@ export default function EnquiryForm() {
           <input type="checkbox" name="termsConsent" required className={checkbox} />
           <span>
             I have read, understood, and agree to the{" "}
-            <a href="#" className="font-semibold text-black underline-offset-2 hover:underline">
+            <a href={PRIVACY} target="_blank" rel="noopener" className="font-semibold text-black underline-offset-2 hover:underline">
               Terms of Service
             </a>
             . I consent to Messe Berlin Asia Pacific collecting, using, and disclosing my personal data for the purpose of processing my registration
@@ -108,19 +101,12 @@ export default function EnquiryForm() {
         </label>
       </div>
 
-      {/* Placeholder for the Cloudflare Turnstile widget (image 79). */}
-      <span className="relative block h-[72px] w-[325px] max-w-full overflow-hidden" aria-hidden>
-        <Image src={captcha} alt="" sizes="429px" style={crop(131.94, 691.67, -15.45, -182.14)} />
-      </span>
+      <Turnstile />
 
       {/* Honeypot: hidden from people, filled by bots; the edge script drops those. */}
       <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
 
-      {state === "error" && (
-        <p role="alert" className="text-[14px] leading-[20px] font-medium text-[#c0392b]">
-          Sorry, your enquiry couldn’t be sent. Please try again in a moment.
-        </p>
-      )}
+      <SendError state={state} />
 
       <div className="pt-[8px]">
         <Pill className="bg-accent text-white">{state === "sending" ? "Sending…" : "Submit Enquiry"}</Pill>

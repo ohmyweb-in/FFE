@@ -1,22 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type FormEvent, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import chevronDown from "@/assets/about/icon-chevron-down.svg";
 import leaf from "@/assets/subscribe/leaf.svg";
 import PhoneInput from "../PhoneInput";
 import { COUNTRIES, FormField, Pill } from "../ui";
+import { SendError, Turnstile, useSend } from "../FormSend";
 
 const Field = (p: { label: string; className?: string; children: ReactNode }) => <FormField gap={8} required {...p} />;
 
-/** UI-only subscribe form (Figma 736:3367): native validation + success state, no submission. */
+/** Subscribe form (Figma 736:3367): native validation, emailed to the marketing team, success state. */
 export default function SubscribeForm() {
-  const [done, setDone] = useState(false);
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // TODO: wire to Mailchimp.
-    setDone(true);
-  };
+  const [state, onSubmit] = useSend("subscribe", "marketing");
 
   return (
     <>
@@ -24,7 +20,7 @@ export default function SubscribeForm() {
         Subscribe to our updates
       </h2>
 
-      {done ? (
+      {state === "done" ? (
         <p role="status" className="fade-in mt-[18px] flex min-h-[280px] items-center justify-center rounded-[20px] bg-mint px-6 text-center text-[18px] leading-[24px] font-medium text-forest">
           Thanks for subscribing — you’re now part of the FFE APAC community.
         </p>
@@ -69,6 +65,7 @@ export default function SubscribeForm() {
           <label className="flex cursor-pointer items-start gap-[14px] pt-[6px] text-[13px] leading-[19px] font-medium text-body">
             <input
               type="checkbox"
+              name="marketingConsent"
               required
               className="checkbox size-[22px] rounded-[5px] border-[1.5px] border-[#a8a8a8] bg-white checked:border-accent checked:bg-accent"
             />
@@ -79,8 +76,11 @@ export default function SubscribeForm() {
             </span>
           </label>
 
+          <Turnstile />
+          <SendError state={state} />
+
           <div className="pt-[8px]">
-            <Pill className="bg-accent text-white">Subscribe</Pill>
+            <Pill className="bg-accent text-white">{state === "sending" ? "Sending…" : "Subscribe"}</Pill>
           </div>
         </form>
       )}

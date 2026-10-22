@@ -37,9 +37,8 @@ const OPTIONS = [
 ];
 
 /**
- * Registration popup (Figma 1138:788), opened on every full page load (client-side navigation keeps the
- * layout, so it doesn’t reappear while browsing). Native <dialog>: Esc, backdrop click and the close
- * button dismiss it.
+ * Registration popup (Figma 1138:788), shown once per browser tab session: most site links are plain <a>, so every
+ * click is a full page load that remounts this. Native <dialog>: Esc, backdrop click and the close button dismiss it.
  */
 export default function LaunchPopup() {
   const ref = useRef<HTMLDialogElement>(null);
@@ -47,11 +46,18 @@ export default function LaunchPopup() {
 
   useEffect(() => {
     if (SKIP.some((p) => pathname.startsWith(p))) return;
+    // Storage can be blocked (private mode, site data off): then it falls back to every page load.
+    try {
+      if (sessionStorage.getItem("popupShown")) return;
+    } catch {}
     // Let the hero load-in play first.
     const t = setTimeout(() => {
       const d = ref.current;
       if (!d) return;
       d.showModal();
+      try {
+        sessionStorage.setItem("popupShown", "1");
+      } catch {}
       // Focus the dialog itself so the first CTA doesn’t open with a focus ring; Tab still moves into it.
       d.focus();
     }, 800);

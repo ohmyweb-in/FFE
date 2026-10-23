@@ -18,12 +18,14 @@ export const viewport: Viewport = { themeColor: "#f4f8f4" };
 // content when the observer can actually reveal it. If the observer hasn’t
 // booted within 3s (script error, blocked JS), the class is removed again.
 const revealBoot = `document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.remove('js')},3000);`;
+// Every link to another site opens in a new tab, set as the click starts so no link can miss it.
+const externalLinks = `document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(a&&/^https?:$/.test(a.protocol)&&a.host!==location.host){a.target='_blank';a.rel='noopener'}},true);`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${outfit.variable} ${fredoka.variable} antialiased`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: revealBoot }} />
+        <script dangerouslySetInnerHTML={{ __html: revealBoot + externalLinks }} />
       </head>
       <body>
         {children}

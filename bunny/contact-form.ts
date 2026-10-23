@@ -17,7 +17,7 @@ const TEAMS: Record<string, string> = {
   marketing: "marketing@freshfoodexpoapac.com",
   visitor: "visitor@freshfoodexpoapac.com",
   conference: "conference@freshfoodexpoapac.com",
-  buyers: "buyers@freshfoodexpoapac.com",
+  buyers: "buyer@freshfoodexpoapac.com",
   media: "media@freshfoodexpoapac.com",
 };
 

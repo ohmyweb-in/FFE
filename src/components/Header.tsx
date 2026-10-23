@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { type RefObject, useEffect, useRef, useState } from "react";
 import logo from "@/assets/logo.png";
 import logoCompact from "@/assets/logo-compact.png";
 import menuIcon from "@/assets/icon-menu.png";
@@ -34,55 +34,105 @@ const Arrow = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
+// Every page in the menu, once, searched by its label, description and menu section.
+const PAGES = [
+  { label: "Home", href: "/", desc: "Fresh Food Expo Asia Pacific, 16–18 November 2027, Singapore", section: "" },
+  ...NAV.flatMap((s) => s.links.map((l) => ({ ...l, section: s.label }))),
+].filter((p, i, all) => all.findIndex((q) => q.href === p.href) === i);
+
+/** Site search (native <dialog>): filters the menu's pages as you type; an empty box lists them all. */
+function SearchDialog({ dialog }: { dialog: RefObject<HTMLDialogElement | null> }) {
+  const [q, setQ] = useState("");
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const hits = PAGES.filter((p) => words.every((w) => `${p.label} ${p.desc} ${p.section}`.toLowerCase().includes(w)));
+  return (
+    <dialog
+      ref={dialog}
+      aria-label="Search the site"
+      onClick={(e) => e.target === e.currentTarget && dialog.current?.close()}
+      onClose={() => setQ("")}
+      className="modal mx-auto mt-[12vh] w-[calc(100%-32px)] max-w-[640px] bg-transparent"
+    >
+      <div className="modal-body rounded-[24px] bg-white p-3 shadow-[0_32px_64px_-28px_rgb(2_93_3/0.4)]">
+        <input
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search pages…"
+          aria-label="Search pages"
+          autoFocus
+          className="input h-[52px] px-4 text-[17px]"
+        />
+        <ul className="mt-2 max-h-[min(60dvh,480px)] overflow-y-auto overscroll-contain">
+          {hits.map((p) => (
+            <li key={p.href}>
+              <a href={p.href} className="flex flex-col gap-[2px] rounded-[14px] px-4 py-[10px] transition-colors duration-(--dur-ui) hover:bg-mint focus-visible:bg-mint focus-visible:outline-none">
+                <span className="font-display text-[17px] font-medium text-ink">{p.label}</span>
+                <span className="text-[13px] text-body/80">{p.section ? `${p.section} · ${p.desc}` : p.desc}</span>
+              </a>
+            </li>
+          ))}
+          {!hits.length && <li className="px-4 py-[10px] text-[15px] text-body">No pages match “{q}”.</li>}
+        </ul>
+      </div>
+    </dialog>
+  );
+}
+
 /**
  * Utility bar above the header (Figma 736:1498). Scrolls away; the header below stays sticky.
  * Below lg language + search stay visible and Newsletter / Press move into the mobile menu.
  */
 function TopBar() {
+  const search = useRef<HTMLDialogElement>(null);
+  const openSearch = () => search.current?.showModal();
   return (
-    <div className="bg-forest font-medium tracking-[0.02em] text-white">
-      <div className="container-page flex h-[44px] items-center justify-between text-[14px] lg:hidden">
-        <a href="#" aria-hidden tabIndex={-1} className="invisible flex h-[44px] items-center uppercase">
-          {SITE}
-        </a>
-        <div className="-mr-[12px] flex items-center">
-          <a href="#" aria-label="Language: English" className="flex h-[44px] items-center gap-[5px] px-[8px] text-white/50 uppercase">
-            EN
-            <Image src={chevronLang} alt="" className="rotate-180" />
+    <>
+      <div className="bg-forest font-medium tracking-[0.02em] text-white">
+        <div className="container-page flex h-[44px] items-center justify-between text-[14px] lg:hidden">
+          <a href="#" aria-hidden tabIndex={-1} className="invisible flex h-[44px] items-center uppercase">
+            {SITE}
           </a>
-          <a href="#" aria-label="Search" className="grid size-[44px] place-items-center">
-            <Image src={searchIcon} alt="" sizes="18px" className="size-[18px]" />
+          <div className="-mr-[12px] flex items-center">
+            <a href="#" aria-label="Language: English" className="flex h-[44px] items-center gap-[5px] px-[8px] text-white/50 uppercase">
+              EN
+              <Image src={chevronLang} alt="" className="rotate-180" />
+            </a>
+            <button type="button" onClick={openSearch} aria-label="Search" className="grid size-[44px] place-items-center">
+              <Image src={searchIcon} alt="" sizes="18px" className="size-[18px]" />
+            </button>
+          </div>
+        </div>
+
+        <div className="container-page hidden h-[49px] items-center justify-between text-[15px] lg:flex">
+          <a href="#" aria-hidden tabIndex={-1} className="footer-link invisible uppercase hover:text-white/70">
+            {SITE}
           </a>
+          <ul className="flex items-center gap-[18px]">
+            {UTIL.map((l) => (
+              <li key={l.label} className="flex items-center gap-[18px]">
+                <Link href={l.href} className="footer-link hover:text-white/70">
+                  {l.label}
+                </Link>
+                <Divider />
+              </li>
+            ))}
+            <li>
+              <a href="#" aria-label="Language: English" className="footer-link flex items-start gap-[5px] text-white/50 uppercase hover:text-white/70">
+                <span className="trim">EN</span>
+                <Image src={chevronLang} alt="" className="mt-[5px] rotate-180" />
+              </a>
+            </li>
+            <li className="ml-[-4px]">
+              <button type="button" onClick={openSearch} aria-label="Search" className="block cursor-pointer transition-opacity duration-(--dur-ui) hover:opacity-70">
+                <Image src={searchIcon} alt="" sizes="18px" className="size-[18px]" />
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
-
-      <div className="container-page hidden h-[49px] items-center justify-between text-[15px] lg:flex">
-        <a href="#" aria-hidden tabIndex={-1} className="footer-link invisible uppercase hover:text-white/70">
-          {SITE}
-        </a>
-        <ul className="flex items-center gap-[18px]">
-          {UTIL.map((l) => (
-            <li key={l.label} className="flex items-center gap-[18px]">
-              <Link href={l.href} className="footer-link hover:text-white/70">
-                {l.label}
-              </Link>
-              <Divider />
-            </li>
-          ))}
-          <li>
-            <a href="#" aria-label="Language: English" className="footer-link flex items-start gap-[5px] text-white/50 uppercase hover:text-white/70">
-              <span className="trim">EN</span>
-              <Image src={chevronLang} alt="" className="mt-[5px] rotate-180" />
-            </a>
-          </li>
-          <li className="ml-[-4px]">
-            <a href="#" aria-label="Search" className="block transition-opacity duration-(--dur-ui) hover:opacity-70">
-              <Image src={searchIcon} alt="" sizes="18px" className="size-[18px]" />
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+      <SearchDialog dialog={search} />
+    </>
   );
 }
 
@@ -131,7 +181,7 @@ function MegaPanel({ s, i, on }: { s: NavSection; i: number; on: boolean }) {
                 <span className="size-[7px] shrink-0 rounded-full bg-accent" aria-hidden />
                 16-18 November 2027 | Sands Expo &amp; Convention Centre, Singapore
               </p>
-              <Pill href={s.cta.href} className="bg-brand text-white md:h-[40px]! md:px-[18px]! md:text-[15px]!">
+              <Pill href={s.cta.href} className="shrink-0 bg-brand whitespace-nowrap text-white md:h-[40px]! md:px-[18px]! md:text-[15px]!">
                 {s.cta.label}
               </Pill>
             </div>

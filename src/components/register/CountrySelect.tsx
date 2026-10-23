@@ -72,7 +72,12 @@ export default function CountrySelect({ name, placeholder }: { name: string; pla
         }}
         onFocus={() => setOpen(true)}
         onClick={() => setOpen(true)}
-        onBlur={() => setOpen(false)}
+        onBlur={() => {
+          setOpen(false);
+          // Typed rather than picked ("india", or the only match left): take the listed spelling.
+          const exact = COUNTRIES.find((c) => c.toLowerCase() === q);
+          if (exact || (q && matches.length === 1)) setQuery(exact ?? matches[0]);
+        }}
         onKeyDown={onKeyDown}
         className={`${input} pr-[48px]`}
       />

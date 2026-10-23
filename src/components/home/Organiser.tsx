@@ -29,19 +29,6 @@ const STATS = [
 type Show = { name: string; href: string; img: StaticImageData; logo: ReactNode; logoX: number };
 
 const SHOWS: Show[] = [
-  {
-    name: "Grüne Woche",
-    href: "https://www.gruenewoche.de/en",
-    img: showGW,
-    logoX: 20,
-    // Figma "Ebene_1" (359:416): mark + wordmark composed in a 94×30 box.
-    logo: (
-      <span className="relative block h-[30px] w-[94px]">
-        <Image src={gwMark} alt="" className="absolute top-[1.33px] left-0" />
-        <Image src={gwText} alt="" className="absolute top-0 left-[36.58px]" />
-      </span>
-    ),
-  },
   { name: "Fruit Logistica", href: "https://www.fruitlogistica.com/en", img: showFL, logoX: 21, logo: <Image src={flLogo} alt="" /> },
   {
     name: "Asia Fruit Logistica",
@@ -58,6 +45,19 @@ const SHOWS: Show[] = [
     logoX: 23,
     // Mobile logo is 39.5×21.7 (318:2703) → 63.8×35.1 before the ×0.619 zoom.
     logo: <Image src={fliLogo} alt="" sizes="70px" className="h-[35.1px] w-[63.8px] object-cover md:h-[39px] md:w-[70px]" />,
+  },
+  {
+    name: "Grüne Woche",
+    href: "https://www.gruenewoche.de/en",
+    img: showGW,
+    logoX: 20,
+    // Figma "Ebene_1" (359:416): mark + wordmark composed in a 94×30 box.
+    logo: (
+      <span className="relative block h-[30px] w-[94px]">
+        <Image src={gwMark} alt="" className="absolute top-[1.33px] left-0" />
+        <Image src={gwText} alt="" className="absolute top-0 left-[36.58px]" />
+      </span>
+    ),
   },
 ];
 

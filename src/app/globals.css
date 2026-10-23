@@ -349,6 +349,52 @@ body {
     box-shadow: 0 0 0 4px rgb(217 48 37 / 0.12);
   }
 
+  /* Phone dial-code list (PhoneInput): browsers that can style a <select>'s list (Chrome/Edge 135+) get padded
+     rows in the site's dropdown look, like CountrySelect; the rest keep their own native list. */
+  @supports (appearance: base-select) {
+    .dial-select,
+    .dial-select::picker(select) {
+      appearance: base-select;
+    }
+    .dial-select::picker(select) {
+      width: 300px;
+      max-height: min(320px, 60dvh);
+      margin-top: 6px;
+      padding: 6px 0;
+      border: 1px solid var(--color-field);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 12px 32px -12px rgb(2 93 3 / 0.3);
+    }
+    .dial-select optgroup {
+      padding-top: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-body);
+      text-transform: uppercase;
+      text-indent: 16px;
+    }
+    .dial-select option {
+      padding: 9px 16px;
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 500;
+      color: #1f1f1f;
+      text-transform: none;
+      text-indent: 0;
+    }
+    .dial-select option:hover,
+    .dial-select option:focus-visible,
+    .dial-select option:checked {
+      background: var(--color-mint);
+      color: var(--color-forest);
+      outline: none;
+    }
+    .dial-select option::checkmark {
+      display: none;
+    }
+  }
+
   /* Touch screens: grow small controls to a 44px hit area without moving anything.
      Percent insets resolve per axis, so only the short side grows. .tap-y = vertical only
      (closely spaced icons, so neighbours don't overlap). */

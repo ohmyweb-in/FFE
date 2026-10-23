@@ -34,7 +34,7 @@ Where each form's email goes (the `TEAMS` table in the script):
 | Apply to Exhibit | exhibitor@ |
 | Register to Visit | visitor@ |
 | Subscribe, About page community form | No email: added to Mailchimp (audience "Messe Berlin Asia Pacific", tag `FFE APAC`, Source "FFE APAC website"). Someone already in the audience keeps their details and is resubscribed and tagged. |
-| Contact Us | by the visitor's "Enquiry Type": General → marketing@, Exhibiting & Sponsorship → exhibitor@, Visitor Registration → visitor@, Conference → conference@, Buyers → buyers@, Media Partnership → media@ |
+| Contact Us | by the visitor's "Enquiry Type": General → marketing@, Exhibiting & Sponsorship → exhibitor@, Visitor Registration → visitor@, Conference → conference@, Buyers → buyer@, Media Partnership → media@ |
 
 Turnstile: the widget (Cloudflare dashboard → Turnstile) must list every hostname that shows the forms
 (www.freshfoodexpoapac.com, the preview host, localhost). Its site key goes in `SITE_KEY` in

@@ -90,14 +90,14 @@ export default function LaunchPopup() {
 
       {/* Portrait phones/tablets: a capped column where the poster shrinks (min 140px) so the whole popup fits the screen without scrolling. */}
       <div className="modal-body grid overflow-hidden rounded-[20px] bg-white max-lg:portrait:flex max-lg:portrait:max-h-[calc(100dvh-24px)] max-lg:portrait:flex-col max-lg:portrait:overflow-y-auto lg:grid-cols-[minmax(0,735fr)_minmax(0,564fr)] lg:rounded-[30px] landscape-phone:grid-cols-2">
-        {/* Phones/tablets/1024 band: whole poster (its own background is white). ≥1280: Figma’s cover fill. */}
+        {/* The whole key visual at every width, centred in its column (its own background is white, like the column). */}
         <div className="relative flex items-center bg-white max-lg:portrait:contents">
           <Image
             src={poster}
             alt="Fresh Food Expo APAC 2027 poster"
             placeholder="blur"
             sizes="(min-width: 1024px) 735px, 100vw"
-            className="h-auto w-full max-lg:portrait:min-h-[140px] max-lg:portrait:object-contain xl:absolute xl:inset-0 xl:size-full xl:object-cover xl:object-[25%_50%] 3xl:object-center"
+            className="h-auto w-full max-lg:portrait:min-h-[140px] max-lg:portrait:object-contain xl:absolute xl:inset-0 xl:size-full xl:object-contain"
           />
         </div>
 

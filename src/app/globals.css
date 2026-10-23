@@ -359,6 +359,7 @@ body {
     .dial-select::picker(select) {
       width: 300px;
       max-height: min(320px, 60dvh);
+      overflow-x: hidden;
       margin-top: 6px;
       padding: 6px 0;
       border: 1px solid var(--color-field);
@@ -379,6 +380,7 @@ body {
       font-size: 15px;
       line-height: 20px;
       font-weight: 500;
+      white-space: normal;
       color: #1f1f1f;
       text-transform: none;
       text-indent: 0;

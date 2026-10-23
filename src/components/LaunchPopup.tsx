@@ -102,7 +102,7 @@ export default function LaunchPopup() {
         </div>
 
         <div className="flex flex-col p-[16px] pt-[18px] sm:p-[20px] sm:pt-[22px] md:p-[32px] lg:py-[36px] lg:pr-[32px] lg:pl-[28px] xl:pt-[45px] xl:pr-[55px] xl:pb-[52px] xl:pl-[31px] landscape-phone:p-[20px]!">
-          <p className="inline-flex h-[27px] items-center gap-[7px] self-start rounded-full bg-mint pr-[14px] pl-[16px] text-[12px] font-semibold text-forest uppercase">
+          <p className="inline-flex h-[27px] items-center gap-[7px] self-center rounded-full bg-mint pr-[14px] pl-[16px] text-[12px] font-semibold text-forest uppercase">
             <span className="size-[10px] animate-pulse rounded-full bg-accent" aria-hidden />
             Registration is now open!
           </p>

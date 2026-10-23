@@ -1,7 +1,7 @@
 // Site footer (Theme Builder "Footer"): port of src/components/home/{Partners,Footer,FooterNav}.tsx.
 // Partners strip, then logo + tagline + socials, the four link columns (an accordion on phones), copyright.
 // Run: node footer.js   (FOOTER_ID=33 rebuilds the existing template)
-const { call, T, OUTFIT, px, pct, pad, P0, gap, link, image, box, div, w, media, HIDE, mtAuto, attrs } = require("./lib.js");
+const { call, php, T, OUTFIT, px, pct, pad, P0, gap, link, image, box, div, w, media, HIDE, mtAuto, attrs } = require("./lib.js");
 
 const M = media();
 const PRIVACY = "https://www.messe-berlin.asia/en/additional-pages/privacy-policy";
@@ -146,7 +146,10 @@ const accordion = {
     _border_width: { unit: "px", top: "0", right: "0", bottom: "1", left: "0", isLinked: false },
     _border_color: "rgba(0,0,0,0.3)",
     _margin: { unit: "px", top: "27", right: "0", bottom: "0", left: "0", isLinked: false },
+    // active breakpoints: mobile 767, tablet 1024, tablet_extra 1279, laptop 1439: hide_desktop alone only hides from 1440 up
     hide_desktop: "hidden-desktop",
+    hide_laptop: "hidden-laptop",
+    hide_tablet_extra: "hidden-tablet_extra",
     hide_tablet: "hidden-tablet",
   },
   elements: COLS.map((c) => ({
@@ -180,4 +183,22 @@ const footer = box("site-footer", [
 let ID = Number(process.env.FOOTER_ID || 33);
 if (!ID) ID = call("novamira/elementor-create-template", { title: "Footer", type: "footer", status: "draft" }).id;
 call("novamira/elementor-set-content", { post_id: ID, template_type: "footer", content: [partners, footer] });
+// Tailwind lg (1024–1279) differs from xl (1280+): smaller partner type and logos, and the footer stacks the brand above the columns (xl:flex-row).
+// Elementor has no variant for 1025–1279, so it is template CSS; `body .elementor …` (0,2,1) beats the local `.elementor .s-<id>` (0,2,0).
+const CSS = `@media (min-width: 1025px) and (max-width: 1279.98px) {
+body .elementor [data-id="supported-t"], body .elementor [data-id^="role-"][data-id$="-label-t"] { font-size: 18px; }
+body .elementor [data-id^="logo-"] { height: 70px; }
+body .elementor [data-id="supported-logos"] { column-gap: 56px; }
+body .elementor [data-id="footer-top"] { flex-direction: column; row-gap: 48px; }
+body .elementor [data-id="footer-brand"] { width: 100%; padding-top: 0; }
+body .elementor [data-id="footer-cols"] { flex: none; width: 100%; }
+body .elementor :is([data-id="col-about"], [data-id="col-exhibit"], [data-id="col-visit"], [data-id="col-news"]) { padding-left: 16px; }
+}`;
+php(`
+$s = get_post_meta(${ID}, '_elementor_page_settings', true); if (!is_array($s)) $s = [];
+$s['custom_css'] = base64_decode('${Buffer.from(CSS).toString("base64")}');
+update_post_meta(${ID}, '_elementor_page_settings', wp_slash($s));
+\\Elementor\\Core\\Files\\CSS\\Post::create(${ID})->update();
+return true;
+`);
 console.log("footer", ID, "elements:", call("novamira/elementor-get-content", { post_id: ID }).element_count);

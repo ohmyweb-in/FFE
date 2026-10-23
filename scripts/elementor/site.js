@@ -1,10 +1,24 @@
 // Site-wide settings: Elementor kit (colours, fonts, page background, content width) and font loading.
 // Run once, and again after a token change in src/app/globals.css.
-const { php, T } = require("./lib.js");
+const { execFileSync } = require("child_process");
+const path = require("path");
+const { php, call, T, SP, ORIGIN } = require("./lib.js");
+
+// Inter SemiBold Italic, latin only (story/WhyNow.tsx loads it with next/font; it is the only Inter on the site). Elementor's local-fonts option only serves
+// the families a page's typography asks for, so this one is fetched from Google Fonts here and served from the uploads folder with its own @font-face.
+const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"; // a modern UA gets woff2
+const interCss = execFileSync("curl", ["-sSf", "-A", UA, "https://fonts.googleapis.com/css2?family=Inter:ital,wght@1,600&display=swap"], { encoding: "utf8" });
+const latin = interCss.match(/\/\* latin \*\/\s*@font-face \{([^}]*)\}/)[1];
+const woff = path.join(SP, "ffe-inter-600-italic-latin.woff2");
+execFileSync("curl", ["-sSf", "-o", woff, latin.match(/url\((https:[^)]+\.woff2)\)/)[1]]);
+const upload = call("novamira/create-upload-link", { path: "wp-content/uploads/2026/10/ffe-inter-600-italic-latin.woff2", overwrite: true });
+execFileSync("curl", ["-sSf", "-X", "PUT", "-H", `${upload.token_header}: ${upload.upload_token}`, "--data-binary", `@${woff}`, upload.upload_url]);
+const INTER_FACE = `@font-face { font-family: Inter; font-style: italic; font-weight: 600; font-display: swap; src: url("${ORIGIN}/wp-content/uploads/2026/10/ffe-inter-600-italic-latin.woff2") format("woff2"); unicode-range: ${latin.match(/unicode-range: ([^;]+);/)[1]}; }`;
 
 // Rules the atomic style schema can't express (no text-box, zoom, container-type, white-space, pointer-events, per-element CSS),
 // keyed on data attributes the home sections set. Sources: globals.css, RevealObserver.tsx, CountUp.tsx.
-const KIT_CSS = `/* Cap-trimmed text like the reference (globals.css :where(h1,h2,h3,p,li,label,.trim)), inside sections marked data-trim. */
+const KIT_CSS = `${INTER_FACE}
+/* Cap-trimmed text like the reference (globals.css :where(h1,h2,h3,p,li,label,.trim)), inside sections marked data-trim. */
 [data-trim] :is(.e-heading-base, .e-paragraph-base):not([data-untrim]) { text-box: trim-both cap alphabetic; }
 /* Two-tone headings: <em> is the accent run. */
 :is(.e-heading-base, .e-paragraph-base) em { font-style: normal; color: #28ae3d; }
@@ -35,15 +49,107 @@ const KIT_CSS = `/* Cap-trimmed text like the reference (globals.css :where(h1,h
   .ffe-js [data-reveal="fade"] { transform: none; }
   .ffe-js [data-reveal="scale"] { transform: scale(0.85); }
   .ffe-js [data-reveal].is-visible { opacity: 1; transform: none; }
-  [data-reveal-i="1"] { transition-delay: 90ms; } [data-reveal-i="2"] { transition-delay: 180ms; } [data-reveal-i="3"] { transition-delay: 270ms; }
+  /* globals.css: transition-delay = --i * --stagger (90ms). Same specificity as the transition shorthand above would lose to it, hence the extra attribute. */
+  .ffe-js [data-reveal][data-reveal-i="1"] { transition-delay: 90ms; } .ffe-js [data-reveal][data-reveal-i="2"] { transition-delay: 180ms; } .ffe-js [data-reveal][data-reveal-i="3"] { transition-delay: 270ms; }
+  .ffe-js [data-reveal][data-reveal-i="4"] { transition-delay: 360ms; } .ffe-js [data-reveal][data-reveal-i="5"] { transition-delay: 450ms; }
 }
-.elementor-editor-active [data-reveal] { opacity: 1 !important; transform: none !important; }`.split("\n");
+.elementor-editor-active [data-reveal] { opacity: 1 !important; transform: none !important; }
+/* Inner pages: a <br> that only breaks from lg (max-lg:hidden); title that must stay on one line from lg. */
+@media (max-width: 1024px) { [data-br-lg] br { display: none; } }
+@media (min-width: 1025px) { [data-nowrap-lg] { white-space: nowrap; } }
+[data-prewrap] { white-space: pre-wrap; } @media (min-width: 1025px) { [data-prewrap-lg] { white-space: pre-wrap; } } /* whitespace-pre-wrap / lg:whitespace-pre-wrap copy (double spaces and \n survive escaped-html) */
+[data-nowrap-span] span { white-space: nowrap; } /* <span>…</span> inside a heading = the source's whitespace-nowrap run (a class is stripped from headings) */
+/* Forms (globals.css .input / .checkbox / .pill): states the atomic schema can't express. .elementor lifts these above the widgets' own base and local classes. */
+body .elementor [data-ffe-input] { appearance: none; outline: none; }
+body .elementor [data-ffe-input]::placeholder { color: #cdcdcd; opacity: 1; }
+body .elementor select[data-ffe-input]:invalid { color: #cdcdcd; } body .elementor select[data-ffe-input] option { color: #000; }
+body .elementor [data-ffe-input]:is(:focus, :focus-within) { border-color: #28ae3d; box-shadow: 0 0 0 4px rgb(40 174 61 / .15); }
+body .elementor [data-ffe-input]:is(:user-invalid, :has(:user-invalid)) { border-color: #d93025; box-shadow: 0 0 0 4px rgb(217 48 37 / .12); }
+body .elementor [data-ffe-dial] input { outline: none; } body .elementor [data-ffe-dial] select { appearance: none; border: 0; }
+body .elementor [data-ffe-check], body .elementor [data-ffe-radio] { appearance: none; flex-shrink: 0; margin: 0; cursor: pointer; background: #fff center / 100% no-repeat; }
+body .elementor [data-ffe-check]::before, body .elementor [data-ffe-radio]::before { content: none; }
+body .elementor [data-ffe-check]:checked { border-color: #28ae3d; background-color: #28ae3d; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+body .elementor [data-ffe-radio] { border-radius: 50%; } body .elementor [data-ffe-radio]:checked { border-color: #28ae3d; background-color: #28ae3d; box-shadow: inset 0 0 0 4px #fff; }
+body .elementor :is([data-ffe-check], [data-ffe-radio]):focus-visible { outline: 2px solid #025d03; outline-offset: 2px; }
+body .elementor :is([data-ffe-check], [data-ffe-radio]):user-invalid { border-color: #d93025; }
+[data-span] { grid-column: 1 / -1; }
+body .elementor .e-form-label-base :is(b, strong) { font-weight: 600; }
+body .elementor [data-link="dark"] a { font-weight: 600; color: #000; text-decoration: none; text-underline-offset: 2px; } body .elementor [data-link="dark"] a:hover { text-decoration: underline; }
+body .elementor [data-link="accent"] a { color: #28ae3d; text-decoration: underline; text-decoration-thickness: from-font; text-underline-offset: 2px; overflow-wrap: anywhere; transition: color 250ms cubic-bezier(.22,1,.36,1); } body .elementor [data-link="accent"] a:hover { color: #025d03; }
+body .elementor [data-req] span { color: #e4051f; } /* the " *" run inside a required field's label */
+/* SIAW trailer (SiawVideo.tsx). */
+[data-ffe-video] video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+[data-ffe-video] button { position: absolute; right: 16px; bottom: 16px; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%;
+  background: rgb(0 0 0 / .4); color: #fff; backdrop-filter: blur(4px); cursor: pointer; transition: background-color 250ms cubic-bezier(.22,1,.36,1); }
+[data-ffe-video] button:hover { background: rgb(0 0 0 / .6); }
+[data-ffe-video] button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { [data-ffe-video] button { display: none; } }`.split("\n");
 
 // Custom Code snippet "FFE motion" (Elementor Pro): reveal on scroll + count-up. Reduced motion: nothing hides, numbers stay final.
 const MOTION = `<script id="ffe-motion">
-/* RevealObserver.tsx + CountUp.tsx. */
+/* RevealObserver.tsx + CountUp.tsx + SiawVideo.tsx + the atomic forms' behaviours. */
 document.documentElement.classList.add('ffe-js');
+/* SiawVideo: a muted looping <video> in [data-ffe-video], playing while 25% in view. Reduced motion: controls instead, no autoplay. */
+function ffeVideo() {
+  var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-ffe-video]').forEach(function (box) {
+    var v = document.createElement('video');
+    v.muted = v.defaultMuted = v.loop = v.playsInline = true; v.preload = 'none';
+    v.poster = box.dataset.poster || ''; v.src = box.dataset.ffeVideo;
+    v.setAttribute('aria-label', box.getAttribute('aria-label') || ''); box.removeAttribute('aria-label');
+    box.appendChild(v);
+    if (rm) { v.controls = true; return; }
+    var b = document.createElement('button'); b.type = 'button';
+    var icon = function () {
+      b.setAttribute('aria-label', v.muted ? 'Unmute trailer' : 'Mute trailer');
+      b.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z" fill="currentColor"/>' + (v.muted ? '<path d="m22 9-6 6m0-6 6 6"/>' : '<path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>') + '</svg>';
+    };
+    b.onclick = function () { v.muted = !v.muted; icon(); };
+    icon(); box.appendChild(b);
+    new IntersectionObserver(function (e) { if (e[0].isIntersecting) v.play().catch(function () {}); else v.pause(); }, { threshold: 0.25 }).observe(v);
+  });
+}
+/* Atomic forms (globals.css .input etc. + FormSend / PhoneInput / CountrySelect / VisitorForm behaviours). */
+function ffeForms() {
+  /* select[data-ph]: option 1 is the placeholder, not a choice. "-" options are separators. */
+  document.querySelectorAll('select[data-ph]').forEach(function (s) { var o = s.options[0]; o.value = ''; o.disabled = true; s.selectedIndex = 0; });
+  document.querySelectorAll('select option[value="-"]').forEach(function (o) { o.disabled = true; });
+  /* Real autofill hints: the widget only has an on/off switch. */
+  document.querySelectorAll('[data-ac]').forEach(function (el) { el.setAttribute('autocomplete', el.dataset.ac); });
+  /* Phone: the visible dial code and flag follow the hidden picker (flag for Singapore only). */
+  document.querySelectorAll('[data-ffe-dial]').forEach(function (w) {
+    var sel = w.querySelector('select'), code = w.querySelector('[data-dial-code]'), flag = w.querySelector('[data-dial-flag]');
+    var sync = function () {
+      var t = sel.options[sel.selectedIndex].text, m = t.match(/\\(([^)]*)\\)\\s*$/);
+      if (code && m) code.textContent = m[1];
+      if (flag) flag.style.display = /^Singapore \\(/.test(t) ? '' : 'none';
+    };
+    sel.addEventListener('change', sync); sync();
+  });
+  /* Searchable country: a native datalist, and only a listed value is valid. */
+  document.querySelectorAll('[data-ffe-countries]').forEach(function (inp) {
+    var list = inp.dataset.ffeCountries.split('|'), dl = document.createElement('datalist');
+    dl.id = inp.id + '-list';
+    list.forEach(function (c) { var o = document.createElement('option'); o.value = c; dl.appendChild(o); });
+    inp.parentNode.appendChild(dl); inp.setAttribute('list', dl.id);
+    var check = function () { inp.setCustomValidity(!inp.value || list.indexOf(inp.value) > -1 ? '' : 'Please select a country from the list.'); };
+    inp.addEventListener('input', check); check();
+  });
+  /* Tick at least one box in the group (or Other). */
+  document.querySelectorAll('[data-require-one]').forEach(function (g) {
+    var boxes = g.querySelectorAll('input[type=checkbox]');
+    var sync = function () { var any = [].some.call(boxes, function (b) { return b.checked; }); boxes.forEach(function (b) { b.required = !any; }); };
+    g.addEventListener('change', sync); sync();
+  });
+  /* "Other" box: reveals and requires its text field. */
+  document.querySelectorAll('input[data-other]').forEach(function (cb) {
+    var t = cb.form && cb.form.querySelector('[data-other-text]'); if (!t) return;
+    var sync = function () { t.style.display = cb.checked ? '' : 'none'; t.required = cb.checked; if (!cb.checked) t.value = ''; };
+    cb.addEventListener('change', sync); sync();
+  });
+}
 document.addEventListener('DOMContentLoaded', function () {
+  ffeVideo(); ffeForms();
   var io = 'IntersectionObserver' in window;
   var reveal = document.querySelectorAll('[data-reveal]');
   if (!io) { reveal.forEach(function (el) { el.classList.add('is-visible'); }); return; }
@@ -53,8 +159,8 @@ document.addEventListener('DOMContentLoaded', function () {
   reveal.forEach(function (el) { ro.observe(el); });
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.querySelectorAll('[data-count]').forEach(function (el) {
-    var to = +el.dataset.count, dec = +(el.dataset.decimals || 0), suf = el.dataset.suffix || '';
-    var fmt = function (v) { return v.toFixed(dec) + suf; };
+    var to = +el.dataset.count, dec = +(el.dataset.decimals || 0), suf = el.dataset.suffix || '', sep = el.dataset.sep !== undefined;
+    var fmt = function (v) { return (sep ? Math.round(v).toLocaleString('en-US') : v.toFixed(dec)) + suf; };
     el.innerHTML = '<span aria-hidden="true"></span><span class="screen-reader-text"></span>';
     var shown = el.firstChild; el.lastChild.textContent = fmt(to); shown.textContent = fmt(0);
     var co = new IntersectionObserver(function (en) {
@@ -115,7 +221,7 @@ const snippet = php(`
 $t = get_posts(['post_type' => 'elementor_snippet', 'title' => 'FFE motion', 'post_status' => 'any', 'numberposts' => 1]);
 $sid = $t ? $t[0]->ID : wp_insert_post(['post_type' => 'elementor_snippet', 'post_title' => 'FFE motion', 'post_status' => 'publish']);
 wp_update_post(['ID' => $sid, 'post_status' => 'publish']);
-update_post_meta($sid, '_elementor_code', base64_decode('${Buffer.from(MOTION).toString("base64")}'));
+update_post_meta($sid, '_elementor_code', wp_slash(base64_decode('${Buffer.from(MOTION).toString("base64")}'))); // wp_slash: update_post_meta unslashes, which would eat the regex backslashes
 update_post_meta($sid, '_elementor_location', 'elementor_head');
 update_post_meta($sid, '_elementor_priority', 1);
 update_post_meta($sid, '_elementor_conditions', ['include/general']);

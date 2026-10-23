@@ -28,7 +28,10 @@ const pillar = (p, i) => {
         { position: "relative", padding: pad(0, 27, 32, 27) },
         { mobile: { padding: pad(0, 27, 13, 27) } },
       ], [
-        svg(`${id}-ring`, "icon-ring", [{ ...at(px(-31), null, null, px(23)), width: px(70), height: px(70) }, {}], { attributes: attrs([["aria-hidden", "true"]]) }),
+        // icon-ring.svg drawn with CSS: the e-svg sanitizer drops its <filter> (the 5% drop shadow, dy 4, blur 2)
+        div(`${id}-ring`, [{ ...at(px(-31), null, null, px(23)), width: px(70), height: px(70), padding: P0 }], [
+          div(`${id}-ring-c`, [{ ...at(px(0), null, null, px(4)), width: px(62), height: px(62), "min-width": px(0), padding: P0, "border-radius": radius(999), "box-sizing": "border-box", "border-width": pad(1), "border-style": "solid", "border-color": T.accent, background: { color: T.white }, "box-shadow": shadow(0, 4, 4, 0, "rgba(0,0,0,0.05)") }]),
+        ], { attributes: attrs([["aria-hidden", "true"]]) }),
         w(`${id}-icon`, "e-image", { image: image(M["icon-" + p.key].id), attributes: attrs([["aria-hidden", "true"]]) }, [
           { ...at(px(-16.61), null, null, px(41.39)), width: px(33.21), height: px(33.21), "max-width": custom("none") },
         ]),

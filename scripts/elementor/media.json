@@ -270,5 +270,77 @@
  "dots": {
   "id": 82,
   "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-dots.svg"
+ },
+ "ph-about": {
+  "id": 100,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-about.jpg"
+ },
+ "ph-apply": {
+  "id": 101,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-apply.jpg"
+ },
+ "ph-contact": {
+  "id": 102,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-contact.jpg"
+ },
+ "ph-ecosystem": {
+  "id": 103,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-ecosystem.jpg"
+ },
+ "ph-exhibit": {
+  "id": 104,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-exhibit.jpg"
+ },
+ "ph-plan": {
+  "id": 105,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-plan.jpg"
+ },
+ "ph-siaw": {
+  "id": 106,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-siaw.jpg"
+ },
+ "ph-subscribe": {
+  "id": 107,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-subscribe.jpg"
+ },
+ "ph-visit": {
+  "id": 108,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-visit.jpg"
+ },
+ "ph-who": {
+  "id": 109,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-who.jpg"
+ },
+ "ph-curve": {
+  "id": 110,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-curve.png"
+ },
+ "ph-curve-eco": {
+  "id": 111,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-curve-eco.svg"
+ },
+ "ph-curve-exhibit": {
+  "id": 112,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-curve-exhibit.svg"
+ },
+ "ph-curve-register": {
+  "id": 113,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-ph-curve-register.svg"
+ },
+ "icon-cal-24": {
+  "id": 114,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-icon-cal-24.svg"
+ },
+ "icon-pin-24": {
+  "id": 115,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-icon-pin-24.svg"
+ },
+ "icon-chevron-down": {
+  "id": 116,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-icon-chevron-down.svg"
+ },
+ "icon-chevron-down-sm": {
+  "id": 117,
+  "url": "https://ffe-staging.ohmyweb.in/wp-content/uploads/2026/10/ffe-icon-chevron-down-sm.svg"
  }
 }

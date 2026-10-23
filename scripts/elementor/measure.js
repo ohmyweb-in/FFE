@@ -1,5 +1,7 @@
 // Reference-vs-staging measuring tool.  Usage: node scripts/elementor/measure.js <spec.json>
-// spec = { ref, stg, widths: [1440, 900, 390], root: [refSel, stgSel], items: { name: [refSel, stgSel, mode?] }, shots: "/abs/dir" (optional), rootName, rootPos: false to skip the root's absolute x/y (buttons) }
+// spec = { ref, stg, widths: [1440, 900, 390], root: [refSel, stgSel], items: { name: [refSel, stgSel, mode?] }, shots: "/abs/dir" (optional), rootName, rootPos: false to skip the root's absolute x/y (buttons),
+//          countOnly: true (only line counts can FAIL; boxes and lines are printed as info: for widths that are not pixel-matched),
+//          gaps: true (after the items, the vertical gap between consecutive visible items on ref and stg; FAIL when |Δ| > 1) }
 // mode "lines" compares text lines only (text boxes differ by design: the reference trims line boxes, Elementor does not). Scrollbars are hidden on both.
 // Per site and width it prints each item's box and text lines (relative to the root's top-left) and the deltas.
 // Exits 1 when any |delta| > 1px or a line count differs. Reduced motion is on, so reveals are visible and counts final.
@@ -28,6 +30,8 @@ const PAGE = (rootSel, items) => `(() => {
       if (!n.textContent.trim()) continue;
       const cs = getComputedStyle(n.parentElement);
       if (cs.visibility === "hidden" || cs.display === "none") continue;
+      const pb = n.parentElement.getBoundingClientRect();
+      if (pb.width <= 1 && pb.height <= 1) continue; // sr-only duplicates (CountUp): clipped to 1px, but their text rects still span the full text
       const rg = document.createRange(); rg.selectNodeContents(n);
       for (const q of rg.getClientRects()) if (q.width > 0) rects.push(q);
     }
@@ -78,23 +82,35 @@ const shot = (site, width, root) => {
 let fails = 0;
 const fmt = (a) => (a ? a.map((v) => v.toFixed(1)).join(", ") : "—");
 const row = (name, a, b, mode, noPos) => {
+  const info = spec.countOnly;
   if (!a && !b) return `ok   ${name} hidden on both`;
   if (!a || !b) { fails++; return `FAIL ${name}: ${a ? "missing on stg" : "missing on ref"}`; }
   const out = [];
   const cmp = (tag, x, y, skip = 0) => {
     const d = x.map((v, i) => (i < skip ? 0 : +(y[i] - v).toFixed(2)));
-    const bad = d.some((v) => Math.abs(v) > 1);
+    const bad = !info && d.some((v) => Math.abs(v) > 1);
     if (bad) fails++;
-    out.push(`${bad ? "FAIL" : "ok  "} ${name} ${tag}  ref [${fmt(x)}]  stg [${fmt(y)}]  Δ [${d.join(", ")}]`);
+    out.push(`${bad ? "FAIL" : info ? "info" : "ok  "} ${name} ${tag}  ref [${fmt(x)}]  stg [${fmt(y)}]  Δ [${d.join(", ")}]`);
   };
   if (mode !== "lines") cmp("box", a.box, b.box, noPos ? 2 : 0);
   if (a.lines.length !== b.lines.length) { fails++; out.push(`FAIL ${name} line count ref ${a.lines.length} stg ${b.lines.length}`); }
   // Lines compare left/top/width; height depends on line-height and trimming.
   for (let i = 0; i < Math.min(a.lines.length, b.lines.length); i++) {
     const x = a.lines[i], y = b.lines[i], d = [0, 1, 2].map((k) => +(y[k] - x[k]).toFixed(2));
-    const bad = d.some((v) => Math.abs(v) > 1);
+    const bad = !info && d.some((v) => Math.abs(v) > 1);
     if (bad) fails++;
-    out.push(`${bad ? "FAIL" : "ok  "} ${name} line${i}  ref [${x.slice(0, 3).map((v) => v.toFixed(1)).join(", ")}]  stg [${y.slice(0, 3).map((v) => v.toFixed(1)).join(", ")}]  Δ [${d.join(", ")}]`);
+    out.push(`${bad ? "FAIL" : info ? "info" : "ok  "} ${name} line${i}  ref [${x.slice(0, 3).map((v) => v.toFixed(1)).join(", ")}]  stg [${y.slice(0, 3).map((v) => v.toFixed(1)).join(", ")}]  Δ [${d.join(", ")}]`);
+  }
+  return out.join("\n");
+};
+
+// Vertical gaps between consecutive visible items (next.top - prev.bottom), ref vs stg.
+const gaps = (names, ref, stg) => {
+  const seen = names.filter((k) => ref[k] && stg[k]), out = [];
+  for (let i = 1; i < seen.length; i++) {
+    const [p, n] = [seen[i - 1], seen[i]], g = (it) => +(it[n].box[1] - (it[p].box[1] + it[p].box[3])).toFixed(2), a = g(ref), b = g(stg), d = +(b - a).toFixed(2), bad = Math.abs(d) > 1;
+    if (bad) fails++;
+    out.push(`${bad ? "FAIL" : "ok  "} gap ${p} -> ${n}  ref ${a}  stg ${b}  Δ ${d}`);
   }
   return out.join("\n");
 };
@@ -110,6 +126,7 @@ try {
     shot("stg", width, stg.root);
     console.log(row("root", ref.root, stg.root, "", spec.rootPos === false));
     for (const k of Object.keys(spec.items || {})) console.log(row(k, ref.items[k], stg.items[k], spec.items[k][2]));
+    if (spec.gaps) console.log(gaps(Object.keys(spec.items || {}), ref.items, stg.items));
   }
 } finally {
   spawnSync("agent-browser", ["--session", SESSION, "close"]);

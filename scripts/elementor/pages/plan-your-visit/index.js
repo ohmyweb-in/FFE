@@ -1,0 +1,23 @@
+module.exports = {
+  slug: "plan-your-visit", parent: null, title: "Plan Your Visit", prefix: "pv",
+  footer: [51.68, 48, 48],
+  css: [
+    "/* P1 Venue map sm:aspect-[600/320] (640–767) */",
+    '@media (min-width: 640px) and (max-width: 767px) { body .elementor [data-id="pv-map"] { aspect-ratio: 600 / 320; } }',
+    "/* P2 Venue map <iframe> (absolute inset-0 size-full border-0) inside the classic html widget */",
+    'body .elementor [data-id="pv-map-embed"] { position: absolute; inset: 0; margin: 0; }',
+    'body .elementor [data-id="pv-map-embed"] > .elementor-widget-container { height: 100%; }',
+    'body .elementor [data-id="pv-map-embed"] iframe { display: block; width: 100%; height: 100%; border: 0; }',
+    "/* P3 Resources ul sm:grid-cols-2 (640–767) */",
+    '@media (min-width: 640px) and (max-width: 767px) { body .elementor [data-id="pv-res-grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }',
+    "/* P4 WhereToStay ul min-[480px]:grid-cols-2 (480–767) */",
+    '@media (min-width: 480px) and (max-width: 767px) { body .elementor [data-id="pv-stay-grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }',
+    '/* P5 Resources h2: whitespace-nowrap "Resources" + the md:hidden inline rule (ml-[16px] w-[36px] h-[2px] align-middle) */',
+    'body .elementor [data-id="pv-res-title"] span { white-space: nowrap; }',
+    '@media (max-width: 767px) { body .elementor [data-id="pv-res-title"] span::after { content: ""; display: inline-block; width: 36px; height: 2px; margin-left: 16px; border-radius: 1px; background: #28ae3d; vertical-align: middle; } }',
+    "/* P6 Resources visa card mailto: text-accent hover:text-forest */",
+    'body .elementor [data-id="pv-res-c1-text"] a { color: #28ae3d; text-decoration: none; transition: color 250ms cubic-bezier(.22,1,.36,1); }',
+    'body .elementor [data-id="pv-res-c1-text"] a:hover { color: #025d03; }',
+  ],
+  sections: ["hero", "venue", "resources", "where-to-stay", "join-banner"],
+};

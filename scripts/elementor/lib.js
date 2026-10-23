@@ -85,7 +85,19 @@ const w = (id, widgetType, settings, styles) => ({ id, elType: "widget", widgetT
 // HTML attributes on an atomic element, e.g. attrs([["aria-label", "Home"]]).
 // Elementor drops attributes whose value is "", so a flag like ["data-trim", ""] is stored as "1" (the kit CSS and snippet match on presence).
 const attrs = (pairs) => ({ $$type: "attributes", value: pairs.map(([k, v]) => ({ $$type: "key-value", value: { key: { $$type: "string", value: k }, value: { $$type: "string", value: v === "" ? "1" : v } } })) });
-const media = () => JSON.parse(fs.readFileSync(path.join(__dirname, "media.json"), "utf8"));
+// media.json plus every media-<group>.json (written by `media.py g<n>`), merged once per process. A key in two files is an error.
+let mediaMap;
+const media = () => {
+  if (mediaMap) return mediaMap;
+  const files = ["media.json", ...fs.readdirSync(__dirname).filter((f) => /^media-.+\.json$/.test(f)).sort()];
+  mediaMap = {};
+  for (const f of files)
+    for (const [k, v] of Object.entries(JSON.parse(fs.readFileSync(path.join(__dirname, f), "utf8")))) {
+      if (k in mediaMap) throw new Error(`duplicate media key ${k} (${f})`);
+      mediaMap[k] = v;
+    }
+  return mediaMap;
+};
 
 // ---- fully wrapped style values the server can't infer from scalars -------
 const sz = (size, unit = "px") => ({ $$type: "size", value: { size, unit } });
@@ -221,4 +233,267 @@ const dateVenue = (prefix, date = DATE, styles = [{}, {}], settings = {}) => {
   );
 };
 
-module.exports = { call, php, SITE, ORIGIN, SP, T, OUTFIT, FREDOKA, px, em, pct, custom, pad, P0, AUTO, mtAuto, radius, gap, flex, link, image, V, box, div, w, attrs, media, sz, shadow, ease, lift, text, HIDE, svg , DATE, VENUE, NORMAL, stop, grad, layers, at, FILL, BRAND0, step, toLeft, rotate, scale, mix, PAGE, WIDE, reveal, btn, dateVenue };
+
+// ════ Inner pages (pages plan 2): shared components ═════════════════════════════════════════════════════════════
+const DATE_LONG = "16–18 November 2027";
+const SIAW_SITE = "https://sginternationalagrifoodweek.com.sg/";
+const BRAND85 = "rgba(44,166,47,0.85)";
+const WASH = grad(180, [[T.brand, 35], [BRAND85, 50], ["rgba(44,166,47,0.65)", 100]]); // PageHero below-lg wash
+const lsp = (fs) => px(+(fs * 0.02).toFixed(3)); // tracking-[0.02em] in px
+
+// PageHero SIZES, transcribed from PageHero.tsx (Tailwind classes -> numbers). Per size:
+//   panel: lg+ height; radius: lg+ radius (default 25); curve: { top | bottom, w, h, key? } (key = media key of an svg, else the about png crop);
+//   pt / pl / left: lg+ content padding-top / padding-left / relative left; title: { mt (lg+), all (mt at every width), fs, lh };
+//   descType: { max, fs: [phone, md+], lh: [phone, md+] (null = normal), weight, ml, untrim, ls } (absent = DESC_TYPE); desc: lg+ margin-top;
+//   date / ctas: [md+, lg+] margin-top (absent = 22 / 24 everywhere); fades: [{ left, w, xlHide }].
+const F2 = [{ left: 16.7, w: 38.57 }, { left: 36.63, w: 38.57 }];
+const F3 = [{ left: 16.34, w: 72.83 }, { left: 16.34, w: 38.57 }];
+const MEDIUM = (max, lh, ml) => ({ max, fs: [17, 18], lh: [23, lh], weight: 500, ml, untrim: true }); // "text-[17px] leading-[23px] font-medium [text-box:normal]!"
+const CURVE_EXHIBIT = { w: 196.841, h: 157.316, key: "ph-curve-exhibit" };
+const HERO_SIZES = {
+  default: { panel: 501, curve: { bottom: 0, w: 213, h: 181 }, pt: 80, pl: 6.5, desc: 31, date: [28], ctas: [34], fades: F2 },
+  compact: { panel: 426, curve: { bottom: 5, w: 195, h: 165 }, pt: 77, pl: 12.5, desc: 39, date: [28], ctas: [34, 39.6], fades: F2 },
+  tall: { panel: 371, curve: { bottom: 0, w: 194.586, h: 165.352 }, pt: 53, pl: 15, desc: 20, date: [28, 24], fades: F2 },
+  siaw: {
+    panel: 516, curve: { bottom: 0.88, w: 197.477, h: 167.809 }, pt: 88, pl: 19, title: { mt: 31.93 },
+    descType: { max: 694, fs: [17, 18], lh: [22, 23], weight: 400, untrim: true }, desc: 30.88, ctas: [28.71], fades: [{ left: 34.16, w: 42.72 }],
+  },
+  eco: {
+    panel: 351, curve: { top: 171, w: 230.623, h: 184.316, key: "ph-curve-eco" }, pt: 64.37, pl: 1.52, title: { mt: 30.86 },
+    descType: MEDIUM(625, 25, 4), desc: 26, ctas: [30], fades: [{ left: 16.35, w: 48.46 }, { left: 16.35, w: 35.56 }],
+  },
+  story: {
+    panel: 342, curve: { top: 161, w: 230.623, h: 184.316, key: "ph-curve-eco" }, pt: 59, pl: 0.51, title: { mt: 0, all: true },
+    descType: MEDIUM(625, 25, 4), desc: 24, ctas: [28], fades: [{ left: 16.35, w: 72.83 }, { left: 16.34, w: 38.57 }],
+  },
+  exhibit: {
+    panel: 380, curve: { top: 212, ...CURVE_EXHIBIT }, pt: 59, pl: 0.99, title: { mt: 0, all: true },
+    descType: MEDIUM(620, 26, 4), desc: 23, ctas: [22], fades: [{ left: 16.42, w: 72.83 }, { left: 16.34, w: 38.57 }],
+  },
+  apply: { panel: 246, radius: 30, curve: { top: 93, ...CURVE_EXHIBIT }, pt: 59, pl: 13, title: { mt: 0, all: true, fs: 45, lh: 48 }, fades: F3 },
+  applyLong: { panel: 294, radius: 30, curve: { top: 141, ...CURVE_EXHIBIT }, pt: 59, pl: 13, title: { mt: 0, all: true, fs: 45, lh: 48 }, fades: F3 },
+  plan: {
+    panel: 338, radius: 30, curve: { top: 174, ...CURVE_EXHIBIT }, pt: 54, left: -0.5, title: { mt: 0, all: true },
+    descType: MEDIUM(620, 26), desc: 23, ctas: [18], fades: [{ left: 34.95, w: 23.3 }, { left: 34.95, w: 30, xlHide: true }],
+  },
+  register: {
+    panel: 360, radius: 30, curve: { top: 171.98, w: 196.842, h: 207.848, key: "ph-curve-register" }, pt: 71, pl: 0.5, title: { mt: 0, all: true },
+    ctas: [26], fades: F3.map((f, i) => (i ? f : { left: 16.42, w: 72.83 })),
+  },
+  why: { panel: 316, radius: 30, curve: { top: 142, ...CURVE_EXHIBIT }, pt: 59, pl: 0.5, title: { mt: 0, all: true }, ctas: [26], fades: F3 },
+  contact: { panel: 298, curve: { top: 118, w: 213, h: 181 }, pt: 111, pl: 0.13, fades: [{ left: 16.72, w: 38.57 }, { left: 16.75, w: 38.57 }] },
+};
+
+// HeroCtas (PageHero.tsx): Register / Apply / Stay Connected, 200/162/162 x 40 white pills. o = { stayHref, registerHref, styles, attributes /* extra attr pairs */ }.
+const heroCtas = (p, o = {}) => {
+  const { stayHref = "/subscribe", registerHref = "/register-to-visit", styles = [{}, {}], attributes = [] } = o;
+  const HB = { h: 40, fs: 15, border: [1, T.white] };
+  const GHOST = { color: T.white, bg: "rgba(255,255,255,0)", hoverBg: "rgba(255,255,255,0.1)", chev: "chevron-sm-white" };
+  return box(
+    `${p}-ctas`,
+    mix([
+      { padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", "align-items": "flex-start", gap: gap(13), width: AUTO },
+      { mobile: { "flex-direction": "column", gap: gap(11) } },
+    ], styles),
+    [
+      btn(`${p}-ctas-register`, "Register Your Interest", registerHref, { ...HB, w: 200, pl: 19, gap: 12, color: T.brand, bg: T.white, chev: "chevron-sm-brand", m: { w: 202, h: 43, pl: 25, gap: 7, fs: 15 } }),
+      btn(`${p}-ctas-apply`, "Apply To Exhibit", "/apply-to-exhibit", { ...HB, w: 162, pl: 19, gap: 12, ...GHOST, m: { w: 178, h: 43, pl: 25, gap: 9, fs: 15 } }),
+      btn(`${p}-ctas-stay`, "Stay Connected", stayHref, { ...HB, w: 162, pl: 19, gap: 14, ...GHOST, m: { w: 178, h: 43, pl: 25, gap: 9, fs: 15 } }),
+    ],
+    attributes.length ? { attributes: attrs(attributes) } : {},
+  );
+};
+
+// HeroVenue (PageHero.tsx): date + venue list for `cta` heroes. styles = [desktop, more] overrides for the list (default margin-left 4 at lg+).
+const heroVenue = (p, styles = [{}, {}]) => {
+  const row = (id, icon, label) =>
+    box(id, [{ padding: P0, display: "flex", "flex-direction": "row", "align-items": "center", gap: gap(0, 12), width: AUTO }], [
+      svg(`${id}-i`, icon, [{ width: px(24), height: px(24), "min-width": px(24) }, {}], { attributes: attrs([["aria-hidden", "true"]]) }),
+      w(`${id}-t`, "e-paragraph", { tag: "span", paragraph: label, attributes: attrs([["data-untrim", ""]]) }, [
+        { ...text(18, 600, T.white, { "line-height": px(23) }), margin: P0 },
+        { mobile: { "font-size": px(17) } },
+      ]),
+    ], { attributes: attrs([["role", "listitem"]]) });
+  return box(
+    `${p}-venue`,
+    mix([
+      { padding: pad(4, 0), margin: pad(0, 0, 0, 4), display: "flex", "flex-direction": "column", gap: gap(10, 0), width: AUTO },
+      { tablet: { margin: P0 } },
+    ], styles),
+    [row(`${p}-venue-date`, "icon-cal-24", DATE_LONG), row(`${p}-venue-place`, "icon-pin-24", VENUE)],
+    { attributes: attrs([["role", "list"]]) },
+  );
+};
+
+// PageHero (PageHero.tsx). One section `${p}-ph` (_cssid "top"); sizes in HERO_SIZES. See the plan 2.1 for `o`.
+const pageHero = (p, o = {}) => {
+  const { size = "default", eyebrow, title, titleBr = "lg", titleAttrs = [], desc, img, imgBox, curveLeft = 0, date, stayHref, cta, cssid = "top" } = o;
+  const z = HERO_SIZES[size];
+  if (!z) throw new Error(`pageHero: unknown size ${size}`);
+  const id = `${p}-ph`, M = media();
+  const tm = z.title ?? {}, dt = z.descType;
+
+  const photo = w(`${id}-photo`, "e-image", { image: image(M[img].id), attributes: attrs([["loading", "eager"], ["fetchpriority", "high"], ["aria-hidden", "true"]]) }, [
+    { ...at(pct(imgBox.top), null, null, pct(imgBox.left)), width: pct(imgBox.w), height: pct(imgBox.h ?? 100), "max-width": custom("none"), "object-fit": "cover" },
+    { tablet: { ...at(px(0), null, null, px(0)), width: pct(100), height: pct(100) } },
+  ]);
+  const wash = div(`${id}-wash`, [{ ...FILL, padding: P0, display: "none", background: layers(WASH) }, { tablet: { display: "block" } }]);
+  const fades = z.fades.map((f, k) =>
+    div(`${id}-fade${k + 1}`, [
+      { ...at(px(0), null, px(0), custom(`calc(${f.left}% - 3px)`)), width: pct(f.w), padding: P0, background: layers(toLeft(BRAND0, T.brand)), ...(f.xlHide && HIDE) },
+      { ...(f.xlHide && { tablet_extra: { display: "block" } }), tablet: HIDE },
+    ]),
+  );
+  const c = z.curve;
+  const curve = div(`${id}-curve-box`, [
+    { position: "absolute", overflow: "hidden", padding: P0, width: px(c.w), height: px(c.h), "inset-inline-start": px(curveLeft), ...(c.top !== undefined ? { "inset-block-start": px(c.top) } : { "inset-block-end": px(c.bottom) }) },
+    { tablet: HIDE },
+  ], [
+    c.key
+      ? svg(`${id}-curve`, c.key, [{ width: px(c.w), height: px(c.h) }, {}])
+      : w(`${id}-curve`, "e-image", { image: image(M["ph-curve"].id) }, [{ ...at(pct(0), null, null, pct(-8.45)), width: pct(108.45), height: pct(101.93), "max-width": custom("none") }, {}]),
+  ], { attributes: attrs([["aria-hidden", "true"], ["data-noevents", ""]]) });
+
+  const kids = [];
+  if (eyebrow)
+    kids.push(w(`${id}-eyebrow`, "e-paragraph", { paragraph: eyebrow, attributes: step(0) }, [
+      { ...text(15, 500, T.white, { "letter-spacing": px(0.3), "line-height": NORMAL, "text-transform": "uppercase" }), margin: P0 }, {},
+    ]));
+  const tfs = tm.fs ?? 50, tmt = tm.all ? [0, 0, 0] : [22, 22, tm.mt ?? 31];
+  kids.push(w(`${id}-title`, "e-heading", { tag: "h1", title, attributes: attrs([...(title.includes("<br") ? [[titleBr === "md" ? "data-br-md" : "data-br-lg", ""]] : []), ...titleAttrs, ["data-load-in", "1"]]) }, [
+    { "font-family": FREDOKA, "font-size": px(tfs), "font-weight": "600", "line-height": px(tm.lh ?? 53), "letter-spacing": lsp(tfs), "text-transform": "uppercase", color: T.white, margin: pad(tmt[2], 0, 0, 0) },
+    { tablet: { "font-size": px(44), "letter-spacing": px(0.88), "line-height": pct(108), margin: pad(tmt[1], 0, 0, 0) },
+      mobile: { "font-size": px(30), "letter-spacing": px(0.6), "line-height": px(35), margin: pad(tmt[0], 0, 0, 0) } },
+  ]));
+  if (desc) {
+    const fs = dt ? dt.fs : [17, 22], lh = dt ? dt.lh : [null, 31];
+    kids.push(w(`${id}-desc`, "e-paragraph", { paragraph: desc, attributes: attrs([["data-load-in", "2"], ...(dt?.untrim ? [["data-untrim", ""]] : [])]) }, [
+      { ...text(fs[1], dt ? dt.weight : 400, T.white, { "line-height": px(lh[1]), ...(!dt && { "letter-spacing": lsp(fs[1]) }) }), "max-width": px(dt ? dt.max : 535), margin: pad(z.desc ?? 22, 0, 0, dt?.ml ?? 0) },
+      { tablet: { margin: pad(22, 0, 0, 0) },
+        mobile: { "font-size": px(fs[0]), "line-height": lh[0] ? px(lh[0]) : NORMAL, ...(!dt && { "letter-spacing": lsp(fs[0]) }), margin: pad(23, 0, 0, 0) } },
+    ]));
+  }
+  if (date) {
+    const [dm, dl = dm] = z.date ?? [22];
+    kids.push(dateVenue(id, date, [{ margin: pad(dl, 0, 0, 0) }, { tablet: { margin: pad(dm, 0, 0, 0) }, mobile: { margin: pad(22, 0, 0, 0) } }], { attributes: step(3) }));
+  }
+  const [cm, cl = cm] = z.ctas ?? [24];
+  const ctaMargin = [{ margin: pad(cl, 0, 0, 0) }, { tablet: { margin: pad(cm, 0, 0, 0) }, mobile: { margin: pad(24, 0, 0, 0) } }];
+  if (cta) kids.push(div(`${id}-cta`, mix([{ padding: P0 }, {}], ctaMargin), cta, { attributes: step(4) }));
+  else if (stayHref) kids.push(heroCtas(id, { stayHref, styles: ctaMargin, attributes: [["data-load-in", "4"]] }));
+
+  const content = div(`${id}-content`, mix(PAGE(32, 26), [
+    { position: "relative", padding: pad(z.pt, 0, 0, z.pl ?? 0), margin: mtAuto(0), ...(z.left && { "inset-inline-start": px(z.left) }) },
+    { tablet: { padding: pad(48, 0, 64, 0), ...(z.left && { "inset-inline-start": px(0) }) }, mobile: { padding: pad(48, 0, 56, 0) } },
+  ]), kids, { attributes: attrs([["data-trim", ""]]) });
+
+  const panel = div(`${id}-panel`, [
+    { position: "relative", overflow: "hidden", padding: P0, height: px(z.panel), "border-radius": radius(z.radius ?? 25), background: { color: T.brand } },
+    { tablet: { height: AUTO, "border-radius": radius(24) }, mobile: { "border-radius": radius(20) } },
+  ], [photo, wash, ...fades, curve, content]);
+  return div(id, mix(WIDE, [{ position: "relative", padding: P0, margin: mtAuto(0) }, { mobile: { margin: mtAuto(10) } }]), [panel], { tag: "section", _cssid: cssid });
+};
+
+// RuleEyebrow (story/RuleEyebrow.tsx): label + 36x1.5 rule. o = { light, styles }. Ids: id, ${id}-t, ${id}-rule.
+const ruleEyebrow = (id, label, o = {}) => {
+  const { light = false, styles = [{}, {}] } = o, c = light ? T.white : T.accent;
+  return box(id, mix([{ padding: P0, display: "flex", "flex-direction": "row", "align-items": "center", gap: gap(0, 14), width: AUTO }, {}], styles), [
+    w(`${id}-t`, "e-paragraph", { paragraph: label, attributes: attrs([["data-untrim", ""]]) }, [
+      { ...text(15, 500, c, { "line-height": px(19), "letter-spacing": px(0.3), "text-transform": "uppercase" }), margin: P0 }, {},
+    ]),
+    div(`${id}-rule`, [{ width: px(36), "min-width": px(36), height: px(1.5), padding: P0, "border-radius": radius(1), background: { color: c }, flex: flex(0, 0, AUTO) }, {}], [], { attributes: attrs([["aria-hidden", "true"]]) }),
+  ]);
+};
+
+// Pill (ui.tsx <Pill> link, .pill in globals.css). o = { color = white, bg = accent, border /* [w, color] */, hoverBg, w /* fixed width */, styles }.
+const pill = (id, label, href, o = {}) => {
+  const { color = T.white, bg = T.accent, border = null, hoverBg, w: width, styles = [{}, {}] } = o;
+  return box(
+    id,
+    mix([
+      {
+        ...text(18, 500, color, { "line-height": px(24), "letter-spacing": px(0.36), "text-align": "center" }),
+        position: "relative", display: "inline-flex", "align-items": "center", "justify-content": "center", gap: gap(0, 10), width: width ? px(width) : AUTO, ...(width && { "max-width": pct(100) }),
+        height: px(52), padding: pad(0, 28), "border-radius": radius(999), background: { color: bg }, transition: ease(250),
+        ...(border && { "border-width": pad(border[0]), "border-style": "solid", "border-color": border[1] }),
+      },
+      {
+        hover: { transform: lift, "box-shadow": shadow(0, 10, 24, -10, "rgba(2,93,3,0.45)"), ...(hoverBg && { background: { color: hoverBg } }) },
+        mobile: { height: AUTO, "min-height": px(44), padding: pad(10, 22), "font-size": px(16), "letter-spacing": px(0.32) },
+      },
+    ], styles),
+    [w(`${id}-t`, "e-paragraph", { tag: "span", paragraph: `${label}⁠<span>›</span>`, attributes: attrs([["data-untrim", ""], ["data-pill", ""], ["data-nowrap-md", ""]]) }, [{ color, margin: P0 }, {}])],
+    { tag: "a", link: link(href), attributes: attrs([["data-btn", ""]]) },
+  );
+};
+
+// CountUp (CountUp.tsx): attribute pairs for the number's paragraph, whose text must be the formatted final value ("2,500+").
+const count = (to, o = {}) => {
+  const { decimals = 0, suffix = "", group = false } = o;
+  return [["data-count", String(to)], ...(decimals ? [["data-decimals", String(decimals)]] : []), ...(suffix ? [["data-suffix", suffix]] : []), ...(group ? [["data-sep", ""]] : [])];
+};
+
+// SiawVideo (about/SiawVideo.tsx): a box the "FFE motion" snippet fills with a muted looping <video> and a mute button. o = { poster, label, styles }.
+const video = (id, key, o = {}) => {
+  const { poster, label = "Video", styles = [{}, {}] } = o, M = media();
+  return div(id, mix([{ position: "relative", overflow: "hidden", padding: P0 }, {}], styles), [], {
+    attributes: attrs([["data-ffe-video", M[key].url], ...(poster ? [["data-poster", M[poster].url]] : []), ["aria-label", label]]),
+  });
+};
+
+// JoinBanner (home/JoinBanner.tsx), every option defaulting to the homepage values. Ids ${p}-jb-*. See the plan 2.1 for `o`.
+const joinBanner = (p, o = {}) => {
+  const {
+    mt = [53, 64, 62], h = [760, 495], img = { top: -20.74, left: 23.7, w: 78.64, h: 141.71 }, pad: ip = { top: 63, bottom: 62, left: 0 },
+    eyebrow = null, eyebrowMb = [16, 19], eyebrowMl = 2.5, title = null, titleMax = 566, titleMl = 0,
+    lead, leadMt = 37, leadMl = 0, leadMax = 579, date = DATE, dateMt = [25, 34, 34], dateMl = 2, ctas = null,
+  } = o;
+  const id = `${p}-jb`, M = media(), HIDE_ = { display: "none" };
+  const heading = title ?? "Join Asia Pacific’s <br>Fresh Food Ecosystem";
+  const leadText = lead === undefined ? "Connect with the fresh food suppliers, technologies, logistics solutions and decision-makers shaping how fresh food is preserved, moved and brought to market across Asia Pacific." : lead;
+  const dateStyles = [{ margin: pad(dateMt[2], 0, 0, dateMl), ...(date === false && { padding: pad(12, 0, 11, 11) }) }, { tablet: { margin: pad(dateMt[1], 0, 0, 0) }, mobile: { margin: pad(dateMt[0], 0, 0, 0) } }];
+  return div(id, mix(WIDE, [
+    { position: "relative", overflow: "hidden", padding: P0, height: px(h[1]), margin: mtAuto(mt[2]), "border-radius": radius(30), background: { color: T.brand } },
+    { tablet: { height: AUTO, margin: mtAuto(mt[1]), "border-radius": radius(24) }, mobile: { height: px(h[0]), margin: mtAuto(mt[0]), "border-radius": radius(20), background: { color: T.dark } } },
+  ]), [
+    w(`${id}-photo`, "e-image", { image: image(M.join.id), attributes: attrs([["aria-hidden", "true"]]) }, [
+      { ...at(pct(img.top), null, null, pct(img.left)), width: pct(img.w), height: pct(img.h), "max-width": custom("none"), "object-fit": "cover" },
+      { tablet: { ...FILL, width: pct(100), height: pct(100) } },
+    ]),
+    div(`${id}-wash-m1`, [{ ...FILL, padding: P0, display: "none", background: layers(grad(180, [["#e5f4da", 0], ["rgba(229,244,218,0)", 100]])) }, { mobile: { display: "block" } }]),
+    div(`${id}-wash-m2`, [{ ...FILL, padding: P0, display: "none", background: layers(grad(180, [[T.brand, 0], [BRAND0, 100]])) }, { mobile: { display: "block" } }]),
+    div(`${id}-wash-t`, [{ ...FILL, padding: P0, display: "none", background: layers(grad(180, [[T.brand, 40], [BRAND85, 50], ["rgba(44,166,47,0.5)", 100]])) }, { tablet: { display: "block" }, mobile: HIDE_ }]),
+    div(`${id}-fade`, [{ ...at(px(0), null, px(0), custom("calc(23.66% - 3px)")), width: pct(51.9), padding: P0, background: layers(toLeft(BRAND0, T.brand)) }, { tablet: HIDE_ }]),
+    div(`${id}-inner`, mix(PAGE(32, 18), [
+      { position: "relative", padding: pad(ip.top, 0, ip.bottom, ip.left), margin: mtAuto(0) },
+      { tablet: { padding: pad(48, 0, 48, 0) }, mobile: { padding: pad(48, 0, 0, 0) } },
+    ]), [
+      div(`${id}-copy`, [{ padding: P0 }, {}], [
+        ...(eyebrow ? [div(`${id}-eyebrow-wrap`, [{ padding: P0, margin: pad(0, 0, eyebrowMb[1], eyebrowMl) }, { tablet: { margin: pad(0, 0, eyebrowMb[0], 0) } }], [ruleEyebrow(`${id}-eyebrow`, eyebrow, { light: true })])] : []),
+        w(`${id}-title`, "e-heading", { tag: "h2", title: heading, attributes: attrs(heading.includes("<br") ? [["data-br-md", ""]] : []) }, [
+          { "font-family": FREDOKA, "font-size": px(48), "font-weight": "600", "line-height": px(52.2), color: T.white, "max-width": px(titleMax), margin: pad(0, 0, 0, titleMl) },
+          { tablet: { "font-size": px(40), "line-height": pct(109), margin: P0 }, mobile: { "font-size": px(30), "line-height": px(38.2), "max-width": px(354) } },
+        ]),
+        ...(leadText === false ? [] : [w(`${id}-lede`, "e-paragraph", { paragraph: leadText }, [
+          { ...text(18, 500, T.white, { "line-height": NORMAL }), "max-width": px(leadMax), margin: pad(leadMt, 0, 0, leadMl) },
+          { tablet: { margin: pad(28, 0, 0, 0) }, mobile: { "font-size": px(17), "line-height": px(24), "max-width": px(330), margin: pad(26, 0, 0, 0) } },
+        ])]),
+      ], { attributes: attrs(reveal(0)) }),
+      div(`${id}-actions`, [{ padding: P0 }, {}], [
+        dateVenue(id, date, dateStyles),
+        ctas
+          ? heroCtas(id, { styles: [{ margin: pad(ctas.mt[1], 0, 0, ctas.ml ?? 0) }, { tablet: { margin: pad(ctas.mt[1], 0, 0, 0) }, mobile: { margin: pad(ctas.mt[0], 0, 0, 0) } }] })
+          : box(`${id}-ctas`, [
+              { padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(10), margin: pad(26, 0, 0, 0), width: AUTO },
+              { mobile: { "flex-direction": "column", "align-items": "flex-start", gap: gap(11), margin: pad(23, 0, 0, 0) } },
+            ], [
+              btn(`${id}-apply`, "Apply To Exhibit", "/apply-to-exhibit", { w: 220, h: 52, pl: 34, gap: 17.66, chev: "chevron-brand", color: T.brand, mColor: "#31a834", bg: T.white, m: { w: 178, h: 43, pl: 25, gap: 7, fs: 15, chev: 0.828 } }),
+              btn(`${id}-register`, "Register Your Interest", "/register-to-visit", { w: 255, h: 52, pl: 31, gap: 13.66, chev: "chevron-white", color: T.white, border: [1, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 202, h: 43, pl: 25, gap: 9, fs: 15, chev: 0.828 } }),
+            ]),
+      ], { attributes: attrs(reveal(1)) }),
+    ]),
+  ], { tag: "section", attributes: attrs([["data-trim", ""]]) });
+};
+
+module.exports = { call, php, SITE, ORIGIN, SP, T, OUTFIT, FREDOKA, px, em, pct, custom, pad, P0, AUTO, mtAuto, radius, gap, flex, link, image, V, box, div, w, attrs, media, sz, shadow, ease, lift, text, HIDE, svg , DATE, VENUE, NORMAL, stop, grad, layers, at, FILL, BRAND0, step, toLeft, rotate, scale, mix, PAGE, WIDE, reveal, btn, dateVenue,
+  DATE_LONG, SIAW_SITE, HERO_SIZES, pageHero, heroCtas, heroVenue, joinBanner, ruleEyebrow, pill, count, video };

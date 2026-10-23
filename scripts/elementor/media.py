@@ -1,12 +1,15 @@
 """Prepare the header/footer images from src/assets, upload them to staging and register them in the
 media library. Writes media.json (key -> {id, url}). Idempotent: an existing file is overwritten and its
-attachment reused, never duplicated.  Run: python3 scripts/elementor/media.py"""
-import base64, json, os, pathlib, re, subprocess
+attachment reused, never duplicated.  Run: python3 scripts/elementor/media.py
+Group mode: python3 scripts/elementor/media.py g<n> uploads media/g<n>.py's MEDIA only (keys g<n>-*, files ffe-g<n>-*) and writes media-g<n>.json.
+A source starting with "public:" is read from public/ instead of src/assets/."""
+import base64, json, os, pathlib, re, runpy, subprocess, sys
 from PIL import Image
 
 SITE = "ffe-staging"
 HERE = pathlib.Path(__file__).parent
 SRC = HERE.parent.parent / "src/assets"
+PUBLIC = HERE.parent.parent / "public"
 OUT = HERE / ".tmp/media"
 DIR = "2026/10"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -87,7 +90,30 @@ MEDIA = {
     "newsletter-main": ("newsletter-main.jpg", "ffe-newsletter-main.jpg", "Exhibitors talking beside a robotics demo at a trade fair stand", ((25, 0, 1720, 1122), 1000)),
     "newsletter-small": ("newsletter-small.jpg", "ffe-newsletter-small.jpg", "Robotic arm harvesting in a greenhouse", ((25, 94, 761, 629), 480)),
     "dots": ("dots.svg", "ffe-dots.svg", "", None),
+    # Inner pages (pages plan 4): hero photos at native width, re-encoded; curves, date/venue icons and the select chevrons.
+    **{f"ph-{d}": (f"{d}/hero.jpg", f"ffe-ph-{d}.jpg", "", Image.open(SRC / d / "hero.jpg").width)
+       for d in ["about", "apply", "contact", "ecosystem", "exhibit", "plan", "siaw", "subscribe", "visit", "who"]},
+    "ph-curve": ("about/hero-curve.png", "ffe-ph-curve.png", "", None),
+    "ph-curve-eco": ("ecosystem/hero-curve.svg", "ffe-ph-curve-eco.svg", "", None),
+    "ph-curve-exhibit": ("exhibit/hero-curve.svg", "ffe-ph-curve-exhibit.svg", "", None),
+    "ph-curve-register": ("register/hero-curve.svg", "ffe-ph-curve-register.svg", "", None),
+    "icon-cal-24": ("exhibit/icon-calendar.svg", "ffe-icon-cal-24.svg", "", None),
+    "icon-pin-24": ("exhibit/icon-pin.svg", "ffe-icon-pin-24.svg", "", None),
+    "icon-chevron-down": ("about/icon-chevron-down.svg", "ffe-icon-chevron-down.svg", "", None),
+    "icon-chevron-down-sm": ("contact/icon-chevron-down-sm.svg", "ffe-icon-chevron-down-sm.svg", "", None),
 }
+
+# Group mode: a group's own manifest, kept apart so parallel builders can't overwrite each other's files or keys.
+GROUP = sys.argv[1] if len(sys.argv) > 1 else None
+JSON_OUT = HERE / "media.json"
+if GROUP:
+    if not re.fullmatch(r"g\d+", GROUP):
+        raise SystemExit(f"usage: media.py [g<n>]  (got {GROUP!r})")
+    MEDIA = runpy.run_path(str(HERE / "media" / f"{GROUP}.py"))["MEDIA"]
+    bad = [k for k, v in MEDIA.items() if not k.startswith(f"{GROUP}-") or not v[1].startswith(f"ffe-{GROUP}-")]
+    if bad:
+        raise SystemExit(f"{GROUP}: keys must start '{GROUP}-' and files 'ffe-{GROUP}-': {bad}")
+    JSON_OUT = HERE / f"media-{GROUP}.json"
 
 
 def run(ability, data):
@@ -100,39 +126,47 @@ def run(ability, data):
     return j["data"]
 
 
+def save(im, dst):
+    # Output format follows the output name: .jpg re-encodes at q82 (RGB), anything else (an RGBA .png) keeps its format.
+    im.convert("RGB").save(dst, quality=82, optimize=True) if dst.suffix == ".jpg" else im.save(dst, optimize=True)
+
+
 for key, (src, name, alt, prep) in MEDIA.items():
     dst = OUT / name
+    base = SRC
+    if src and src.startswith("public:"):
+        src, base = src[len("public:"):], PUBLIC
     if isinstance(prep, tuple) and isinstance(prep[0], int):
-        Image.open(SRC / src).crop(prep).save(dst, optimize=True)
+        Image.open(base / src).crop(prep).save(dst, optimize=True)
     elif isinstance(prep, tuple):
         # (crop box, size): crop, then resize to an int width or a (w, h) tuple.
         box, size = prep
-        im = Image.open(SRC / src).crop(box)
+        im = Image.open(base / src).crop(box)
         size = size if isinstance(size, tuple) else (size, round(im.height * size / im.width))
         im = im.resize(size, Image.LANCZOS)
-        im.save(dst, quality=82, optimize=True) if name.endswith(".jpg") else im.save(dst, optimize=True)
+        save(im, dst)
     elif isinstance(prep, int):
-        im = Image.open(SRC / src)
+        im = Image.open(base / src)
         im = im.resize((prep, round(im.height * prep / im.width)), Image.LANCZOS)
-        im.save(dst, quality=82, optimize=True) if name.endswith(".jpg") else im.save(dst, optimize=True)
+        save(im, dst)
     elif prep == "compose-gw":
         # Grüne Woche lockup (Organiser.tsx): mark and wordmark side by side in one 94x30 SVG.
         inner = lambda f: re.sub(r' id="[^"]*"', "", re.search(r"<svg[^>]*>(.*)</svg>", (SRC / f).read_text(), re.S).group(1))
         dst.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" width="94" height="30" viewBox="0 0 94 30" fill="none"><g transform="translate(0 1.33)">{inner("logo-gruene-woche-mark.svg")}</g><g transform="translate(36.58 0)">{inner("logo-gruene-woche-text.svg")}</g></svg>')
     elif prep == "rot90":
-        svg = (SRC / src).read_text()
+        svg = (base / src).read_text()
         vb = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg)
         w, h = vb.groups()
         paths = "".join(re.findall(r"<path[^>]*/>", svg))
         dst.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" width="{h}" height="{w}" viewBox="0 0 {h} {w}" fill="none"><g transform="translate({h} 0) rotate(90)">{paths}</g></svg>')
     elif name.endswith(".svg"):
         # e-svg rewrites the root fill to currentColor, so an unfilled path (line art) has to say so itself.
-        svg = (SRC / src).read_text()
+        svg = (base / src).read_text()
         if re.search(r'<svg[^>]*\bfill="none"', svg):
             svg = re.sub(r"<(path|circle)(?![^>]*\bfill=)", r'<\1 fill="none"', svg)
         dst.write_text(svg)
     else:
-        dst.write_bytes((SRC / src).read_bytes())
+        dst.write_bytes((base / src).read_bytes())
     link = run("novamira/create-upload-link", {"path": f"wp-content/uploads/{DIR}/{name}", "overwrite": True})
     subprocess.run(["curl", "-sSf", "-X", "PUT", "-H", f"{link['token_header']}: {link['upload_token']}", "--data-binary", f"@{dst}", link["upload_url"]], check=True, capture_output=True)
     print(".", end="", flush=True)
@@ -140,7 +174,7 @@ for key, (src, name, alt, prep) in MEDIA.items():
 # One PHP round-trip registers the lot. SVGs get an attachment too, so they show in the media library.
 rows = [[k, f"{DIR}/{v[1]}", v[2]] for k, v in MEDIA.items()]
 code = f"""
-require_once ABSPATH.'wp-admin/includes/image.php';
+require_once ABSPATH.'wp-admin/includes/image.php'; require_once ABSPATH.'wp-admin/includes/media.php'; require_once ABSPATH.'wp-admin/includes/file.php'; // media.php: mp4 metadata
 $up = wp_upload_dir(); $out = [];
 foreach (json_decode(base64_decode('{base64.b64encode(json.dumps(rows).encode()).decode()}'), true) as [$key, $rel, $alt]) {{
   $abs = $up['basedir'].'/'.$rel;
@@ -155,5 +189,5 @@ return $out;
 """
 res = run("novamira/execute-php", {"code": code})
 res = res["return_value"]
-(HERE / "media.json").write_text(json.dumps(res, indent=1) + "\n")
+JSON_OUT.write_text(json.dumps(res, indent=1) + "\n")
 print("\nregistered", len(res))

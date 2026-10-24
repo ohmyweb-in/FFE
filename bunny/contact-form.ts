@@ -1,6 +1,6 @@
 // Bunny Edge Script (standalone, its own pull zone): every form on the website posts here; the
 // Turnstile token is checked, then newsletter sign-ups go to Mailchimp and everything else is emailed
-// through ZeptoMail to the form's team inbox.
+// through ZeptoMail to the form's team inbox (and also added to Mailchimp when the marketing consent box is ticked).
 // Kept off the site's own pull zone because Bunny middleware doesn't run on storage-backed (Bunny Sites) zones.
 // Deploy: see bunny/README.md. Env: ZEPTOMAIL_TOKEN, TURNSTILE_SECRET, MAILCHIMP_API_KEY (secrets), MAIL_FROM, ALLOWED_ORIGINS.
 import * as BunnySDK from "npm:@bunny.net/edgescript-sdk@0.12.1";
@@ -27,6 +27,14 @@ const FORMS: Record<string, string> = {
   exhibit: "Apply to exhibit",
   visit: "Visitor registration",
   subscribe: "Newsletter sign-up",
+};
+
+// Mailchimp Source (MMERGE12) per form, so marketing can tell sign-ups, enquiries, exhibitors and visitors apart.
+const SOURCES: Record<string, string> = {
+  contact: "FFE APAC website – Contact Us",
+  exhibit: "FFE APAC website – Apply to Exhibit",
+  visit: "FFE APAC website – Register to Visit",
+  subscribe: "FFE APAC website",
 };
 
 // Not shown in the email (routing, honeypot, Turnstile token; the dial code is joined to the phone number).
@@ -67,7 +75,10 @@ async function contact(request: Request, json: (status: number, body: object) =>
     .catch(() => null);
   if (!check?.success) return json(403, { ok: false });
 
-  if (get("form") === "subscribe") return subscribe(get, json);
+  if (get("form") === "subscribe") {
+    const ok = await subscribe(get);
+    return json(ok ? 200 : 502, { ok });
+  }
 
   // Every submitted field, in form order; checkbox groups are joined. Capped so a crafted post can't build a huge email.
   const rows = [...new Set(form.keys())]
@@ -97,10 +108,13 @@ async function contact(request: Request, json: (status: number, body: object) =>
     }),
   });
   if (!res.ok) console.error("ZeptoMail", res.status, await res.text());
+  // Ticked the marketing box: add them to Mailchimp too. The email is the form's real job, so a Mailchimp failure is only logged.
+  if (form.has("marketingConsent")) await subscribe(get).catch((e) => console.error("Mailchimp", e));
   return json(res.ok ? 200 : 502, { ok: res.ok });
 }
 
-async function subscribe(get: (k: string) => string, json: (status: number, body: object) => Response): Promise<Response> {
+/** Adds (or resubscribes and tags) the sender in the Mailchimp audience; false if Mailchimp refused. */
+async function subscribe(get: (k: string) => string): Promise<boolean> {
   const headers = { Authorization: `Basic ${btoa(`x:${process.env.MAILCHIMP_API_KEY}`)}`, "Content-Type": "application/json" };
   const f = (k: string) => get(k).slice(0, 255);
   const res = await fetch(MAILCHIMP, {
@@ -118,16 +132,17 @@ async function subscribe(get: (k: string) => string, json: (status: number, body
         MMERGE10: f("jobTitle"),
         MMERGE11: f("country"),
         MMERGE7: get("phone") && !get("phone").startsWith("+") ? f("dialCode") : "",
-        MMERGE8: f("phone"),
-        MMERGE12: "FFE APAC website",
+        // Register to Visit's field is `mobile`, typed with its own "+code".
+        MMERGE8: f("phone") || f("mobile"),
+        MMERGE12: SOURCES[get("form")],
       },
     }),
   });
-  if (res.ok) return json(200, { ok: true });
+  if (res.ok) return true;
   const err = await res.json().catch(() => ({}));
   if (err.title !== "Member Exists") {
     console.error("Mailchimp", res.status, JSON.stringify(err));
-    return json(502, { ok: false });
+    return false;
   }
 
   // Already in the audience (often from another Messe Berlin event): keep their details, (re)subscribe and tag them.
@@ -137,7 +152,7 @@ async function subscribe(get: (k: string) => string, json: (status: number, body
   if (!status.ok) console.error("Mailchimp status", status.status, await status.text());
   const tag = await fetch(`${member}/tags`, { method: "POST", headers, body: JSON.stringify({ tags: [{ name: MAILCHIMP_TAG, status: "active" }] }) });
   if (!tag.ok) console.error("Mailchimp tag", tag.status, await tag.text());
-  return json(tag.ok ? 200 : 502, { ok: tag.ok });
+  return tag.ok;
 }
 
 BunnySDK.net.http.serve(async (request) => {

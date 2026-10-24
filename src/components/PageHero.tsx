@@ -42,8 +42,9 @@ type Props = {
    * "register" = Register as a Trade Visitor 793:4301: 404px panel (360px since the 30px sub line was dropped), title only; sub, date block + CTAs via `cta`; taller curve.
    * "why" = Why Visit 869:777: 316px panel (30px radius), title only; date block + CTAs via `cta`; exhibit curve.
    * "contact" = Contact Us 483:211: 298px panel, eyebrow + title only, image 78 curve at top 118.
+   * "gallery" = Gallery 1288:856: "why" panel with the title lower (cap top 77) and two lines of 18/26 copy above the CTAs.
    */
-  size?: "default" | "compact" | "tall" | "siaw" | "eco" | "story" | "exhibit" | "apply" | "applyLong" | "plan" | "register" | "why" | "contact";
+  size?: "default" | "compact" | "tall" | "siaw" | "eco" | "story" | "exhibit" | "apply" | "applyLong" | "plan" | "register" | "why" | "contact" | "gallery";
 };
 
 type Size = { panel: string; curve: string; content: string; desc: string; date: string; ctas: string; title?: string; descType?: string; fades?: string[]; curveSrc?: StaticImageData };
@@ -181,6 +182,20 @@ const SIZES: Record<NonNullable<Props["size"]>, Size> = {
     desc: "",
     date: "",
     ctas: "md:mt-[26px]",
+    fades: ["left-[16.34%] w-[72.83%]", "left-[16.34%] w-[38.57%]"],
+  },
+  // Title cap top 77 at x 55; copy (untrimmed, 448px wide) top 134; CTAs 215. Curve at (3.89, 162).
+  gallery: {
+    panel: "lg:h-[316px] lg:rounded-[30px]!",
+    curve: "top-[162px] h-[157.316px] w-[196.841px]",
+    curveSrc: exhibitCurve,
+    content: "lg:pt-[77px] lg:pl-[0.5px]",
+    title: "mt-0!",
+    descType: "max-w-[448px] text-[17px] leading-[23px] font-medium [text-box:normal]! md:mt-[22px] md:text-[18px] md:leading-[26px]",
+    // Browser trims the title to 35px, so 22px lands the copy at y 134.
+    desc: "lg:mt-[22px]",
+    date: "",
+    ctas: "md:mt-[29px]",
     fades: ["left-[16.34%] w-[72.83%]", "left-[16.34%] w-[38.57%]"],
   },
 };

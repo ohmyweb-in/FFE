@@ -434,6 +434,11 @@ body {
     background: rgb(40 174 61 / 0.2);
     backdrop-filter: none;
   }
+  /* Gallery photo preview: near-black so the photo carries the screen. */
+  .lightbox::backdrop {
+    background: rgb(0 0 0 / 0.88);
+    backdrop-filter: none;
+  }
   html:has(.modal[open]) {
     overflow: hidden;
   }

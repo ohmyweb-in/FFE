@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   output: "export",
   // `/about/index.html` so Netlify serves each route without extra rewrites.
   trailingSlash: true,
+  // Dev only: let phones on the office Wi-Fi load the dev server (http://192.168.x.x:3000).
+  allowedDevOrigins: ["192.168.*.*"],
   images: {
     // The default optimizer needs a server; static export serves the source files.
     unoptimized: true,

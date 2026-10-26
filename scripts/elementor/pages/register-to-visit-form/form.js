@@ -62,7 +62,7 @@ module.exports = [
   ]), [
     head,
     form("rf-form", {
-      name: "Visitor registration", to: ["visitor@freshfoodexpoapac.com"], subject: "Visitor registration",
+      name: "Visitor registration", actions: ["email", "ffe-mailchimp"], to: ["visitor@freshfoodexpoapac.com"], subject: "Visitor registration",
       success: [S.visitSuccess("rf")], error: [S.sendError("rf")],
       styles: [{ display: "flex", "flex-direction": "column", gap: gap(28, 0) }, {}],
     }, [grid, S.tsSlot("rf"), S.submitRow("rf", "Submit"), S.honeypot("rf")]),

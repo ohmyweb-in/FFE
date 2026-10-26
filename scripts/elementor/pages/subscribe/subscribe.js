@@ -73,7 +73,7 @@ const formcard = div("sb-formcard", [
 ], [
   w("sb-form-title", "e-heading", { tag: "h2", title: "Subscribe to our updates" }, [H(32, 38), { mobile: { "font-size": px(28), "line-height": px(34) } }]),
   form("sb-form", {
-    name: "subscribe", to: ["marketing@freshfoodexpoapac.com"], subject: "Newsletter sign-up", success: [OK], error: [ERR],
+    name: "subscribe", actions: ["ffe-mailchimp"], to: ["marketing@freshfoodexpoapac.com"], subject: "Newsletter sign-up", success: [OK], error: [ERR],
     styles: [{ padding: P0, position: "relative", margin: pad(18, 0, 0, 0), display: "flex", "flex-direction": "column", gap: gap(18, 0) }, {}],
   }, [
     div("sb-form-grid", [{ padding: P0, ...GRID(2, 18, 20) }, { mobile: { ...GRIDC(1), gap: gap(16, 16) } }], [

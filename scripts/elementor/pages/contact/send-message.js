@@ -21,7 +21,7 @@ const f = (name, label, ctl, o = {}) => field(`ct-fd-${name.toLowerCase()}`, lab
 const SPAN = [{ "grid-column": "1 / -1" }, { mobile: { "grid-column": "auto" } }];
 
 const formNode = form("ct-form", {
-  name: "contact", to: ["marketing@freshfoodexpoapac.com"], subject: "Website enquiry", success: [OK], error: [ERR],
+  name: "contact", actions: ["email", "ffe-mailchimp"], to: ["marketing@freshfoodexpoapac.com"], subject: "Website enquiry", success: [OK], error: [ERR],
   styles: [{ padding: P0, margin: pad(18, 0, 0, 0), display: "flex", "flex-direction": "column", gap: gap(18, 0) }, {}],
 }, [
   div("ct-form-grid", [{ padding: P0, ...GRID(2, 18, 24) }, { mobile: { ...GRIDC(1), gap: gap(16, 16) } }], [

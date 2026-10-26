@@ -107,6 +107,9 @@ body .elementor [data-req] span { color: #e4051f; } /* the " *" run inside a req
 [data-ffe-video] button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { [data-ffe-video] button { display: none; } }`.split("\n");
 
+// Cloudflare Turnstile site key (public, as in src/components/FormSend.tsx); the secret is FFE_TURNSTILE_SECRET in wp-config.php.
+const TURNSTILE_SITE_KEY = "0x4AAAAAAFgvz0fD6-Qi3FgK";
+
 // Country -> ISO code (src/components/dialCodes.ts), so the phone input can show /flags/<iso>.svg.
 const DIAL_ISO = Object.fromEntries([...fs.readFileSync(path.join(__dirname, "../../src/components/dialCodes.ts"), "utf8").matchAll(/\["([^"]+)", "[^"]+", "([a-z]{2})"\]/g)].map(([, c, i]) => [c, i]));
 
@@ -136,6 +139,28 @@ function ffeVideo() {
 }
 /* Atomic forms (globals.css .input etc. + FormSend / PhoneInput / CountrySelect / VisitorForm behaviours). */
 function ffeForms() {
+  /* Cloudflare Turnstile (FormSend.tsx Turnstile): rendered into each form's [data-ffe-turnstile] slot, script loaded only on pages with a form.
+     Elementor posts only the form's own fields, so the token is added to its request here; ffe-forms.php checks it and refuses a post without one. */
+  var slots = document.querySelectorAll('form[data-element_type="e-form"] [data-ffe-turnstile]');
+  if (slots.length) {
+    window.ffeTurnstile = function () { slots.forEach(function (el) { el.dataset.wid = turnstile.render(el, { sitekey: '${TURNSTILE_SITE_KEY}' }); }); };
+    var ts = document.createElement('script');
+    ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=ffeTurnstile'; ts.async = true;
+    document.head.appendChild(ts);
+    var send = window.fetch;
+    window.fetch = function (input, init) {
+      var body = init && init.body, slot = null;
+      if (body instanceof FormData && body.get('action') === 'elementor_pro_atomic_forms_send_form') {
+        var form = document.querySelector('form[data-id="' + CSS.escape(String(body.get('form_id'))) + '"]');
+        slot = form && form.querySelector('[data-ffe-turnstile]');
+        if (slot && slot.dataset.wid && window.turnstile) body.set('cf-turnstile-response', turnstile.getResponse(slot.dataset.wid) || '');
+      }
+      var p = send.apply(window, arguments);
+      /* A token is single-use: get a fresh one for the next try, whatever happened. */
+      if (slot && slot.dataset.wid) { var reset = function () { turnstile.reset(slot.dataset.wid); }; p.then(reset, reset); }
+      return p;
+    };
+  }
   /* select[data-ph]: option 1 is the placeholder, not a choice. "-" options are separators. */
   document.querySelectorAll('select[data-ph]').forEach(function (s) { var o = s.options[0]; o.value = ''; o.disabled = true; s.selectedIndex = 0; });
   document.querySelectorAll('select option[value="-"]').forEach(function (o) { o.disabled = true; });

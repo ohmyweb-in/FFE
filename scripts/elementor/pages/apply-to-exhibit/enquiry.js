@@ -55,7 +55,7 @@ const card = div("ax-card", [
     row: [{ margin: pad(0, 0, 20, 0) }, {}],
   }),
   form("ax-form", {
-    name: "Apply to exhibit", to: ["exhibitor@freshfoodexpoapac.com"], subject: "Apply to exhibit",
+    name: "Apply to exhibit", actions: ["email", "ffe-mailchimp"], to: ["exhibitor@freshfoodexpoapac.com"], subject: "Apply to exhibit",
     success: [S.applySuccess("ax")], error: [S.sendError("ax")],
     styles: [{ display: "flex", "flex-direction": "column", gap: gap(20, 0) }, {}],
   }, [grid, consents, S.tsSlot("ax"), S.submitRow("ax", "Submit Enquiry"), S.honeypot("ax")]),

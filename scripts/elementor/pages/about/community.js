@@ -1,4 +1,4 @@
-// JoinCommunity + CommunityForm (about/JoinCommunity.tsx, CommunityForm.tsx): mint intro panel + newsletter form. The form is never submitted on staging.
+// JoinCommunity + CommunityForm (about/JoinCommunity.tsx, CommunityForm.tsx): mint intro panel + newsletter form (Mailchimp only, no email).
 const { T, OUTFIT, px, pct, custom, pad, P0, AUTO, radius, gap, flex, image, box, div, w, attrs, media, text, at, mix, reveal, layers, grad, svg, rotate, FREDOKA } = require("../../lib.js");
 const { form, field, input, select, phone, check, honeypot, turnstileSlot, pillSubmit } = require("../../forms.js");
 const { NARROW, EYB, H44, B15 } = require("../g1-shared.js");
@@ -47,7 +47,7 @@ const card = div("au-cm-card", [
   { padding: pad(36, 40, 36, 40), "min-width": px(0), flex: flex(1, 1, pct(0)), "border-radius": radius(32), background: { color: "#ffffff" } },
   { tablet: { "border-radius": radius(24) }, mobile: { padding: pad(28, 22, 28, 22) } },
 ], [
-  form("au-cm-form", { name: "Community", to: ["marketing@freshfoodexpoapac.com"], subject: "Newsletter sign-up", success: [SUCCESS], error: [ERR], styles: [{ gap: gap(18, 0) }, {}] }, [
+  form("au-cm-form", { name: "Community", actions: ["ffe-mailchimp"], to: ["marketing@freshfoodexpoapac.com"], subject: "Newsletter sign-up", success: [SUCCESS], error: [ERR], styles: [{ gap: gap(18, 0) }, {}] }, [
     div("au-cm-grid", [
       { padding: P0, display: "grid", "grid-template-columns": "repeat(2, minmax(0, 1fr))", gap: gap(18, 24) },
       { mobile: { "grid-template-columns": "minmax(0, 1fr)", gap: gap(16, 16) } },

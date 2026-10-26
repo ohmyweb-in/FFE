@@ -40,10 +40,11 @@ const typedStyles = (id, desktop, more = {}) => {
   return V(id, t(desktop), Object.fromEntries(Object.entries(more).map(([bp, props]) => [bp, t(props)])));
 };
 
-// form(id, o, children): the e-form. o = { name, to: string[], subject, success: node[], error: node[], styles: [desktop, more], replyTo = "[email]" }.
+// form(id, o, children): the e-form. o = { name, to: string[], subject, success: node[], error: node[], styles: [desktop, more], replyTo = "[email]", actions = ["email"] }.
+// actions: "email" (team inbox via ZeptoMail) and/or "ffe-mailchimp" (ffe-forms.php: the audience; on email forms only when the marketing box is ticked).
 // The form's own box defaults to padding 0 and the group's column layout (Elementor's base is padding 20, gap 10). success / error nodes go into the message containers.
 const form = (id, o, children) => {
-  const { name, to, subject, success = [], error = [], styles = [{}, {}], replyTo = "[email]" } = o;
+  const { name, to, subject, success = [], error = [], styles = [{}, {}], replyTo = "[email]", actions = ["email"] } = o;
   // Elementor prints x-data="eForm<element id>", an Alpine expression: a hyphen in the id reads as a subtraction ("eFormct - form": Undefined variable, no submit handler). So the e-form's own id has none ("ct-form" -> "ctform"); its children keep ${id}-… ids.
   const eid = id.replace(/-/g, "");
   const email = { $$type: "emails", value: { to: strs(to), subject: str(subject), message: str("[all-fields]"), ...(replyTo && { "reply-to": str(replyTo) }) } };
@@ -51,7 +52,7 @@ const form = (id, o, children) => {
   const [d, more] = mix([{ padding: P0, display: "flex", "flex-direction": "column", gap: gap(0, 0) }, {}], styles);
   return {
     id: eid, elType: "e-form",
-    settings: { "form-name": str(name), "actions-after-submit": strs(["email"]), email },
+    settings: { "form-name": str(name), "actions-after-submit": strs(actions), email },
     styles: typedStyles(eid, d, more),
     elements: [...children, ...(success.length ? [msg("e-form-success-message", success)] : []), ...(error.length ? [msg("e-form-error-message", error)] : [])],
   };
@@ -185,12 +186,13 @@ const choice = (type, name, label, o = {}) => {
 const check = (name, label, o) => choice("check", name, label, o);
 const radio = (name, label, o) => choice("radio", name, label, o);
 
-// honeypot(p): a hidden text field the edge script used to reject (not checked yet, see plan 3.6).
+// honeypot(p): a hidden text field people never fill; ffe-forms.php rejects a post that has it filled.
 const honeypot = (p) =>
   w(`${p}-f-website`, "e-form-input", { type: "text", _cssid: "website", autocomplete: false, attributes: attrs([["tabindex", "-1"], ["aria-hidden", "true"], ["autocomplete", "off"]]) }, [{ display: "none" }, {}]);
 
-// turnstileSlot(p): keeps the 71px the loaded Turnstile widget takes in the reference (65px iframe + the inline line gap); the widget itself is unwired (plan 3.6).
-const turnstileSlot = (p) => div(`${p}-f-turnstile`, [{ padding: P0, "min-height": px(71), width: pct(100) }, {}], [], { attributes: attrs([["aria-hidden", "true"]]) });
+// turnstileSlot(p): the Cloudflare Turnstile widget (FormSend.tsx Turnstile): the snippet renders it into [data-ffe-turnstile]; ffe-forms.php checks the token.
+// min-height keeps the 71px the widget takes in the reference (65px iframe + the inline line gap).
+const turnstileSlot = (p) => div(`${p}-f-turnstile`, [{ padding: P0, "min-height": px(71), width: pct(100) }, {}], [], { attributes: attrs([["data-ffe-turnstile", ""]]) });
 
 // pillSubmit(id, label, o): e-form-submit-button looking like pill(). o = { color, bg, w, styles }.
 const pillSubmit = (id, label, o = {}) => {

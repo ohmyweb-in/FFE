@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import RevealObserver from "@/components/RevealObserver";
 import Footer from "@/components/home/Footer";
+import ShareBar from "@/components/news/ShareBar";
 import StayUpdated from "@/components/news/StayUpdated";
 import { POSTS, PHOTOS_HREF } from "@/components/news/posts";
 import { Pill } from "@/components/ui";
@@ -140,6 +141,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </a>
             </p>
           </section>
+
+          <ShareBar className="mt-[44px]" />
         </article>
         <StayUpdated mt="mt-[56px] lg:mt-[72px]" />
       </main>

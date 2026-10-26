@@ -114,19 +114,18 @@ const select = (name, o = {}) => {
 const dialOptions = () => {
   const src = fs.readFileSync(path.join(__dirname, "../../src/components/dialCodes.ts"), "utf8");
   const cut = src.indexOf("export const DIAL_ALL");
-  const rows = (s) => [...s.matchAll(/\["([^"]+)", "([^"]+)"\]/g)].map(([, c, d]) => `${c} (${d})`);
+  const rows = (s) => [...s.matchAll(/\["([^"]+)", "([^"]+)", "[a-z]{2}"\]/g)].map(([, c, d]) => `${c} (${d})`);
   const top = rows(src.slice(0, cut)), all = rows(src.slice(cut));
   return [...top.map((l) => [l, l]), ["────────", "-"], ...all.map((l) => [l, l])];
 };
 
-// phone(o): PhoneInput. o = { p, split = false, required = true, placeholder = "8123 4567" }. The snippet mirrors the chosen code into [data-dial-code].
+// phone(o): PhoneInput. o = { p, split = false, required = true, placeholder = "8123 4567" }. The snippet mirrors the chosen code into [data-dial-code] and the flag into [data-dial-flag].
 const phone = (o = {}) => {
   const { p, split = false, required = true, placeholder = "8123 4567" } = o, id = `${p}-f-phone`;
   const sp = split;
-  const flag = div(`${id}-flag`, [{ width: px(22), height: px(15), "min-width": px(22), padding: P0, "border-radius": radius(2), overflow: "hidden", "border-width": pad(1), "border-style": "solid", "border-color": "#e0e0e0", display: "flex", "flex-direction": "column", "box-sizing": "border-box" }, {}], [
-    div(`${id}-flag1`, [{ height: pct(50), width: pct(100), padding: P0, background: { color: "#ef3340" } }, {}]),
-    div(`${id}-flag2`, [{ height: pct(50), width: pct(100), padding: P0, background: { color: T.white } }, {}]),
-  ], { attributes: attrs([["aria-hidden", "true"], ["data-dial-flag", ""]]) });
+  // The picked country's flag (public/flags/<iso>.svg, served at /flags/): kit CSS draws Singapore's, the snippet swaps it on change.
+  const flag = div(`${id}-flag`, [{ width: px(22), height: px(15), "min-width": px(22), padding: P0, "border-radius": radius(2), "border-width": pad(1), "border-style": "solid", "border-color": "#e0e0e0", "box-sizing": "border-box" }, {}],
+    [], { attributes: attrs([["aria-hidden", "true"], ["data-dial-flag", ""]]) });
   const code = w(`${id}-code`, "e-paragraph", { tag: "span", paragraph: "+65", attributes: attrs([["data-dial-code", ""], ["data-untrim", ""]]) }, [
     { ...text(sp ? VARIANT.apply.fs : 14, 500, "#000", { "line-height": px(19) }), margin: P0, "flex-shrink": 0 }, {},
   ]);

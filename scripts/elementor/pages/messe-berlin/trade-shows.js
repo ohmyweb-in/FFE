@@ -14,20 +14,20 @@ const H2 = [
 ];
 
 const SHOWS = [
-  { name: "Grüne Woche", href: "https://www.gruenewoche.de/en", img: "show-gw", x: 20,
-    logo: () => svg("mb-ts-c1-logo", "logo-gw", [{ width: px(94), height: px(30) }, {}]) },
   { name: "Fruit Logistica", href: "https://www.fruitlogistica.com/en", img: "show-fl", x: 21,
-    logo: () => svg("mb-ts-c2-logo", "logo-fl", [{ width: px(84), height: px(28.7813) }, {}]) },
+    logo: (id) => svg(`${id}-logo`, "logo-fl", [{ width: px(84), height: px(28.7813) }, {}]) },
   { name: "Asia Fruit Logistica", href: "http://www.asiafruitlogistica.com/", img: "show-afl", x: 14,
-    logo: () => w("mb-ts-c3-logo", "e-image", { image: image(M["logo-afl"].id) }, [
+    logo: (id) => w(`${id}-logo`, "e-image", { image: image(M["logo-afl"].id) }, [
       { width: px(106), height: px(48), "object-fit": "cover", "object-position": { $$type: "string", value: "center left" } },
       { mobile: { width: px(88.9), height: px(40.4) } },
     ]) },
   { name: "Fruit Logistica Connect India", href: "https://www.fruitlogisticaindia.com/", img: "show-fli", x: 23,
-    logo: () => w("mb-ts-c4-logo", "e-image", { image: image(M["logo-fli"].id) }, [
+    logo: (id) => w(`${id}-logo`, "e-image", { image: image(M["logo-fli"].id) }, [
       { width: px(70), height: px(39), "object-fit": "cover" },
       { mobile: { width: px(63.8), height: px(35.1) } },
     ]) },
+  { name: "Grüne Woche", href: "https://www.gruenewoche.de/en", img: "show-gw", x: 20,
+    logo: (id) => svg(`${id}-logo`, "logo-gw", [{ width: px(94), height: px(30) }, {}]) },
 ];
 
 const card = (s, i) => {
@@ -52,7 +52,7 @@ const card = (s, i) => {
           "border-radius": radius(18), background: { color: T.sun } },
         { mobile: { margin: pad(-31, 0, 0, 13.1) } },
       ], [
-        s.logo(),
+        s.logo(id),
         svg(`${id}-arrow`, "arrow-circle", [{ width: px(28), height: px(28), "flex-shrink": 0 }, {}], { attributes: attrs([["aria-hidden", "true"], ["data-group-nudge", ""]]) }),
       ]),
     ], { tag: "a", link: link(s.href, true), attributes: attrs([["rel", "noopener"], ["aria-label", `${s.name} (opens in a new tab)`], ["data-group", ""]]) }),

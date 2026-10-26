@@ -8,7 +8,7 @@
 const FFE_TEAMS = [
   'marketing' => 'marketing@freshfoodexpoapac.com', 'exhibitor' => 'exhibitor@freshfoodexpoapac.com',
   'visitor' => 'visitor@freshfoodexpoapac.com', 'conference' => 'conference@freshfoodexpoapac.com',
-  'buyers' => 'buyers@freshfoodexpoapac.com', 'media' => 'media@freshfoodexpoapac.com',
+  'buyers' => 'buyer@freshfoodexpoapac.com', 'media' => 'media@freshfoodexpoapac.com',
 ];
 
 // $form_data is keyed by the posted field's ELEMENT id, not its name: the Enquiry Type select is element ct-f-team (forms.js select("team", { p: "ct" })).

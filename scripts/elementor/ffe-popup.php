@@ -118,14 +118,13 @@ html:has(#ffe-popup[open]) { overflow: hidden; }
 	#ffe-popup .pu-meta { margin-top: auto; padding-top: 28px; }
 }
 @media (min-width: 1280px) {
-	#ffe-popup .pu-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 25% 50%; }
+	#ffe-popup .pu-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; } /* the whole key visual, centred (its own background is white, like the column) */
 	#ffe-popup .pu-text { padding: 45px 55px 52px 31px; }
 	#ffe-popup h2 { font-size: 40px; line-height: 49.2px; }
 	#ffe-popup .pu-options { grid-template-columns: 240fr 224fr; }
 	#ffe-popup .pu-meta { margin-top: 19px; padding-top: 32px; }
 	#ffe-popup .pu-meta li:last-child { height: 23px; white-space: nowrap; }
 }
-@media (min-width: 1440px) { #ffe-popup .pu-poster img { object-position: center; } }
 
 /* Phones held sideways: two columns, tighter text column, no date/venue list (the poster shows both). */
 @media (orientation: landscape) and (max-height: 500px) {

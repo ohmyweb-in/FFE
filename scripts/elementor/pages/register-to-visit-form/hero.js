@@ -4,7 +4,7 @@ const { pageHero } = require("../../lib.js");
 module.exports = [
   pageHero("rf", {
     size: "apply",
-    title: "Register as a <br>Trade Visitor",
+    title: "Register Your <br>Interest",
     titleBr: "lg",
     img: "ph-visit",
     imgBox: { top: -78.32, left: 16.45, w: 104.03, h: 202.03 },

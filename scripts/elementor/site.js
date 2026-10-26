@@ -1,6 +1,7 @@
 // Site-wide settings: Elementor kit (colours, fonts, page background, content width) and font loading.
 // Run once, and again after a token change in src/app/globals.css.
 const { execFileSync } = require("child_process");
+const fs = require("fs");
 const path = require("path");
 const { php, call, T, SP, ORIGIN } = require("./lib.js");
 
@@ -66,6 +67,17 @@ body .elementor select[data-ffe-input]:invalid { color: #cdcdcd; } body .element
 body .elementor [data-ffe-input]:is(:focus, :focus-within) { border-color: #28ae3d; box-shadow: 0 0 0 4px rgb(40 174 61 / .15); }
 body .elementor [data-ffe-input]:is(:user-invalid, :has(:user-invalid)) { border-color: #d93025; box-shadow: 0 0 0 4px rgb(217 48 37 / .12); }
 body .elementor [data-ffe-dial] input { outline: none; } body .elementor [data-ffe-dial] select { appearance: none; border: 0; }
+body .elementor [data-dial-flag] { flex-shrink: 0; background: #fff url(/flags/sg.svg) center / cover no-repeat; }
+/* Dial-code list (PhoneInput .dial-select): where the browser can style a select's list (Chrome/Edge 135+), padded rows in the
+   country dropdown's look, long names wrapping; elsewhere the native list. */
+@supports (appearance: base-select) {
+  body .elementor [data-ffe-dial] select, body .elementor [data-ffe-dial] select::picker(select) { appearance: base-select; }
+  body .elementor [data-ffe-dial] select::picker(select) { width: 300px; max-height: min(320px, 60dvh); overflow-x: hidden; margin-top: 6px; padding: 6px 0; border: 1px solid #cdcdcd; border-radius: 10px; background: #fff; box-shadow: 0 12px 32px -12px rgb(2 93 3 / .3); }
+  body .elementor [data-ffe-dial] optgroup { padding-top: 6px; font-size: 12px; font-weight: 600; color: #4f4f4f; text-transform: uppercase; text-indent: 16px; }
+  body .elementor [data-ffe-dial] option { padding: 9px 16px; font-size: 15px; line-height: 20px; font-weight: 500; white-space: normal; color: #1f1f1f; text-transform: none; text-indent: 0; }
+  body .elementor [data-ffe-dial] option:is(:hover, :focus-visible, :checked) { background: #e2f0e4; color: #025d03; outline: none; }
+  body .elementor [data-ffe-dial] option::checkmark { display: none; }
+}
 /* Country combobox (CountrySelect.tsx): chevron flips when open, listbox as in the source. */
 body .elementor [data-ffe-cs] { position: relative; }
 body .elementor [data-ffe-cs] [data-noevents] { transition: transform 250ms cubic-bezier(.22, 1, .36, 1); }
@@ -94,6 +106,9 @@ body .elementor [data-req] span { color: #e4051f; } /* the " *" run inside a req
 [data-ffe-video] button:hover { background: rgb(0 0 0 / .6); }
 [data-ffe-video] button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { [data-ffe-video] button { display: none; } }`.split("\n");
+
+// Country -> ISO code (src/components/dialCodes.ts), so the phone input can show /flags/<iso>.svg.
+const DIAL_ISO = Object.fromEntries([...fs.readFileSync(path.join(__dirname, "../../src/components/dialCodes.ts"), "utf8").matchAll(/\["([^"]+)", "[^"]+", "([a-z]{2})"\]/g)].map(([, c, i]) => [c, i]));
 
 // Custom Code snippet "FFE motion" (Elementor Pro): reveal on scroll + count-up. Reduced motion: nothing hides, numbers stay final.
 const MOTION = `<script id="ffe-motion">
@@ -126,13 +141,25 @@ function ffeForms() {
   document.querySelectorAll('select option[value="-"]').forEach(function (o) { o.disabled = true; });
   /* Real autofill hints: the widget only has an on/off switch. */
   document.querySelectorAll('[data-ac]').forEach(function (el) { el.setAttribute('autocomplete', el.dataset.ac); });
-  /* Phone: the visible dial code and flag follow the hidden picker (flag for Singapore only). */
+  /* Phone: the visible dial code and flag follow the hidden picker. The "-" separator becomes PhoneInput's two optgroups. */
+  var ISO = ${JSON.stringify(DIAL_ISO)};
   document.querySelectorAll('[data-ffe-dial]').forEach(function (w) {
     var sel = w.querySelector('select'), code = w.querySelector('[data-dial-code]'), flag = w.querySelector('[data-dial-flag]');
+    var cut = sel.querySelector('option[value="-"]');
+    if (cut) {
+      var v = sel.value, top = document.createElement('optgroup'), rest = document.createElement('optgroup');
+      top.label = 'Asia Pacific'; rest.label = 'All countries';
+      while (sel.firstChild !== cut) top.appendChild(sel.firstChild);
+      sel.removeChild(cut);
+      while (sel.firstChild) rest.appendChild(sel.firstChild);
+      sel.append(top, rest);
+      sel.value = v; /* moving the options drops the selection */
+    }
     var sync = function () {
-      var t = sel.options[sel.selectedIndex].text, m = t.match(/\\(([^)]*)\\)\\s*$/);
-      if (code && m) code.textContent = m[1];
-      if (flag) flag.style.display = /^Singapore \\(/.test(t) ? '' : 'none';
+      var t = sel.options[sel.selectedIndex].text, m = t.match(/^(.*) \\(([^)]*)\\)\\s*$/);
+      if (!m) return;
+      if (code) code.textContent = m[2];
+      if (flag && ISO[m[1]]) flag.style.backgroundImage = 'url(/flags/' + ISO[m[1]] + '.svg)';
     };
     sel.addEventListener('change', sync); sync();
   });
@@ -171,7 +198,13 @@ function ffeForms() {
     inp.addEventListener('input', function () { check(); show(true); });
     inp.addEventListener('focus', function () { show(true); });
     inp.addEventListener('click', function () { show(true); });
-    inp.addEventListener('blur', function () { show(false); });
+    inp.addEventListener('blur', function () {
+      show(false);
+      /* Typed rather than picked ("india", or the only match left): take the listed spelling. */
+      var q = inp.value.trim().toLowerCase(), hits = all.filter(function (c) { return c.toLowerCase().indexOf(q) > -1; });
+      var exact = all.filter(function (c) { return c.toLowerCase() === q; })[0];
+      if (exact || (q && hits.length === 1)) { inp.value = exact || hits[0]; check(); }
+    });
     inp.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();

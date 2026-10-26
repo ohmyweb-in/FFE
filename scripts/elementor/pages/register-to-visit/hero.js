@@ -4,7 +4,7 @@ const { T, px, pad, P0, w, attrs, text, pageHero, heroVenue, heroCtas } = requir
 module.exports = [
   pageHero("rv", {
     size: "register",
-    title: "Register as a Trade Visitor",
+    title: "Register Your Interest",
     img: "ph-visit",
     imgBox: { top: -78.32, left: 16.45, w: 104.03, h: 202.03 },
     curveLeft: 4.39,

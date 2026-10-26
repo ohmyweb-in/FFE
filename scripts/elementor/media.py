@@ -6,7 +6,7 @@ A source starting with "public:" is read from public/ instead of src/assets/."""
 import base64, json, os, pathlib, re, runpy, subprocess, sys
 from PIL import Image
 
-SITE = "ffe-staging"
+SITE = "ffe"
 HERE = pathlib.Path(__file__).parent
 SRC = HERE.parent.parent / "src/assets"
 PUBLIC = HERE.parent.parent / "public"

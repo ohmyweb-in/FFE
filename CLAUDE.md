@@ -1,8 +1,8 @@
 @AGENTS.md
 
-## WordPress rebuild (staging)
+## WordPress (live since 26 Oct 2026)
 
-The site is being rebuilt in WordPress + Elementor at https://ffe-staging.ohmyweb.in, following the Fruit Logistica playbook. This Next.js build stays the source of truth for copy and layout until launch.
+www.freshfoodexpoapac.com runs on WordPress + Elementor, built by `scripts/elementor/` (Fruit Logistica playbook). The Next.js app in `src/` is retired: it no longer deploys anywhere, so edit the site in WordPress (or the Elementor scripts), not here. Bunny zone `sites-ffe-yla75m` pulls from the server (origin https://ffe-staging.ohmyweb.in with the www Host header forwarded); the staging hostname redirects visitors to www.
 
-- **Novamira:** always pass `--site ffe-staging`. Never use another profile from this repo; `flci-prod` is Fruit Logistica's live site.
+- **Novamira:** always pass `--site ffe`. Never use another profile from this repo; `flci-prod` is Fruit Logistica's live site.
 - **Server:** shared with Fruit Logistica (`ssh flci-prod`). FFE is isolated: Linux user `ffe`, `/var/www/freshfoodexpoapac`, database `ffe_prod`, Redis db 1 with prefix `ffe_prod`, and OpenLiteSpeed vhost `ffe`. Never touch the `fruitlogisticaindia` folder, the `flci_prod` database or the `flci` vhost.

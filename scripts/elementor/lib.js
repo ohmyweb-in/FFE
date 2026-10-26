@@ -1,12 +1,12 @@
 // Shared helpers for the Elementor rebuild of this site on WordPress staging.
 // Port of /Volumes/ohmyweb/github/fruitlogistica/scripts/elementor/lib.js, pinned to the
-// ffe-staging profile: never point this at another site (see CLAUDE.md).
+// ffe profile (www.freshfoodexpoapac.com, live): never point this at another site (see CLAUDE.md).
 const { execFileSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-const SITE = "ffe-staging";
-const ORIGIN = "https://ffe-staging.ohmyweb.in";
+const SITE = "ffe";
+const ORIGIN = "https://www.freshfoodexpoapac.com";
 
 // Ability payloads are written to a file and passed as @file; they are far too big for argv.
 const SP = path.join(__dirname, ".tmp");

@@ -1,7 +1,0 @@
-# Static export (next.config.ts: output "export") — plain HTML/CSS/JS, no Next.js runtime needed.
-[build]
-  command = "npm run build"
-  publish = "out"
-
-[build.environment]
-  NODE_VERSION = "24"

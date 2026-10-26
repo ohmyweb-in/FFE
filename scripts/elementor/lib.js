@@ -1,4 +1,4 @@
-// Shared helpers for the Elementor rebuild of this site on WordPress staging.
+// Shared helpers for the Elementor build of the production site (WordPress, www.freshfoodexpoapac.com).
 // Port of /Volumes/ohmyweb/github/fruitlogistica/scripts/elementor/lib.js, pinned to the
 // ffe profile (www.freshfoodexpoapac.com, live): never point this at another site (see CLAUDE.md).
 const { execFileSync } = require("child_process");

@@ -37,10 +37,12 @@ const KIT_CSS = `${INTER_FACE}
 /* Pills (globals.css .btn / .pill): focus ring, 44px touch target, chevron nudge; cards: photo zoom. */
 :is([data-btn], [data-group]):focus-visible { outline: 2px solid #025d03; outline-offset: 3px; }
 @media (pointer: coarse) { [data-btn]::after { content: ""; position: absolute; inset: min(0px, calc((100% - 44px) / 2)); } }
-[data-pill] span { display: inline-block; margin-left: 10px; }
+[data-pill] span { display: inline; position: relative; left: 0; margin-left: 10px; } /* inline (not inline-block) so the word joiner keeps the chevron with the last word */
 @media (prefers-reduced-motion: no-preference) and (hover: hover) {
-  [data-nudge], [data-group-nudge], [data-pill] span { transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1); }
-  [data-btn]:hover :is([data-nudge], [data-pill] span), [data-group]:hover [data-group-nudge] { transform: translateX(3px); }
+  [data-nudge], [data-group-nudge] { transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1); }
+  [data-pill] span { transition: left 250ms cubic-bezier(0.22, 1, 0.36, 1); }
+  [data-btn]:hover [data-nudge], [data-group]:hover [data-group-nudge] { transform: translateX(3px); }
+  [data-btn]:hover [data-pill] span { left: 3px; }
   [data-zoom] { transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
   [data-group]:hover [data-zoom] { transform: scale(1.04); }
 }
@@ -94,6 +96,8 @@ body .elementor [data-ffe-check]:checked { border-color: #28ae3d; background-col
 body .elementor [data-ffe-radio] { border-radius: 50%; } body .elementor [data-ffe-radio]:checked { border-color: #28ae3d; background-color: #28ae3d; box-shadow: inset 0 0 0 4px #fff; }
 body .elementor :is([data-ffe-check], [data-ffe-radio]):focus-visible { outline: 2px solid #025d03; outline-offset: 2px; }
 body .elementor :is([data-ffe-check], [data-ffe-radio]):user-invalid { border-color: #d93025; }
+body .elementor [data-ffe-turnstile].is-compact { min-height: 140px; } /* compact widget is 150x140 */
+body .elementor [data-ffe-turnstile] { max-width: 100%; }
 [data-span] { grid-column: 1 / -1; }
 body .elementor .e-form-label-base :is(b, strong) { font-weight: 600; }
 body .elementor [data-link="dark"] a { font-weight: 600; color: #000; text-decoration: none; text-underline-offset: 2px; } body .elementor [data-link="dark"] a:hover { text-decoration: underline; }
@@ -143,7 +147,7 @@ function ffeForms() {
      Elementor posts only the form's own fields, so the token is added to its request here; ffe-forms.php checks it and refuses a post without one. */
   var slots = document.querySelectorAll('form[data-element_type="e-form"] [data-ffe-turnstile]');
   if (slots.length) {
-    window.ffeTurnstile = function () { slots.forEach(function (el) { el.dataset.wid = turnstile.render(el, { sitekey: '${TURNSTILE_SITE_KEY}' }); }); };
+    window.ffeTurnstile = function () { slots.forEach(function (el) { var c = el.clientWidth < 300; el.classList.toggle('is-compact', c); el.dataset.wid = turnstile.render(el, { sitekey: '${TURNSTILE_SITE_KEY}', size: c ? 'compact' : 'normal' }); }); };
     var ts = document.createElement('script');
     ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=ffeTurnstile'; ts.async = true;
     document.head.appendChild(ts);
@@ -306,7 +310,7 @@ const kit = {
   // globals.css: decorative curves poke past the page edge without a sideways scroll; .load-in, where an
   // element's data-load-in="n" is its step in the page-load sequence (150ms + n × 90ms).
   custom_css: [
-    "body { overflow-x: clip; }",
+    "html, body { overflow-x: clip; }", // both: with only body set, its value propagates to the viewport, which then still scrolls sideways
     "@keyframes ffe-fade-up { from { opacity: 0; transform: translate3d(0, 24px, 0); } }",
     "@media (prefers-reduced-motion: no-preference) {",
     "  [data-load-in] { animation: ffe-fade-up 700ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both; }",

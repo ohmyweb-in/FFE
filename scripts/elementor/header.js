@@ -1,7 +1,7 @@
 // Site header (Theme Builder "Header"): port of src/components/Header.tsx + nav.ts.
 // Green utility bar that scrolls away, then the sticky bar: logo, mega menu, "Register Your Interest".
 // Sticky / scrolled behaviour lives in ffe-header.php (mu-plugin). Run: node header.js
-const { call, T, OUTFIT, FREDOKA, px, pct, pad, P0, radius, gap, link, image, box, div, w, media, sz, shadow, ease, lift, text, HIDE, svg } = require("./lib.js");
+const { call, T, OUTFIT, FREDOKA, px, pct, pad, P0, radius, gap, link, image, box, div, w, media, sz, shadow, ease, lift, text, HIDE, svg, attrs } = require("./lib.js");
 
 const M = media();
 const DATE_LINE = "16-18 November 2027 | Sands Expo &amp; Convention Centre, Singapore";
@@ -105,7 +105,7 @@ const utility = box("util-bar", [{ width: pct(100), padding: P0, background: { c
     { tablet: { height: px(44), gap: gap(0, 0), padding: pad(0, 20, 0, 32) }, mobile: { padding: pad(0, 14, 0, 26) } },
   ], [
     utilLink(UTIL[0]), rule("util-rule-1"), utilLink(UTIL[1]), rule("util-rule-2"),
-    // Language and search are placeholders on the reference build too (href="#").
+    // Language is a placeholder on the reference build too (href="#"). Search: ffe-header.php opens the overlay; /?s= is the no-JS fallback.
     box("util-lang", [
       { padding: P0, width: "auto", display: "flex", "flex-direction": "row", "align-items": "center", gap: gap(0, 5) },
       { tablet: { padding: pad(0, 8), height: px(44) } },
@@ -113,7 +113,7 @@ const utility = box("util-bar", [{ width: pct(100), padding: P0, background: { c
       w("util-lang-label", "e-paragraph", { tag: "span", paragraph: "EN" }, [text(15, 500, "rgba(255,255,255,0.5)", { "text-transform": "uppercase", "letter-spacing": px(0.3) }), { tablet: { "font-size": px(14) } }]),
       svg("util-lang-chev", "chevron-lang", [{ width: px(8), height: px(4), transform: { $$type: "transform", value: { "transform-functions": { $$type: "transform-functions", value: [{ $$type: "transform-rotate", value: { x: sz(0, "deg"), y: sz(0, "deg"), z: sz(180, "deg") } }] } } } }]),
     ], { tag: "a", link: link("#") }),
-    w("util-search", "e-image", { image: image(M["icon-search"].id), link: link("#") }, [
+    w("util-search", "e-image", { image: image(M["icon-search"].id), link: link("/?s=") }, [
       { width: px(18), height: px(18), "margin": pad(0, 0, 0, -4) },
       { tablet: { width: px(44), height: px(44), padding: pad(13), margin: P0 } },
     ]),
@@ -163,12 +163,12 @@ const panel = (s) => {
           "border-width": pad(1, 0, 0, 0), "border-style": "solid", "border-color": "rgba(2,93,3,0.1)" },
         { tablet: HIDE },
       ], [
-        box(`${s.key}-date`, [{ padding: P0, width: "auto", display: "flex", "flex-direction": "row", "align-items": "center", gap: gap(0, 6), flex: { flexGrow: 0, flexShrink: 1, flexBasis: "auto" } }], [
+        box(`${s.key}-date`, [{ padding: P0, width: "auto", display: "flex", "flex-direction": "row", "align-items": "center", gap: gap(0, 6), "min-width": px(0), flex: { flexGrow: 0, flexShrink: 1, flexBasis: "auto" } }], [
           div(`${s.key}-dot`, [{ width: px(7), height: px(7), "min-width": px(7), padding: P0, "border-radius": radius(999), background: { color: T.accent } }]),
           w(`${s.key}-date-t`, "e-paragraph", { tag: "span", paragraph: DATE_LINE }, [text(12, 500, "#727272", { "letter-spacing": px(0.24), "line-height": pct(130) })]),
         ]),
-        w(`${s.key}-cta`, "e-button", { text: `${s.cta[0]}<span class="pill-chev">›</span>`, link: link(s.cta[1]) }, [
-          { ...text(15, 500, T.white, { "letter-spacing": px(0.3) }), background: { color: T.brand }, height: px(44), padding: pad(0, 18), "border-radius": radius(999), display: "flex", "align-items": "center", gap: gap(0, 10), transition: ease(250) },
+        w(`${s.key}-cta`, "e-button", { text: `${s.cta[0]}<span class="pill-chev">›</span>`, link: link(s.cta[1]), attributes: attrs([["data-nowrap", ""]]) }, [
+          { ...text(15, 500, T.white, { "letter-spacing": px(0.3) }), background: { color: T.brand }, height: px(44), padding: pad(0, 18), "border-radius": radius(999), display: "flex", "align-items": "center", gap: gap(0, 10), transition: ease(250), flex: { flexGrow: 0, flexShrink: 0, flexBasis: "auto" } },
           { hover: { transform: lift, "box-shadow": shadow(0, 10, 24, -10, "rgba(2,93,3,0.45)") } },
         ]),
       ]),

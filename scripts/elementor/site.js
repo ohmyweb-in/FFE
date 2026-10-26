@@ -66,6 +66,16 @@ body .elementor select[data-ffe-input]:invalid { color: #cdcdcd; } body .element
 body .elementor [data-ffe-input]:is(:focus, :focus-within) { border-color: #28ae3d; box-shadow: 0 0 0 4px rgb(40 174 61 / .15); }
 body .elementor [data-ffe-input]:is(:user-invalid, :has(:user-invalid)) { border-color: #d93025; box-shadow: 0 0 0 4px rgb(217 48 37 / .12); }
 body .elementor [data-ffe-dial] input { outline: none; } body .elementor [data-ffe-dial] select { appearance: none; border: 0; }
+/* Country combobox (CountrySelect.tsx): chevron flips when open, listbox as in the source. */
+body .elementor [data-ffe-cs] { position: relative; }
+body .elementor [data-ffe-cs] [data-noevents] { transition: transform 250ms cubic-bezier(.22, 1, .36, 1); }
+body .elementor [data-ffe-cs][data-open] [data-noevents] { transform: rotate(180deg); }
+body .elementor [data-ffe-cs] > ul { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 20; max-height: 264px; overflow-y: auto; overscroll-behavior: contain; margin: 0; padding: 6px 0; list-style: none; background: #fff; border: 1px solid #cdcdcd; border-radius: 10px; box-shadow: 0 12px 32px -12px rgb(2 93 3 / .3); animation: ffe-cs-in 250ms cubic-bezier(.22, 1, .36, 1) both; }
+body .elementor [data-ffe-cs] > ul[hidden] { display: none; }
+body .elementor [data-ffe-cs] > ul > li { margin: 0; padding: 9px 16px; cursor: pointer; font-size: 15px; line-height: 20px; font-weight: 500; color: #1f1f1f; }
+body .elementor [data-ffe-cs] > ul > li.is-active { background: #e2f0e4; color: #025d03; }
+body .elementor [data-ffe-cs] > ul > li.ffe-cs-none { cursor: default; font-weight: 400; color: #4f4f4f; }
+@keyframes ffe-cs-in { from { opacity: 0; } }
 body .elementor [data-ffe-check], body .elementor [data-ffe-radio] { appearance: none; flex-shrink: 0; margin: 0; cursor: pointer; background: #fff center / 100% no-repeat; }
 body .elementor [data-ffe-check]::before, body .elementor [data-ffe-radio]::before { content: none; }
 body .elementor [data-ffe-check]:checked { border-color: #28ae3d; background-color: #28ae3d; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
@@ -126,14 +136,51 @@ function ffeForms() {
     };
     sel.addEventListener('change', sync); sync();
   });
-  /* Searchable country: a native datalist, and only a listed value is valid. */
-  document.querySelectorAll('[data-ffe-countries]').forEach(function (inp) {
-    var list = inp.dataset.ffeCountries.split('|'), dl = document.createElement('datalist');
-    dl.id = inp.id + '-list';
-    list.forEach(function (c) { var o = document.createElement('option'); o.value = c; dl.appendChild(o); });
-    inp.parentNode.appendChild(dl); inp.setAttribute('list', dl.id);
-    var check = function () { inp.setCustomValidity(!inp.value || list.indexOf(inp.value) > -1 ? '' : 'Please select a country from the list.'); };
-    inp.addEventListener('input', check); check();
+  /* Searchable country (CountrySelect.tsx): ARIA combobox, prefix matches first, only a listed value is valid. */
+  document.querySelectorAll('[data-ffe-countries]').forEach(function (inp, n) {
+    var all = inp.dataset.ffeCountries.split('|'), box = inp.parentNode, ul = document.createElement('ul'), shown = [], active = 0, open = false;
+    ul.id = 'ffe-cs-' + n; ul.setAttribute('role', 'listbox'); ul.hidden = true; box.appendChild(ul); box.setAttribute('data-ffe-cs', '');
+    inp.setAttribute('role', 'combobox'); inp.setAttribute('aria-controls', ul.id); inp.setAttribute('aria-autocomplete', 'list'); inp.setAttribute('aria-expanded', 'false');
+    var check = function () { inp.setCustomValidity(!inp.value || all.indexOf(inp.value) > -1 ? '' : 'Please select a country from the list.'); };
+    var render = function () {
+      var q = inp.value.trim().toLowerCase(), hits = all.filter(function (c) { return c.toLowerCase().indexOf(q) > -1; });
+      shown = hits.filter(function (c) { return c.toLowerCase().indexOf(q) === 0; }).concat(hits.filter(function (c) { return c.toLowerCase().indexOf(q) !== 0; }));
+      ul.textContent = '';
+      shown.forEach(function (c, i) {
+        var li = document.createElement('li'); li.id = ul.id + '-' + i; li.setAttribute('role', 'option'); li.textContent = c;
+        li.setAttribute('aria-selected', c === inp.value);
+        /* mousedown, not click: fires before the input's blur closes the list. */
+        li.addEventListener('mousedown', function (e) { e.preventDefault(); pick(c); });
+        li.addEventListener('mouseenter', function () { mark(i); });
+        ul.appendChild(li);
+      });
+      if (!shown.length) { var no = document.createElement('li'); no.className = 'ffe-cs-none'; no.textContent = 'No matching country'; ul.appendChild(no); }
+      mark(0);
+    };
+    var mark = function (i) {
+      active = i;
+      [].forEach.call(ul.children, function (li, k) { li.classList.toggle('is-active', k === i); });
+      var li = ul.children[i];
+      if (li && shown.length) { inp.setAttribute('aria-activedescendant', li.id); if (open) li.scrollIntoView({ block: 'nearest' }); } else inp.removeAttribute('aria-activedescendant');
+    };
+    var show = function (v) {
+      open = v; ul.hidden = !v; inp.setAttribute('aria-expanded', v); box.toggleAttribute('data-open', v);
+      if (v) { render(); mark(Math.max(0, shown.indexOf(inp.value))); }
+    };
+    var pick = function (c) { inp.value = c; check(); inp.dispatchEvent(new Event('change', { bubbles: true })); show(false); };
+    inp.addEventListener('input', function () { check(); show(true); });
+    inp.addEventListener('focus', function () { show(true); });
+    inp.addEventListener('click', function () { show(true); });
+    inp.addEventListener('blur', function () { show(false); });
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!open) return show(true);
+        mark(shown.length ? (active + (e.key === 'ArrowDown' ? 1 : shown.length - 1)) % shown.length : 0);
+      } else if (e.key === 'Enter' && open && shown[active]) { e.preventDefault(); pick(shown[active]); }
+      else if (e.key === 'Escape') show(false);
+    });
+    check();
   });
   /* Tick at least one box in the group (or Other). */
   document.querySelectorAll('[data-require-one]').forEach(function (g) {

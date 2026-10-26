@@ -152,7 +152,7 @@ const phone = (o = {}) => {
   ], sp ? [trigger, divider(1), code, divider(2), number] : [flag, trigger, divider(1), number], { attributes: attrs([["data-ffe-input", ""], ["data-ffe-dial", ""]]) });
 };
 
-// countrySelect(name, o): the VisitorForm CountrySelect as a text input with a native datalist (built by the snippet from data-ffe-countries, "A|B|C").
+// countrySelect(name, o): the VisitorForm CountrySelect as a text input that the snippet turns into a combobox from data-ffe-countries ("A|B|C").
 const countrySelect = (name, o = {}) => {
   const { p, placeholder = "Search country / region", required = true, v = "apply" } = o, vt = VARIANT[v], id = fid(p, name);
   const src = fs.readFileSync(path.join(__dirname, "../../src/components/register/countries.ts"), "utf8");

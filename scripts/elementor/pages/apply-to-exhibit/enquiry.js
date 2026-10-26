@@ -84,9 +84,9 @@ const whyLi = ([icon, title, desc], k) => {
 const aside = div("ax-aside", [
   {
     position: "relative", overflow: "hidden", display: "flex", "flex-direction": "column", gap: gap(26, 0), "border-radius": radius(28),
-    background: layers(grad(180, [[T.mint, 0], ["#eef6ef", 100]])), width: px(420), "flex-shrink": 0, padding: pad(36, 30, 489, 30),
+    background: layers(grad(180, [[T.mint, 0], ["#eef6ef", 100]])), width: px(420), "flex-shrink": 0, padding: pad(36, 30, 489, 30), "align-self": "flex-start",
   },
-  { tablet_extra: { width: pct(100), padding: pad(36, 30, 190, 30) }, tablet: { padding: pad(36, 30, 489, 30) }, mobile: { padding: pad(32, 22, 489, 22), "border-radius": radius(24) } },
+  { tablet_extra: { "align-self": "stretch", width: pct(100), padding: pad(36, 30, 190, 30) }, tablet: { padding: pad(36, 30, 489, 30) }, mobile: { padding: pad(32, 22, 489, 22), "border-radius": radius(24) } },
 ], [
   S.ruleHeading("ax-why-h", "ax-why", "Why Exhibit?", { font: [{ "font-size": px(24), "line-height": px(30) }, {}] }),
   div("ax-why", [

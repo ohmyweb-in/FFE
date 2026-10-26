@@ -73,5 +73,5 @@ module.exports = [dv("es-sec", d, m, [
     pg("es-sec-lede", "Fresh Food Expo APAC brings together companies and organisations involved in fresh food, the technologies that preserve its quality, and the logistics and distribution systems that connect it with markets.", mix(LEAD, [{ "max-width": px(900) }, {}])),
   ], { attributes: attrs(reveal(0)) }),
   dv("es-sec-grid", { display: "grid", width: pct(100), gap: gap(24), padding: pad(22, 0, 0, 0), "grid-template-columns": COLS(3) },
-    { tablet_extra: { "grid-template-columns": COLS(2) }, mobile: { "grid-template-columns": COLS(1) } }, COLUMNS.map(column)),
+    { tablet_extra: { "grid-template-columns": COLS(2) }, tablet: { "grid-template-columns": COLS(1) }, mobile: { "grid-template-columns": COLS(1) } }, COLUMNS.map(column)),
 ], { tag: "section" })];

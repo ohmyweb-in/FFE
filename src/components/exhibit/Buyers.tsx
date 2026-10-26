@@ -59,7 +59,7 @@ export default function Buyers() {
       </div>
 
       {/* Media 440×520 (1138:3307): the 777:739 photo pair scaled to 0.898 and moved in, meeting photo 359×359 at (22, 26), stand photo 216×198 (7px page-colour frame) at (202, 295). */}
-      <div className="relative mx-auto aspect-[440/520] w-full max-w-[440px] xl:mx-0 xl:w-[440px] xl:shrink-0" data-reveal style={{ "--i": 1 } as CSSProperties}>
+      <div className="relative mx-auto aspect-[440/520] w-full max-w-[440px] md:aspect-[2/1] md:max-w-none xl:mx-0 xl:aspect-[440/520] xl:w-[440px] xl:shrink-0" data-reveal style={{ "--i": 1 } as CSSProperties}>
         <div className="group overflow-hidden rounded-[23.35px] bg-linear-to-b from-mint to-[#c2e3c3]" style={M(22, 26, 359.23, 359.23)}>
           {/* Fill 175.67% wide at −40.26% → cover, 53.2% across. */}
           <Image src={buyerMeeting} alt="Journalists interviewing a speaker on the show floor" placeholder="blur" sizes="360px" className="zoom size-full object-cover object-[53.2%_50%]" />

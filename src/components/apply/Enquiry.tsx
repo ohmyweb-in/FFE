@@ -37,8 +37,8 @@ function RuleHeading({ className, children }: { className: string; children: str
  */
 export default function Enquiry() {
   return (
-    <section id="enquiry" className="untrim mx-auto mt-[32px] flex w-[min(1360px,100%-2*var(--gutter))] flex-col gap-[24px] md:mt-[40px] lg:mt-[45px] xl:flex-row xl:items-stretch">
-      <div className="min-w-0 flex-1 rounded-[24px] bg-white px-[22px] py-[32px] md:rounded-[28px] md:p-[40px]" data-reveal>
+    <section id="enquiry" className="untrim mx-auto mt-[32px] flex w-[min(1360px,100%-2*var(--gutter))] flex-col gap-[24px] md:mt-[40px] lg:mt-[45px] max-[359px]:w-[min(1360px,100%-32px)] xl:flex-row xl:items-stretch">
+      <div className="min-w-0 flex-1 rounded-[24px] bg-white px-[22px] py-[32px] max-[359px]:px-[16px] md:rounded-[28px] md:p-[40px]" data-reveal>
         <div className="mb-[20px]">
           <RuleHeading className="text-[28px] leading-[34px] md:text-[34px] md:leading-[40px]">Enquiry Form</RuleHeading>
         </div>
@@ -48,7 +48,7 @@ export default function Enquiry() {
       {/* Why Exhibit (781:1603). Bottom padding = Figma's 16px + the room the frame leaves for the dots and collage (489 total).
           lg–xl (full-width panel): the collage sits beside the event details instead of below them. */}
       <aside
-        className="relative flex flex-col gap-[26px] overflow-hidden rounded-[24px] bg-linear-to-b from-mint to-[#eef6ef] px-[22px] pt-[32px] pb-[489px] md:rounded-[28px] lg:pb-[190px] xl:pb-[489px] md:px-[30px] md:pt-[36px] xl:w-[420px] xl:shrink-0"
+        className="relative flex flex-col gap-[26px] overflow-hidden rounded-[24px] bg-linear-to-b from-mint to-[#eef6ef] px-[22px] pt-[32px] pb-[489px] md:rounded-[28px] lg:pb-[190px] xl:pb-[489px] md:px-[30px] md:pt-[36px] xl:w-[420px] xl:shrink-0 xl:self-start"
         data-reveal
         style={i(1)}
       >

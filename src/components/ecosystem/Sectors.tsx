@@ -78,7 +78,7 @@ export default function Sectors() {
         </p>
       </div>
 
-      <div className="grid w-full gap-[24px] pt-[22px] md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid w-full gap-[24px] pt-[22px] min-[1025px]:grid-cols-2 xl:grid-cols-3">
         {COLUMNS.map((c, idx) => (
           <article
             key={c.title}

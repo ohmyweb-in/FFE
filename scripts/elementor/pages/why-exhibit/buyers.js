@@ -39,7 +39,7 @@ const copy = box("we-buy-copy", [{ padding: P0, display: "flex", "flex-direction
 
 const media_ = box("we-buy-media", [
   { position: "relative", padding: P0, "aspect-ratio": "440/520", flex: flex(0, 0, AUTO), width: px(440), margin: pad(0) },
-  { tablet_extra: { width: pct(100), "max-width": px(440), margin: mtAuto(0) } },
+  { tablet_extra: { width: pct(100), "max-width": custom("none"), "aspect-ratio": "2/1", margin: mtAuto(0) }, mobile: { "max-width": px(440), "aspect-ratio": "440/520" } },
 ], [
   div("we-buy-p1", [
     { ...at(pct(5), null, null, pct(5)), width: pct(81.6432), height: pct(69.0827), overflow: "hidden", padding: P0, "border-radius": radius(23.35), background: PHOTO_BG }, {},

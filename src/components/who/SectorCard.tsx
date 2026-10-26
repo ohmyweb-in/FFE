@@ -44,7 +44,7 @@ export default function SectorCard({ title, lead, icon, items, tiles, tileH, tex
             </div>
           </div>
 
-          <ul className={`grid w-full gap-[8px] ${tiles === "stack" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 3xl:grid-cols-4"}`}>
+          <ul className={`grid w-full gap-[8px] ${tiles === "stack" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 3xl:grid-cols-4"}`}>
             {items.map((it) =>
               tiles === "stack" ? (
                 <li key={it.label} className={`flex flex-col items-center gap-[10px] rounded-[14px] border border-accent bg-mint px-[10px] pt-[16px] pb-[14px] text-center ${tileH}`}>

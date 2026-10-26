@@ -126,10 +126,10 @@ export default function ApplyForm() {
             {ACTIVITY.map((col, c) => (
               <ul
                 key={c}
-                className={`gap-x-[24px] sm:columns-2 lg:max-xl:columns-1 3xl:columns-1 ${c === 2 ? "lg:max-xl:pl-[41px] 3xl:pl-[41px]" : ""}`}
+                className={`gap-x-[24px] sm:grid sm:grid-cols-2 sm:gap-y-[14px] lg:max-xl:block 3xl:block ${c === 2 ? "lg:max-xl:pl-[41px] 3xl:pl-[41px]" : ""}`}
               >
                 {col.map((a) => (
-                  <li key={a} className="mb-[14px] break-inside-avoid last:mb-0">
+                  <li key={a} className="mb-[14px] last:mb-0 sm:mb-0 lg:max-xl:mb-[14px] lg:max-xl:last:mb-0 3xl:mb-[14px] 3xl:last:mb-0">
                     <label className="flex cursor-pointer items-start gap-[14px] text-[13px] leading-[19px] font-medium text-body">
                       <input type="checkbox" name="activity" value={a} className={checkbox} />
                       <span className="min-w-0 flex-1">{a}</span>

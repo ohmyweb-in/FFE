@@ -42,6 +42,8 @@ const typedStyles = (id, desktop, more = {}) => {
 
 // form(id, o, children): the e-form. o = { name, to: string[], subject, success: node[], error: node[], styles: [desktop, more], replyTo = "[email]", actions = ["email"] }.
 // actions: "email" (team inbox via ZeptoMail) and/or "ffe-mailchimp" (ffe-forms.php: the audience; on email forms only when the marketing box is ticked).
+// Every form also runs "collect-submissions" first (Elementor > Submissions); atomic forms only store entries when that action is listed.
+// No submissions_metadata, so the visitor's IP and user agent are not stored.
 // The form's own box defaults to padding 0 and the group's column layout (Elementor's base is padding 20, gap 10). success / error nodes go into the message containers.
 const form = (id, o, children) => {
   const { name, to, subject, success = [], error = [], styles = [{}, {}], replyTo = "[email]", actions = ["email"] } = o;
@@ -52,7 +54,7 @@ const form = (id, o, children) => {
   const [d, more] = mix([{ padding: P0, display: "flex", "flex-direction": "column", gap: gap(0, 0) }, {}], styles);
   return {
     id: eid, elType: "e-form",
-    settings: { "form-name": str(name), "actions-after-submit": strs(actions), email },
+    settings: { "form-name": str(name), "actions-after-submit": strs(["collect-submissions", ...actions.filter((a) => a !== "collect-submissions")]), email },
     styles: typedStyles(eid, d, more),
     elements: [...children, ...(success.length ? [msg("e-form-success-message", success)] : []), ...(error.length ? [msg("e-form-error-message", error)] : [])],
   };

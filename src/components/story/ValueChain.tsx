@@ -2,7 +2,7 @@ import Image, { type StaticImageData } from "next/image";
 import type { CSSProperties } from "react";
 import hall from "@/assets/story/hall.jpg";
 import imgFresh from "@/assets/siaw/card-fresh.jpg";
-import imgTech from "@/assets/siaw/card-agri.jpg";
+import imgTech from "@/assets/ecosystem/card-agri.jpg";
 import imgLogistics from "@/assets/eco-logistics.jpg";
 import sprout from "@/assets/story/icon-sprout.svg";
 import gear from "@/assets/story/icon-gear.svg";

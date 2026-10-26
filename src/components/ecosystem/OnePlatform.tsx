@@ -5,7 +5,7 @@ import ring from "@/assets/siaw/ring.svg";
 import arrow from "@/assets/siaw/arrow.svg";
 import check from "@/assets/check.svg";
 import imgFresh from "@/assets/siaw/card-fresh.jpg";
-import imgTech from "@/assets/siaw/card-agri.jpg";
+import imgTech from "@/assets/ecosystem/card-agri.jpg";
 import imgLogistics from "@/assets/eco-logistics.jpg";
 import iconFresh from "@/assets/icon-fresh-food.png";
 import iconTech from "@/assets/icon-agri-tech.png";
@@ -30,7 +30,7 @@ const PILLARS: Pillar[] = [
     title: "Agri & Fresh Technology",
     lead: "Protecting quality and extending freshness.",
     desc: "Technologies and solutions that support the handling, cooling, preservation, storage and packaging of fresh food.",
-    tags: ["AgriTech", "Cooling", "Preservation", "Packaging"],
+    tags: ["AgriTech", "Cooling", "Preservation", "Packaging", "Agriculture", "Harvesting"],
     img: imgTech,
     alt: "Robotic arm tending leafy greens in a vertical farm",
     pos: "object-center",

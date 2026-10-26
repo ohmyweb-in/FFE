@@ -3,6 +3,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import RevealObserver from "@/components/RevealObserver";
 import Footer from "@/components/home/Footer";
+import MediaEnquiries from "@/components/news/MediaEnquiries";
 import PageHero, { HeroCtas } from "@/components/PageHero";
 import { StayUpToDate } from "@/components/register/Sections";
 import { Pill } from "@/components/ui";
@@ -29,7 +30,7 @@ export default function RegisterToVisitPage() {
       <main className="overflow-x-clip">
         <PageHero
           size="register"
-          title="Register as a Trade Visitor"
+          title="Register Your Interest"
           img={hero}
           // Figma fill is 104.03% × 253.27% (stretched 25% tall); kept at its true ratio, same width, left edge and vertical centre.
           imgBox="lg:top-[-78.32%] lg:left-[16.45%] lg:h-[202.03%]! lg:w-[104.03%] lg:max-w-none"
@@ -53,6 +54,7 @@ export default function RegisterToVisitPage() {
         />
 
         <StayUpToDate />
+        <MediaEnquiries className="mt-[24px] w-[min(1360px,100%-2*var(--gutter))]" />
         <div className="mt-[32px] flex justify-center px-(--gutter)" data-reveal>
           <Pill href="/register-to-visit/form" className="bg-brand text-white">
             Register Your Interest

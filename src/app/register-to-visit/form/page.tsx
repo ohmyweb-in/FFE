@@ -22,8 +22,8 @@ export default function VisitorFormPage() {
           size="apply"
           title={
             <>
-              Register as a <br className="max-lg:hidden" />
-              Trade Visitor
+              Register Your <br className="max-lg:hidden" />
+              Interest
             </>
           }
           img={hero}

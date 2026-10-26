@@ -40,6 +40,8 @@ const PAGES = {
     "Event photos from Fresh Food Expo Asia Pacific for editorial use, including the Partner Event Launch Signing Ceremony in Singapore."],
   "gallery/partner-event-launch-signing-ceremony": ["Partner Event Launch Signing Ceremony | FFE APAC Gallery",
     "Photos from the FFE APAC Partner Event Launch Signing Ceremony between Messe Berlin and the Singapore Tourism Board. For editorial use."],
+  "news/messe-berlin-launches-fresh-food-expo-asia-pacific": ["Messe Berlin launches Fresh Food Expo APAC in Singapore",
+    "New B2B trade show for the fresh food industry: Fresh Food Expo Asia Pacific, 16–18 Nov 2027, Sands Expo, Singapore. Part of SIAW from 2027."],
   subscribe: ["Subscribe for Updates | Fresh Food Expo Asia Pacific",
     "Join the FFE APAC community: be the first to know about new exhibitors, programme announcements, networking opportunities and industry news."],
   contact: ["Contact Us | Fresh Food Expo Asia Pacific (FFE APAC)",
@@ -86,10 +88,12 @@ foreach (json_decode(base64_decode('${b64(PAGES)}'), true) as $path => [$t, $d])
   update_post_meta($p->ID, 'rank_math_description', wp_slash($d));
   $done[] = $p->ID;
 }
-// The album page: a shared press-release link previews its cover photo, not the site-wide poster.
-$a = get_page_by_path('gallery/partner-event-launch-signing-ceremony');
-update_post_meta($a->ID, 'rank_math_facebook_image', '${M["g8-signing-1"].url}');
-update_post_meta($a->ID, 'rank_math_facebook_image_id', ${M["g8-signing-1"].id});
-update_post_meta($a->ID, 'rank_math_twitter_use_facebook', 'on');
+// The album and the press release: a shared link previews the signing photo, not the site-wide poster.
+foreach (['gallery/partner-event-launch-signing-ceremony', 'news/messe-berlin-launches-fresh-food-expo-asia-pacific'] as $path) {
+  $a = get_page_by_path($path);
+  update_post_meta($a->ID, 'rank_math_facebook_image', '${M["g8-signing-2"].url}');
+  update_post_meta($a->ID, 'rank_math_facebook_image_id', ${M["g8-signing-2"].id});
+  update_post_meta($a->ID, 'rank_math_twitter_use_facebook', 'on');
+}
 return $done;
 `).return_value));

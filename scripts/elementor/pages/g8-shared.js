@@ -8,9 +8,9 @@ const ALBUMS = [
     title: "Partner Event Launch Signing Ceremony",
     desc: "Between Messe Berlin and the Singapore Tourism Board, supported by the Singapore Food Agency, Temasek and Enterprise Singapore.",
     photos: [
-      ["signing-1", "Guests give a thumbs-up in front of the Partner Event Launch Signing Ceremony backdrop"],
       ["signing-2", "Signatories at the table during the Partner Event Launch Signing Ceremony"],
       ["signing-3", "Signing the partner agreement at the Fresh Food Expo Asia Pacific Partner Event Launch"],
+      ["signing-1", "Guests give a thumbs-up in front of the Partner Event Launch Signing Ceremony backdrop"],
     ],
   },
 ];

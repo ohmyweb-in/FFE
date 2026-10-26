@@ -4,7 +4,7 @@ import RevealObserver from "@/components/RevealObserver";
 import Footer from "@/components/home/Footer";
 import PageHero from "@/components/PageHero";
 import MediaEnquiries from "@/components/news/MediaEnquiries";
-// Hidden for now: import NewsList from "@/components/news/NewsList";
+import NewsList from "@/components/news/NewsList";
 // Hidden for now: import PressPhotos from "@/components/news/PressPhotos";
 import StayUpdated from "@/components/news/StayUpdated";
 import hero from "@/assets/about/hero.jpg";
@@ -32,7 +32,7 @@ export default function NewsPage() {
           Stay up to date with the latest announcements, industry developments, partnerships and programme updates from Fresh Food Expo Asia Pacific (FFE APAC).
         </PageHero>
         <MediaEnquiries />
-        {/* <NewsList /> */}
+        <NewsList />
         {/* <PressPhotos /> */}
         <StayUpdated />
       </main>

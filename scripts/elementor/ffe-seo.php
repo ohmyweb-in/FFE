@@ -92,12 +92,16 @@ function ffe_seo_website($home) {
 }
 
 // Title and description exactly as Rank Math prints them in <title> and the meta tag.
+// get_the_title() is HTML-escaped for display ("&#038;"); JSON-LD wants the plain text.
+function ffe_seo_title($p) { return html_entity_decode(get_the_title($p), ENT_QUOTES | ENT_HTML5, "UTF-8"); }
+
 function ffe_seo_meta($p) {
   $t = $d = '';
   try {
     if (class_exists('\RankMath\Paper\Paper')) { $pp = \RankMath\Paper\Paper::get(); $t = (string) $pp->get_title(); $d = (string) $pp->get_description(); }
   } catch (\Throwable $e) {}
-  return [$t ?: (get_post_meta($p->ID, 'rank_math_title', true) ?: get_the_title($p)), $d ?: (string) get_post_meta($p->ID, 'rank_math_description', true)];
+  $plain = fn($s) => html_entity_decode($s, ENT_QUOTES | ENT_HTML5, 'UTF-8'); // Paper returns them escaped for the <head>
+  return [$plain($t ?: (get_post_meta($p->ID, 'rank_math_title', true) ?: ffe_seo_title($p))), $plain($d ?: (string) get_post_meta($p->ID, 'rank_math_description', true))];
 }
 
 // The album's photos from its Elementor data: every tile link carries data-lb and wraps the thumbnail image
@@ -134,13 +138,23 @@ function ffe_seo_photos($p) {
 add_filter('rank_math/json_ld', function ($data) {
   $home = home_url('/');
   if (is_front_page()) {
-    // Rank Math builds the homepage graph itself; keep it, enrich its Organization, add the event.
+    // Rank Math builds the homepage graph itself; keep it and enrich its Organization (the event is printed below).
     foreach ($data as $k => $n) if (is_array($n) && ($n['@id'] ?? '') === $home . '#organization') $data[$k] = ffe_seo_org($home, $n);
-    $data['ffe_event'] = ffe_seo_event($home);
-    return $data;
   }
+  return $data;
+}, 99);
+
+// Our nodes are their own block, not added through rank_math/json_ld: Rank Math runs every value through wp_kses_post_deep, which
+// turns "Sands Expo & Convention Centre" into "&amp;". Inner pages: Rank Math prints nothing there (see above), so it's the whole graph.
+add_action('wp_head', function () {
+  $g = is_front_page() ? ['ffe_event' => ffe_seo_event(home_url('/'))] : ffe_seo_inner_graph();
+  if ($g) echo '<script type="application/ld+json" class="ffe-schema">' . wp_json_encode(['@context' => 'https://schema.org', '@graph' => array_values($g)], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) . "</script>\n";
+}, 99);
+
+function ffe_seo_inner_graph() {
+  $home = home_url('/');
   $p = get_queried_object();
-  if (!is_singular('page') || !($p instanceof WP_Post)) return $data;
+  if (!is_singular('page') || !($p instanceof WP_Post)) return [];
 
   $url = get_permalink($p);
   [$title, $desc] = ffe_seo_meta($p);
@@ -163,8 +177,8 @@ add_filter('rank_math/json_ld', function ($data) {
 
   // Home → ancestors → this page.
   $crumbs = [['Home', $home]];
-  foreach (array_reverse(get_post_ancestors($p)) as $aid) $crumbs[] = [get_the_title($aid), get_permalink($aid)];
-  $crumbs[] = [get_the_title($p), $url];
+  foreach (array_reverse(get_post_ancestors($p)) as $aid) $crumbs[] = [ffe_seo_title($aid), get_permalink($aid)];
+  $crumbs[] = [ffe_seo_title($p), $url];
   $crumb = ['@type' => 'BreadcrumbList', '@id' => $url . '#breadcrumb', 'itemListElement' => array_map(
     fn($c, $i) => ['@type' => 'ListItem', 'position' => $i + 1, 'name' => $c[0], 'item' => $c[1]], $crumbs, array_keys($crumbs))];
 
@@ -173,7 +187,7 @@ add_filter('rank_math/json_ld', function ($data) {
 
   if ($under === 'news') {
     // A press release (any child of /news/): duplicated article pages get this automatically.
-    $head = get_the_title($p);
+    $head = ffe_seo_title($p);
     $g['ffe_article'] = array_filter([
       '@type' => 'NewsArticle', '@id' => $url . '#article', 'headline' => mb_strlen($head) > 110 ? mb_substr($head, 0, 109) . '…' : $head,
       'description' => $desc, 'image' => $img ? [$img] : null,
@@ -206,5 +220,5 @@ add_filter('rank_math/json_ld', function ($data) {
     }
     if ($parts) $g['ffe_webpage']['hasPart'] = $parts;
   }
-  return $data + $g;
-}, 99);
+  return $g;
+}

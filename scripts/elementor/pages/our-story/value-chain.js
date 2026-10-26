@@ -7,7 +7,7 @@ const AUTOS = { "inset-block-start": AUTO, "inset-inline-end": AUTO, "inset-bloc
 const MINT_GREEN = layers(grad(180, [[T.mint, 0], ["#c2e3c3", 100]]));
 const CARDS = [
   { title: "Fresh Food", text: "Fruit &amp; Vegetables, Meat &amp; Poultry, Seafood, Eggs &amp; Dairy, supplied by growers, producers, exporters and fresh food suppliers from across regional and global markets.", img: "g1-vc-fresh", pos: [50, 50], icon: "g1-ic-sprout" },
-  { title: "Agri &amp; Fresh Technology", text: "Post-harvest technologies, cooling, preservation, storage, packaging and other solutions that help maintain quality, extend freshness, improve efficiency and reduce losses throughout the fresh food journey.", img: "g1-vc-agri", pos: [50, 50], icon: "g1-ic-gear" },
+  { title: "Agri &amp; Fresh Technology", text: "Post-harvest technologies, cooling, preservation, storage, packaging and other solutions that help maintain quality, extend freshness, improve efficiency and reduce losses throughout the fresh food journey.", img: "g7-eco-agri", pos: [50, 50], icon: "g1-ic-gear" },
   { title: "Logistics &amp; Distribution", text: "Transportation, cold chain, warehousing, supply chain infrastructure and distribution solutions that enable fresh food to move safely and efficiently across local, regional and international markets.", img: "g1-vc-logistics", pos: [50, 25], icon: "g1-ic-truck" },
 ];
 

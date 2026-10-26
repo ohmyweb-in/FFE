@@ -1,4 +1,4 @@
-// On-page SEO (Rank Math free; modules sitemap, rich-snippet, redirections): site-wide settings and each page's title +
+// On-page SEO (Rank Math free; modules sitemap, rich-snippet, redirections, instant-indexing): site-wide settings and each page's title +
 // meta description. Titles ≤ 60 chars and descriptions ≤ 160 so Google shows them whole; wording from the pages' own copy,
 // with the terms the 26 Oct 2026 DataForSEO research found people search for (trade fair, Singapore, agri-food, cold chain, SIAW).
 // The Event structured data is in ffe-seo.php. Run: node seo.js [--dry]
@@ -63,6 +63,9 @@ const SOCIAL = [
 const b64 = (v) => Buffer.from(JSON.stringify(v)).toString("base64");
 console.log(JSON.stringify(php(`
 $set = function ($opt, $vals) { $o = get_option($opt, []); update_option($opt, array_merge(is_array($o) ? $o : [], $vals)); };
+// IndexNow (Rank Math "Instant Indexing"): pages are announced to Bing/Yandex on every update. The key file is a plain file in the docroot
+// (<key>.txt, written 27 Oct 2026) because Rank Math's virtual route 404'd behind the cache.
+\\RankMath\\Helper::update_modules(['instant-indexing' => 'on']);
 $set('rank-math-options-titles', [
   'title_separator' => '|',
   'knowledgegraph_type' => 'company',

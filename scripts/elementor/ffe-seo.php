@@ -49,7 +49,8 @@ function ffe_seo_event($home) {
     '@type' => 'ExhibitionEvent',
     '@id' => $home . '#event',
     'name' => 'Fresh Food Expo Asia Pacific 2027',
-    'alternateName' => 'FFE APAC 2027',
+    // "Fresh Food Expo Asia 2027" is how the organiser's own calendar (messe-berlin.asia) lists it: same event, so assistants can match the two.
+    'alternateName' => ['FFE APAC 2027', 'Fresh Food Expo Asia 2027'],
     'description' => "Asia Pacific's premier trade fair for fresh food, connecting fresh food, technology, logistics and distribution from farm to fork.",
     'url' => $home,
     'image' => [$home . 'wp-content/uploads/2026/10/ffe-g7-og.jpg'],

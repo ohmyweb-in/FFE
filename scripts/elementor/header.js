@@ -48,6 +48,7 @@ const NAV = [
     cta: ["Subscribe", "/subscribe"],
     links: [
       ["News & Press Release", "/news", "Announcements and media"],
+      ["Gallery", "/gallery", "Photos from our events"],
       ["Subscribe Newsletter", "/subscribe", "Updates in your inbox"],
     ],
   },

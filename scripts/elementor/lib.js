@@ -282,6 +282,7 @@ const HERO_SIZES = {
   },
   why: { panel: 316, radius: 30, curve: { top: 142, ...CURVE_EXHIBIT }, pt: 59, pl: 0.5, title: { mt: 0, all: true }, ctas: [26], fades: F3 },
   contact: { panel: 298, curve: { top: 118, w: 213, h: 181 }, pt: 111, pl: 0.13, fades: [{ left: 16.72, w: 38.57 }, { left: 16.75, w: 38.57 }] },
+  gallery: { panel: 316, radius: 30, curve: { top: 162, ...CURVE_EXHIBIT }, pt: 77, pl: 0.5, title: { mt: 0, all: true }, descType: MEDIUM(448, 26), desc: 22, ctas: [29], fades: F3 },
 };
 
 // HeroCtas (PageHero.tsx): Register / Apply / Stay Connected, 200/162/162 x 40 white pills. o = { stayHref, registerHref, styles, attributes /* extra attr pairs */ }.

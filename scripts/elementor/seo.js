@@ -36,6 +36,10 @@ const PAGES = {
     "Getting to Sands Expo & Convention Centre, visa information, tips and where to stay in Singapore for Fresh Food Expo APAC, 16–18 November 2027."],
   news: ["News & Press | Fresh Food Expo Asia Pacific (FFE APAC)",
     "The latest announcements, industry developments, partnerships and programme updates from Fresh Food Expo APAC, plus press photos and videos."],
+  gallery: ["Gallery | Fresh Food Expo Asia Pacific (FFE APAC)",
+    "Event photos from Fresh Food Expo Asia Pacific for editorial use, including the Partner Event Launch Signing Ceremony in Singapore."],
+  "gallery/partner-event-launch-signing-ceremony": ["Partner Event Launch Signing Ceremony | FFE APAC Gallery",
+    "Photos from the FFE APAC Partner Event Launch Signing Ceremony between Messe Berlin and the Singapore Tourism Board. For editorial use."],
   subscribe: ["Subscribe for Updates | Fresh Food Expo Asia Pacific",
     "Join the FFE APAC community: be the first to know about new exhibitors, programme announcements, networking opportunities and industry news."],
   contact: ["Contact Us | Fresh Food Expo Asia Pacific (FFE APAC)",
@@ -82,5 +86,10 @@ foreach (json_decode(base64_decode('${b64(PAGES)}'), true) as $path => [$t, $d])
   update_post_meta($p->ID, 'rank_math_description', wp_slash($d));
   $done[] = $p->ID;
 }
+// The album page: a shared press-release link previews its cover photo, not the site-wide poster.
+$a = get_page_by_path('gallery/partner-event-launch-signing-ceremony');
+update_post_meta($a->ID, 'rank_math_facebook_image', '${M["g8-signing-1"].url}');
+update_post_meta($a->ID, 'rank_math_facebook_image_id', ${M["g8-signing-1"].id});
+update_post_meta($a->ID, 'rank_math_twitter_use_facebook', 'on');
 return $done;
 `).return_value));

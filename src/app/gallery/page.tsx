@@ -1,4 +1,3 @@
-// Hidden from routing by the _ prefix. Rename the folder to `gallery` to publish /gallery.
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import RevealObserver from "@/components/RevealObserver";
@@ -7,11 +6,12 @@ import PageHero, { HeroCtas } from "@/components/PageHero";
 import JoinBanner from "@/components/home/JoinBanner";
 import RuleEyebrow from "@/components/story/RuleEyebrow";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
+import { ALBUMS } from "@/components/gallery/albums";
 import hero from "@/assets/hero.jpg";
 
 export const metadata: Metadata = {
   title: "Gallery | Fresh Food Expo Asia Pacific (FFE APAC)",
-  description: "Photos from past editions of the Messe Berlin Asia Pacific trade shows in Singapore, for editorial use.",
+  description: "Event photos from Fresh Food Expo Asia Pacific (FFE APAC) for editorial use, including the Partner Event Launch Signing Ceremony.",
 };
 
 /** Figma 1288:840 (Gallery). */
@@ -32,7 +32,7 @@ export default function GalleryPage() {
           Please note that these photos are intended solely for editorial use.
         </PageHero>
 
-        <GalleryGrid />
+        <GalleryGrid items={ALBUMS.map((a) => ({ thumb: a.photos[0].thumb, alt: a.title, title: a.title, href: `/gallery/${a.slug}/` }))} />
 
         {/* Figma 1288:1220: same 412px banner as Who Should Exhibit (781:2682). */}
         <JoinBanner

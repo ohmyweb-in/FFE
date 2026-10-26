@@ -25,7 +25,7 @@ const COLS = [
   { key: "about", title: "About", grow: 225, max: 201, links: [["Overview", "/about"], ["Our Story", "/our-story"], ["Fresh Food Ecosystem", "/ecosystem"], ["Singapore International Agri-Food Week", "/siaw"], ["Messe Berlin", "/messe-berlin"], ["Contact Us", "/contact"]] },
   { key: "exhibit", title: "Exhibit", grow: 230, max: 190, links: [["Why Exhibit", "/why-exhibit"], ["Who Should Exhibit", "/who-should-exhibit"], ["Apply to Exhibit", "/apply-to-exhibit"]] },
   { key: "visit", title: "Visit", grow: 185, links: [["Why Visit", "/why-visit"], ["Who Should Visit", "/who-should-visit"], ["Plan Your Visit", "/plan-your-visit"], ["Register Your Interest", "/register-to-visit"]] },
-  { key: "news", title: "News & Media", grow: 0, links: [["News & Press Release", "/news"], ["Subscribe Newsletter", "/subscribe"]] },
+  { key: "news", title: "News & Media", grow: 0, links: [["News & Press Release", "/news"], ["Gallery", "/gallery"], ["Subscribe Newsletter", "/subscribe"]] },
 ];
 
 // The reference trims every text box to its cap height, so its 25px list gap measures 37px line to line.

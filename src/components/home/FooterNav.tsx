@@ -10,7 +10,7 @@ const COLS = [
   { title: "About", w: 225, max: 201, gap: 7, links: ["Overview", "Our Story", "Fresh Food Ecosystem", "Singapore International Agri-Food Week", "Messe Berlin", "Contact Us"] },
   { title: "Exhibit", w: 230, max: 190, gap: 8, links: ["Why Exhibit", "Who Should Exhibit", "Apply to Exhibit"] },
   { title: "Visit", w: 185, gap: 6, links: ["Why Visit", "Who Should Visit", "Plan Your Visit", "Register Your Interest"] },
-  { title: "News & Media", w: 0, gap: 5, links: ["News & Press Release", "Subscribe Newsletter"] },
+  { title: "News & Media", w: 0, gap: 5, links: ["News & Press Release", "Gallery", "Subscribe Newsletter"] },
 ];
 
 // Stage 1 pages only (Programme returns in phase 2).
@@ -29,6 +29,7 @@ const HREF: Record<string, string> = {
   "Plan Your Visit": "/plan-your-visit",
   "Register Your Interest": "/register-to-visit",
   "News & Press Release": "/news",
+  Gallery: "/gallery",
   "Subscribe Newsletter": "/subscribe",
 };
 

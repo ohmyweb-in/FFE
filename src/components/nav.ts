@@ -64,6 +64,7 @@ export const NAV: NavSection[] = [
     cta: { label: "Subscribe", href: "/subscribe" },
     links: [
       { label: "News & Press Release", href: "/news", desc: "Announcements and media" },
+      { label: "Gallery", href: "/gallery", desc: "Photos from our events" },
       { label: "Subscribe Newsletter", href: "/subscribe", desc: "Updates in your inbox" },
     ],
   },

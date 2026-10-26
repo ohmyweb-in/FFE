@@ -23,6 +23,9 @@ const D = {
   email: "M3 6h18v12H3zM3 7l9 7 9-7",
   facebook: "M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.4H7.7V13h2.7v8z",
   x: "M17.8 3h3l-6.6 7.5L22 21h-6.1l-4.8-6.3L5.6 21h-3l7-8L2.2 3h6.3l4.3 5.7zM16.7 19.2h1.7L7.4 4.7H5.6z",
+  wechat:
+    "M9.8 3C5.9 3 2.8 5.6 2.8 8.8c0 1.8 1 3.4 2.6 4.4l-.7 2.3 2.6-1.4c.5.1 1 .2 1.6.2M9.8 3c3.7 0 6.8 2.6 6.8 5.8 0 .3 0 .6-.1.8M7 8.2h.01M12.2 8.2h.01M21.3 15c0-2.5-2.4-4.5-5.4-4.5s-5.4 2-5.4 4.5 2.4 4.5 5.4 4.5c.7 0 1.3-.1 1.9-.3l2 1.1-.6-2c1.3-.8 2.1-2 2.1-3.3zM14 14.4h.01M18 14.4h.01",
+  close: "M6 6l12 12M18 6L6 18",
   telegram:
     "M21.5 3.6 2.9 10.8c-.9.3-.9 1 0 1.3l4.7 1.5 1.8 5.6c.2.6.4.8.9.8s.7-.2 1-.5l2.4-2.3 4.7 3.5c.9.5 1.5.2 1.7-.8l3-14.5c.3-1.3-.5-1.9-1.6-1.4zM8.6 13.2l9.2-5.8c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2z",
 };
@@ -30,16 +33,58 @@ const D = {
 type Gtag = (cmd: "event", name: string, params: Record<string, string>) => void;
 
 export default function ShareBar({ className = "" }: { className?: string }) {
-  const [page, setPage] = useState<{ url: string; title: string; canShare: boolean } | null>(null);
+  const [page, setPage] = useState<{ url: string; title: string; canShare: boolean; inWeChat: boolean; touch: boolean } | null>(null);
   const [msg, setMsg] = useState("");
+  const [open, setOpen] = useState(false);
+  const [qr, setQr] = useState<string | null | false>(null); // null = loading, false = failed
+  const wcBtn = useRef<HTMLButtonElement>(null);
+  const closeBtn = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     const canon = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href;
     const og = document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only values (canonical URL, navigator.share), unknown at prerender
-    setPage({ url: canon || location.origin + location.pathname, title: og || document.title, canShare: typeof navigator.share === "function" });
+    setPage({ url: canon || location.origin + location.pathname, title: og || document.title, canShare: typeof navigator.share === "function",
+      inWeChat: /MicroMessenger/i.test(navigator.userAgent),
+      touch: matchMedia("(pointer: coarse)").matches,
+    });
   }, []);
+
+  const url0 = page?.url;
+  // Esc closes (focus back on the WeChat button); a click outside closes. The encoder is a separate chunk, loaded on first open.
+  useEffect(() => {
+    if (!open) return;
+    closeBtn.current?.focus({ preventScroll: true });
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        wcBtn.current?.focus();
+      }
+    };
+    const down = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (!panel.current?.contains(t) && !wcBtn.current?.contains(t)) setOpen(false);
+    };
+    document.addEventListener("keydown", key);
+    document.addEventListener("click", down);
+    return () => {
+      document.removeEventListener("keydown", key);
+      document.removeEventListener("click", down);
+    };
+  }, [open]);
+  useEffect(() => {
+    if (!open || !url0 || qr !== null) return;
+    let live = true;
+    import("@/lib/qr.js").then(
+      (m) => live && setQr(m.qrSvg(url0)),
+      () => live && setQr(false),
+    );
+    return () => {
+      live = false;
+    };
+  }, [open, url0, qr]);
 
   if (!page) return <div className={className} style={{ minHeight: 118 }} />;
   const { url, title } = page;
@@ -82,6 +127,10 @@ export default function ShareBar({ className = "" }: { className?: string }) {
       if ((e as Error)?.name !== "AbortError") say("Sharing failed");
     }
   };
+  const toggleWeChat = () => {
+    if (!open) track("wechat");
+    setOpen(!open);
+  };
   const links: [string, string, string, string, boolean?][] = [
     ["linkedin", "Share on LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${U}`, D.linkedin, true],
     ["whatsapp", "Share on WhatsApp", `https://api.whatsapp.com/send?text=${T}%20${U}`, D.whatsapp],
@@ -108,7 +157,56 @@ export default function ShareBar({ className = "" }: { className?: string }) {
             {icon(d, filled)}
           </a>
         ))}
+        <button ref={wcBtn} type="button" className={btn} aria-label="Share on WeChat" aria-expanded={open} aria-controls="ffe-share-wechat" onClick={toggleWeChat}>
+          {icon(D.wechat)}
+        </button>
       </div>
+      {open && (
+        <div
+          ref={panel}
+          id="ffe-share-wechat"
+          role="group"
+          aria-label="WeChat sharing"
+          className="relative mt-[14px] max-w-[360px] rounded-[20px] bg-white p-[20px] text-[16px] leading-[24px] text-[#032919] shadow-[0_12px_16px_rgb(3_41_26/0.1)]"
+        >
+          <button
+            ref={closeBtn}
+            type="button"
+            className={`${btn} absolute top-[8px] right-[8px]`}
+            aria-label="Close"
+            onClick={() => {
+              setOpen(false);
+              wcBtn.current?.focus();
+            }}
+          >
+            {icon(D.close)}
+          </button>
+          {page.inWeChat ? (
+            <p className="mr-[44px]">Tap ••• in the top-right corner to share this article.</p>
+          ) : (
+            <>
+              {page.touch && (
+                <>
+                  <p className="mr-[44px]">Copy the link and paste it into a WeChat chat.</p>
+                  <button
+                    type="button"
+                    onClick={copy}
+                    className="mt-[12px] inline-flex h-[44px] items-center rounded-full bg-mint px-[22px] font-display text-[16px] leading-none font-semibold text-forest transition-colors duration-250 hover:bg-accent hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+                  >
+                    Copy link
+                  </button>
+                  <p className="mt-[12px]">Or scan from another device</p>
+                </>
+              )}
+              <div className="mt-[12px] flex min-h-[24px] justify-center [&_svg]:block [&_svg]:size-[168px]">
+                {qr ? <span className="contents" dangerouslySetInnerHTML={{ __html: qr }} /> : qr === null ? "Loading…" : "The QR code could not be loaded."}
+              </div>
+              {!page.touch && <p className="mt-[12px]">Scan with WeChat to open and share this article.</p>}
+              <p className="mt-[12px] text-[13px] leading-[18px] break-all text-body">{url}</p>
+            </>
+          )}
+        </div>
+      )}
       <p className="mt-[10px] min-h-[22px] text-[15px] leading-[22px] font-medium text-forest" aria-live="polite">
         {msg}
       </p>

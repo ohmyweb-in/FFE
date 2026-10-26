@@ -164,7 +164,7 @@ export default function VisitorForm() {
         {/* items-end: when one label wraps (Mobile Number at md) the paired inputs still line up. */}
         <div className="grid gap-[24px] md:grid-cols-2 md:items-end md:gap-x-[24px]">
           <Group id="salutation-label" label="Salutation" radio>
-            <Options name="salutation" type="radio" options={SALUTATION} className="flex flex-wrap gap-y-[14px] [&>li]:mb-0" />
+            <Options name="salutation" type="radio" options={SALUTATION} className="grid grid-cols-2 gap-x-[16px] gap-y-[14px] sm:flex sm:flex-wrap [&>li]:mb-0" />
           </Group>
 
           <Field label="First Name" required>

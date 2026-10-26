@@ -56,8 +56,8 @@ const left = box("sb-left", [
     w("sb-card-img", "e-image", { image: image(M["g4-card"].id), attributes: attrs([["data-zoom", ""]]) }, [{ ...at(px(0), px(0), px(0), px(0)), width: pct(100), height: pct(100), "max-width": custom("none"), "object-fit": "cover" }, {}]),
     div("sb-card-shade", [{ ...at(px(0), px(0), px(0), px(0)), padding: P0, background: layers(grad(180, [["rgba(40,174,61,0)", 30], [T.accent, 100]])) }, {}]),
     w("sb-card-t", "e-paragraph", { paragraph: "A connected <br>ecosystem for a <br>healthier tomorrow.", attributes: attrs([["data-br-md", ""]]) }, [
-      { ...H(38, 44, T.white), "max-width": px(536), ...at(px(200), null, null, px(28)) },
-      { mobile: { ...H(30, 36, T.white), "inset-block-start": AUTO, "inset-block-end": px(60), "inset-inline-start": px(24) } },
+      { ...H(38, 44, T.white), "max-width": custom("min(536px, 100% - 56px)"), ...at(px(200), null, null, px(28)) },
+      { mobile: { ...H(30, 36, T.white), "max-width": custom("min(536px, 100% - 48px)"),"inset-block-start": AUTO, "inset-block-end": px(60), "inset-inline-start": px(24) } },
     ]),
     div("sb-card-rule", [
       { ...at(px(348), null, null, px(28)), width: px(64), height: px(5), padding: P0, "border-radius": radius(3), background: { color: T.white } },

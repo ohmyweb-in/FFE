@@ -54,7 +54,7 @@ export default function SubscribeSection() {
             className="zoom absolute inset-0 size-full object-cover"
           />
           <div className="absolute inset-0 bg-linear-to-b from-accent/0 from-30% to-accent" />
-          <p className="absolute bottom-[60px] left-[24px] max-w-[536px] font-display text-[30px] leading-[36px] font-semibold text-white md:top-[200px] md:bottom-auto md:left-[28px] md:text-[38px] md:leading-[44px]">
+          <p className="absolute bottom-[60px] left-[24px] max-w-[min(536px,100%-48px)] font-display text-[30px] leading-[36px] font-semibold text-white md:top-[200px] md:bottom-auto md:left-[28px] md:max-w-[min(536px,100%-56px)] md:text-[38px] md:leading-[44px]">
             A connected <br className="hidden md:block" />
             ecosystem for a <br className="hidden md:block" />
             healthier tomorrow.

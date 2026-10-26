@@ -20,7 +20,7 @@ const head = box("rf-head", [{ padding: P0, display: "flex", "flex-direction": "
   ]),
 ]);
 
-const salList = box("rf-sal-list", [{ padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(14, 24) }, {}],
+const salList = box("rf-sal-list", [{ padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(14, 24) }, { mobile: { display: "grid", "grid-template-columns": "repeat(2, minmax(0, 1fr))", gap: gap(14, 16) } }],
   S.SALUTATION.map((s, k) => S.li(`rf-sal-li${k + 1}`, radio("salutation", s, { p: "rf", value: s, required: true, ...S.BOX }), true, true)), { attributes: attrs([["role", "list"]]) });
 
 const actIn = div("rf-act-in", [{ padding: P0, display: "flex", "flex-direction": "column", gap: gap(14, 0) }, {}], [

@@ -36,7 +36,7 @@ export function StayUpToDate() {
   return (
     <section className={`untrim relative mt-[32px] flex flex-col gap-[20px] overflow-hidden rounded-[24px] bg-linear-to-b from-mint to-[#eef6ef] px-[22px] py-[28px] md:rounded-[28px] md:px-[40px] md:pt-[32px] md:pb-[32px] lg:mt-[43.83px] ${ROW}`}>
       {/* image 11 [Vectorized] (793:4402) at (1124, 10.17) of the panel. */}
-      <Image src={leaf} alt="" aria-hidden className="pointer-events-none absolute top-[10.17px] right-[10.26px] hidden md:block" />
+      <Image src={leaf} alt="" aria-hidden className="pointer-events-none absolute top-[10.17px] right-[10.26px] hidden xl:block" />
       <h2 className="relative flex items-center gap-[16px]" data-reveal>
         <span className="font-display text-[28px] leading-[34px] font-semibold text-forest md:text-[34px] md:leading-[40px]">Stay Up to Date.</span>
         <span aria-hidden className="h-[2px] w-[36px] shrink-0 rounded-[1px] bg-accent" />
@@ -46,7 +46,7 @@ export function StayUpToDate() {
         {BENEFITS.map((b, n) => (
           <li
             key={b.title[0]}
-            className="group flex flex-col items-start gap-[12px] border-[#c2e3c3] xl:flex-1 xl:border-r xl:px-[22px] xl:first:pl-0 xl:last:border-r-0"
+            className="group flex flex-col items-start gap-[12px] border-[#c2e3c3] xl:flex-1 xl:border-r xl:px-[22px] xl:first:pl-0 xl:last:border-r-0 sm:max-lg:last:col-span-2"
             data-reveal
             style={i(n)}
           >

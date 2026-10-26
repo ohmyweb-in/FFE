@@ -2,6 +2,9 @@
 const RV_CSS = [
   '/* StayUpToDate ul: sm:grid-cols-2 (640–767) */',
   '@media (min-width: 640px) and (max-width: 767px) { body .elementor [data-id="rv-stay-grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }',
+  '/* StayUpToDate 2-col (640–1024): 5th item spans both columns; leaf hidden below 1280 so it never runs under text */',
+  '@media (min-width: 640px) and (max-width: 1024px) { body .elementor [data-id="rv-stay-b5"] { grid-column: 1 / -1; } }',
+  '@media (max-width: 1279px) { body .elementor [data-id="rv-stay-leaf"] { display: none; } }',
   '/* StayUpToDate Lines: <br className="max-xl:hidden"> */',
   '@media (max-width: 1279px) { body .elementor [data-br-xl] br { display: none; } }',
   '/* StayUpToDate li.group: group-hover:-translate-y-[3px] on the 56px circle */',

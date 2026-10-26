@@ -20,6 +20,13 @@ module.exports = {
     'body .elementor [data-id$="-arrow"][data-id^="ct-ur-l"] { transition: background-color 250ms cubic-bezier(.22,1,.36,1); }',
     'body .elementor [data-id$="-chev"][data-id^="ct-ur-l"] { transition: transform 250ms cubic-bezier(.22,1,.36,1); }',
     '@media (hover: hover) { body .elementor [data-id^="ct-ur-l"][data-group]:hover [data-id$="-arrow"] { background-color: #e2f0e4; } body .elementor [data-id^="ct-ur-l"][data-group]:hover [data-id$="-chev"] { transform: translateX(2px); } }',
+    "/* C8 UsefulResources cards <=400: icon + arrow on row 1, text full width below */",
+    '@media (max-width: 400px) { body .elementor [data-id="ct-ur-panel"] { padding-left: 14px; padding-right: 14px; } body .elementor [data-id^="ct-ur-l"][data-id$="-a"] { flex-wrap: wrap; row-gap: 10px; } body .elementor [data-id$="-ic"][data-id^="ct-ur-l"] { order: 1; } body .elementor [data-id$="-arrow"][data-id^="ct-ur-l"] { order: 2; margin-left: auto; } body .elementor [data-id$="-txt"][data-id^="ct-ur-l"] { order: 3; flex: 1 1 100%; } }',
+    "/* C9 SendMessage <=400: less nested padding, email stays 14px and may break */",
+    '@media (max-width: 400px) { body .elementor [data-id="ct-sm"] { width: calc(100% - 24px); } body .elementor [data-id="ct-sm-main"] { padding-left: 18px; padding-right: 18px; } body .elementor [data-id="ct-sm-mail-addr"] { font-size: 14px; } }',
+    "/* C10 SendMessage 600-1024: aside is intentional, text left and collage flush bottom-right (2 columns from 768) */",
+    '@media (min-width: 600px) and (max-width: 1024px) { body .elementor [data-id="ct-sm-aside"] { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; row-gap: 26px; padding: 32px 22px 0; } body .elementor [data-id="ct-sm-aside-head"], body .elementor [data-id="ct-sm-mail"] { grid-column: 1; } body .elementor [data-id="ct-sm-collage"] { position: relative; inset: auto; justify-self: end; margin-right: -22px; } }',
+    '@media (min-width: 768px) and (max-width: 1024px) { body .elementor [data-id="ct-sm-aside"] { grid-template-columns: minmax(0, 1fr) 360px; column-gap: 24px; padding: 40px 0 0 44px; } body .elementor [data-id="ct-sm-collage"] { grid-column: 2; grid-row: 1 / span 3; align-self: end; margin-right: 0; } }',
   ],
   sections: ["hero", "help-cards", "send-message", "useful-resources", "join-panel"],
 };

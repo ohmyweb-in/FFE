@@ -352,7 +352,7 @@ const pageHero = (p, o = {}) => {
   const id = `${p}-ph`, M = media();
   const tm = z.title ?? {}, dt = z.descType;
 
-  const photo = w(`${id}-photo`, "e-image", { image: image(M[img].id), attributes: attrs([["loading", "eager"], ["fetchpriority", "high"], ["aria-hidden", "true"]]) }, [
+  const photo = w(`${id}-photo`, "e-image", { image: image(M[img].id), attributes: attrs([["loading", "eager"], ["aria-hidden", "true"]]) }, [
     { ...at(pct(imgBox.top), null, null, pct(imgBox.left)), width: pct(imgBox.w), height: pct(imgBox.h ?? 100), "max-width": custom("none"), "object-fit": "cover" },
     { tablet: { ...at(px(0), null, null, px(0)), width: pct(100), height: pct(100) } },
   ]);

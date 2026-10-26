@@ -59,7 +59,7 @@ const card = div("hero-card", [
   { tablet: { height: AUTO, "border-radius": radius(24) }, mobile: { height: AUTO, "min-height": px(660), "border-radius": radius(20), background: { color: "#032919" } } },
 ], [
   // The page's largest paint: fetched first, never lazy.
-  w("hero-photo", "e-image", { image: image(M.hero.id), attributes: attrs([["loading", "eager"], ["fetchpriority", "high"]]) }, [
+  w("hero-photo", "e-image", { image: image(M.hero.id), attributes: attrs([["loading", "eager"]]) }, [
     { ...at(pct(-0.03), null, null, pct(16.51)), width: pct(83.52), height: pct(105.31), "max-width": custom("none"), "object-fit": "cover" },
     { tablet: { ...at(px(0), null, null, px(0)), width: pct(100), height: pct(100) },
       mobile: { ...at(pct(0.035), null, null, pct(-10.03)), width: pct(294.12), height: pct(103.15) } },

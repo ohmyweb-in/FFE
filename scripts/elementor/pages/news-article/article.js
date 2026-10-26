@@ -21,7 +21,7 @@ module.exports = [div("na-article", mix(CW(880), [{ padding: pad(48, 0, 0, 0), m
   w("na-standfirst", "e-paragraph", { paragraph: "New international B2B trade show for the fresh food industry to join Singapore International Agri-Food Week from 2027" }, [
     { ...text(21, 500, T.body, { "line-height": px(31) }), margin: pad(16, 0, 0, 0) }, { mobile: { "font-size": px(19), "line-height": px(28) } },
   ]),
-  w("na-photo", "e-image", { image: image(M["g8-signing-2"].id), attributes: require("../../lib.js").attrs([["fetchpriority", "high"]]) }, [
+  w("na-photo", "e-image", { image: image(M["g8-signing-2"].id) }, [
     { width: pct(100), height: custom("auto"), "max-width": custom("none"), "border-radius": radius(28), margin: pad(40, 0, 0, 0) },
     { tablet: { "border-radius": radius(20), margin: pad(32, 0, 0, 0) } },
   ]),

@@ -29,7 +29,7 @@ const grid = (p, tiles) => {
           { position: "relative", overflow: "hidden", "aspect-ratio": "298.85/224.14", padding: P0, "border-radius": radius(20), background: { color: T.accent } },
           { tablet: { "border-radius": radius(14) } },
         ], [
-          w(`${id}-img`, "e-image", { image: image(M[t.thumb].id), attributes: attrs([["data-zoom", ""], ["loading", "lazy"]]) }, [
+          w(`${id}-img`, "e-image", { image: image(M[t.thumb].id), attributes: attrs([["data-zoom", ""]]) }, [
             { ...at(px(0), null, null, px(0)), width: pct(100), height: pct(98.9), "max-width": custom("none"), "object-fit": "cover" }, {},
           ]),
         ]),

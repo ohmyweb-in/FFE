@@ -114,7 +114,7 @@ const utility = box("util-bar", [{ width: pct(100), padding: P0, background: { c
       w("util-lang-label", "e-paragraph", { tag: "span", paragraph: "EN" }, [text(15, 500, "rgba(255,255,255,0.5)", { "text-transform": "uppercase", "letter-spacing": px(0.3) }), { tablet: { "font-size": px(14) } }]),
       svg("util-lang-chev", "chevron-lang", [{ width: px(8), height: px(4), transform: { $$type: "transform", value: { "transform-functions": { $$type: "transform-functions", value: [{ $$type: "transform-rotate", value: { x: sz(0, "deg"), y: sz(0, "deg"), z: sz(180, "deg") } }] } } } }]),
     ], { tag: "a", link: link("#") }),
-    w("util-search", "e-image", { image: image(M["icon-search"].id), link: link("/?s=") }, [
+    w("util-search", "e-image", { image: image(M["icon-search"].id), link: link("/?s="), attributes: attrs([["aria-label", "Search"]]) }, [
       { width: px(18), height: px(18), "margin": pad(0, 0, 0, -4) },
       { tablet: { width: px(44), height: px(44), padding: pad(13), margin: P0 } },
     ]),

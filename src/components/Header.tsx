@@ -315,7 +315,7 @@ export default function Header() {
               className="bg-accent text-white max-[359.98px]:w-[96px]!"
             >
               {/* Below 360px the pill reads just "Register" so logo, pill and menu button fit. */}
-              <span className="min-[360px]:hidden">Register</span>
+              <span className="min-[359.98px]:hidden">Register</span>
               <span className="max-[359.98px]:hidden">Register Your Interest</span>
             </Button>
             <button

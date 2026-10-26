@@ -99,6 +99,8 @@ add_action('wp_footer', function () { ?>
 		}
 	});
 
+	// Not in the Elementor editor's preview: the click interceptor would block selecting the menu there.
+	if (document.body.classList.contains('elementor-editor-active')) return;
 	var mq = function (q) { return matchMedia(q).matches; };
 	var sheet = function () { return mq('(max-width: 1024px)'); };
 	var btn = function (el) { return el.querySelector('.e-n-menu-dropdown-icon'); };
@@ -118,7 +120,8 @@ add_action('wp_footer', function () { ?>
 	// Elementor's chevron button does the toggling, so open/close state and aria stay its own.
 	document.addEventListener('click', function (e) {
 		var a = e.target.closest(menu + '.e-n-menu-title-container');
-		if (!a || !(sheet() || mq('(min-width: 1025px) and (max-width: 1279.98px) and (hover: none)'))) return;
+		// detail 0 = keyboard Enter: let the label link navigate, as a keyboard user expects.
+		if (!a || e.detail === 0 || !(sheet() || mq('(min-width: 1025px) and (max-width: 1279.98px) and (hover: none)'))) return;
 		var b = btn(a.parentNode);
 		if (!b) return;
 		e.preventDefault(); e.stopPropagation();
@@ -127,8 +130,9 @@ add_action('wp_footer', function () { ?>
 
 	// Elementor's mega menu picks hover or click once, from the device mode when the page loads, and counts
 	// 1025-1279 (tablet_extra) as touch, so panels never opened on hover there. Drive the same chevron on hover.
+	// Only when the page loaded in that range: loaded wider, Elementor's own hover handler is live and would toggle it back.
 	var mid = function () { return mq('(min-width: 1025px) and (max-width: 1279.98px)'); };
-	document.querySelectorAll(menu + '.e-n-menu-item').forEach(function (item) {
+	if (mid()) document.querySelectorAll(menu + '.e-n-menu-item').forEach(function (item) {
 		var t, b = btn(item);
 		if (!b) return;
 		item.addEventListener('pointerenter', function (e) {

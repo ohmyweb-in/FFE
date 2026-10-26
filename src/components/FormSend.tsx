@@ -41,7 +41,7 @@ export function Turnstile() {
       .then((t) => {
         if (gone || !ref.current) return;
         // The normal widget is 300px wide and overflows form cards narrower than that (320px phones): use the 150×140 compact one.
-        const compact = ref.current.clientWidth < 300;
+        const compact = ref.current.clientWidth > 0 && ref.current.clientWidth < 300;
         if (compact) ref.current.style.minHeight = "140px";
         id = t.render(ref.current, { sitekey: SITE_KEY, size: compact ? "compact" : "normal" });
         ref.current.dataset.widgetId = id;

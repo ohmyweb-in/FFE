@@ -30,7 +30,7 @@ const copy = div("ab-copy", [
   ])),
   w("ab-lede", "e-paragraph", { paragraph: LEDE }, mix(LEAD, [
     { "max-width": px(586), margin: pad(38, 0, 0, 0) },
-    { tablet: { "max-width": px(760) }, tablet_extra: { margin: pad(38, 0, 0, 0) }, tablet: { margin: pad(28, 0, 0, 0) }, mobile: { margin: pad(24, 0, 0, 2) } },
+    { tablet_extra: { margin: pad(38, 0, 0, 0) }, tablet: { "max-width": px(760), margin: pad(28, 0, 0, 0) }, mobile: { margin: pad(24, 0, 0, 2) } },
   ])),
   box("ab-ctas", [
     { padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(12), margin: pad(32, 0, 0, 1), width: pct(100) },

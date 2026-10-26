@@ -59,7 +59,7 @@ export default function Ecosystem() {
       id="ecosystem"
       className="container-wide relative mt-[29px] overflow-hidden rounded-[20px] bg-brand/25 [--gutter:18px] md:mt-16 md:rounded-[24px] md:[--gutter:32px] lg:mt-[54px] lg:rounded-[30px]"
     >
-      <Image src={leafOutline} alt="" aria-hidden className="pointer-events-none absolute top-0 right-0 top-[-12px] h-[60px] w-[110px] max-w-none md:top-0 md:h-[109px] md:w-[200px] lg:h-[163px] lg:w-[300px] xl:h-[239px] xl:w-[440px]" />
+      <Image src={leafOutline} alt="" aria-hidden className="pointer-events-none absolute right-0 top-[-12px] h-[60px] w-[110px] max-w-none md:top-0 md:h-[109px] md:w-[200px] lg:h-[163px] lg:w-[300px] xl:h-[239px] xl:w-[440px]" />
 
       <div className="container-page relative pt-[55px] pb-[60px] md:pt-12 md:pb-12 lg:pt-[69px] lg:pb-[54px]">
         <div className="pl-[2px] md:pl-0 lg:pl-[6px]" data-reveal>

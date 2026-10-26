@@ -147,7 +147,7 @@ function ffeForms() {
      Elementor posts only the form's own fields, so the token is added to its request here; ffe-forms.php checks it and refuses a post without one. */
   var slots = document.querySelectorAll('form[data-element_type="e-form"] [data-ffe-turnstile]');
   if (slots.length) {
-    window.ffeTurnstile = function () { slots.forEach(function (el) { var c = el.clientWidth < 300; el.classList.toggle('is-compact', c); el.dataset.wid = turnstile.render(el, { sitekey: '${TURNSTILE_SITE_KEY}', size: c ? 'compact' : 'normal' }); }); };
+    window.ffeTurnstile = function () { slots.forEach(function (el) { var c = el.clientWidth > 0 && el.clientWidth < 300; el.classList.toggle('is-compact', c); el.dataset.wid = turnstile.render(el, { sitekey: '${TURNSTILE_SITE_KEY}', size: c ? 'compact' : 'normal' }); }); };
     var ts = document.createElement('script');
     ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=ffeTurnstile'; ts.async = true;
     document.head.appendChild(ts);

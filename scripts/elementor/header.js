@@ -282,8 +282,10 @@ const cta = box("header-cta", [
   { hover: { transform: lift, "box-shadow": shadow(0, 10, 24, -10, "rgba(2,93,3,0.45)") }, tablet: { background: { color: T.accent } }, mobile: { width: px(166), height: px(43), padding: pad(0, 0, 0, 13), gap: gap(0, 5), "font-size": px(13) } },
 ], [
   w("header-cta-label", "e-paragraph", { tag: "span", paragraph: "Register Your Interest" }, [{ color: T.white }]),
+  // Below 360px the pill reads just "Register" so logo, pill and menu button fit (swap + width in ffe-header.php).
+  w("header-cta-label-short", "e-paragraph", { tag: "span", paragraph: "Register" }, [{ color: T.white, display: "none" }]),
   svg("header-cta-chev", "chevron-contact", [{ width: px(6), height: px(12) }, { mobile: { width: px(5.5), height: px(11) } }]),
-], { tag: "a", link: link("/register-to-visit") });
+], { tag: "a", link: link("/register-to-visit"), attributes: attrs([["aria-label", "Register Your Interest"]]) });
 
 const bar = box("site-bar", [{ width: pct(100), padding: P0, display: "flex", "flex-direction": "column", "align-items": "center", "z-index": 50 }], [
   box("site-bar-inner", [

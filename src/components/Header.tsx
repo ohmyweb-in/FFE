@@ -312,9 +312,11 @@ export default function Header() {
               pl={24}
               gap={13}
               m={{ w: 166, h: 43, pl: 13, gap: 5, fs: 13, chev: 0.916 }}
-              className="bg-accent text-white"
+              className="bg-accent text-white max-[359.98px]:w-[96px]!"
             >
-              Register Your Interest
+              {/* Below 360px the pill reads just "Register" so logo, pill and menu button fit. */}
+              <span className="min-[360px]:hidden">Register</span>
+              <span className="max-[359.98px]:hidden">Register Your Interest</span>
             </Button>
             <button
               type="button"

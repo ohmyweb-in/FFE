@@ -48,7 +48,7 @@ export default function Footer({ mt = "mt-[47px] md:mt-20 lg:mt-[96px]" }: { mt?
         <div className="mt-10 hidden h-px bg-black/50 md:block lg:mt-[36px]" />
         {/* Phones: policies first, then copyright, left-aligned. Desktop (736:1581–736:1582): copyright left, policies right. */}
         <div className="text-lead mt-[30px] ml-[3px] flex flex-col items-start md:mt-[26px] md:ml-0 md:items-center md:gap-4 md:text-center lg:mt-[27.5px] lg:flex-row lg:justify-between lg:text-left">
-          <p className="mt-[34px] md:mt-0">© 2027 Fresh Food Expo APAC. All rights reserved</p>
+          <p className="mt-[34px] md:mt-0 lg:whitespace-nowrap">© 2027 Fresh Food Expo APAC. All rights reserved</p>
           <p className="order-first md:order-none">
             <a href="https://www.messe-berlin.asia/en/additional-pages/privacy-policy" className="footer-link">Privacy Policy</a>
           </p>

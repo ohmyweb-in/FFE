@@ -37,12 +37,13 @@ add_action('wp_head', function () { ?>
 .elementor-element-site-menu [aria-current] .e-n-menu-title-text::after { transform: scaleX(1); }
 @media (max-width: 1024px) { .elementor-element-site-menu .e-n-menu-title-text::after { display: none; } }
 
-/* Below 1025px the menu opens as one white sheet inset to the page gutter (Header.tsx #mobile-menu),
+/* Below 1025px the menu opens as one white sheet inset to the page gutter (32px, 26px on phones) (Header.tsx #mobile-menu),
    scrolling inside itself on short phones. Elementor positions the dropdown; the sheet is ours. */
+@media (min-width: 1025px) { .elementor-element-site-menu .ffe-util { display: none; } }
 @media (max-width: 1024px) {
 	/* Elementor spans the dropdown wrapper across the viewport; the list inside it is the sheet. */
 	.elementor-element-site-menu .e-n-menu-wrapper .e-n-menu-heading {
-		margin-inline: max(16px, (100% - 1395px) / 2); background: #fff; border-radius: 24px; padding: 12px;
+		margin-inline: 32px; background: #fff; border-radius: 24px; padding: 12px;
 		box-shadow: 0 24px 48px -24px rgb(2 93 3 / .35);
 		max-height: calc(100dvh - 128px - 16px); overflow-y: auto; overscroll-behavior: contain;
 	}
@@ -55,6 +56,13 @@ add_action('wp_head', function () { ?>
 	.elementor-element-site-menu .e-n-menu-title:has([aria-expanded="true"]) .e-n-menu-title-text { color: #025d03; }
 	.elementor-element-site-menu .e-n-menu-content > .e-con { background: transparent; }
 	.elementor-element-site-menu .e-n-menu-content a[aria-current] span { color: #025d03; font-weight: 600; }
+	/* The desktop card's drop shadow stayed on the flattened panel: a green gradient bar under the last link. */
+	.elementor-element-site-menu .e-n-menu-content [data-id$="-card"] { box-shadow: none; }
+	/* Newsletter / Press, which the utility bar hides below 1025px (script below adds them). */
+	.elementor-element-site-menu .ffe-util { display: block; width: 100%; }
+	.elementor-element-site-menu .ffe-util a { display: flex; align-items: center; min-height: 48px; padding: 0 16px; border-radius: 16px; font: 500 16px Outfit, sans-serif; color: #4f4f4f; text-decoration: none; }
+	.elementor-element-site-menu .ffe-util a:hover { background: #e2f0e4; }
+	.elementor-element-site-menu .ffe-util-first { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgb(0 0 0 / .1); }
 }
 @media (max-width: 767px) {
 	.elementor-element-site-menu .e-n-menu-wrapper .e-n-menu-heading { margin-inline: 26px; }
@@ -90,6 +98,60 @@ add_action('wp_footer', function () { ?>
 			}
 		}
 	});
+
+	var mq = function (q) { return matchMedia(q).matches; };
+	var sheet = function () { return mq('(max-width: 1024px)'); };
+	var btn = function (el) { return el.querySelector('.e-n-menu-dropdown-icon'); };
+	var menu = '.elementor-element-site-menu ';
+
+	// Newsletter / Press join the sheet (Header.tsx #mobile-menu); the utility bar hides them below 1025px.
+	var list = document.querySelector(menu + '.e-n-menu-heading');
+	if (list) [['Newsletter', '/subscribe'], ['Press', '/news']].forEach(function (l, i) {
+		var li = document.createElement('li');
+		li.className = 'ffe-util' + (i ? '' : ' ffe-util-first');
+		li.innerHTML = '<a href="' + l[1] + '">' + l[0] + '</a>';
+		list.appendChild(li);
+	});
+
+	// Sheet (and a touch tap at 1025-1279, Elementor's tablet_extra, iPad landscape): the whole label row toggles its
+	// section, as Header.tsx's <summary> does, instead of navigating; the section's own page is its first link inside.
+	// Elementor's chevron button does the toggling, so open/close state and aria stay its own.
+	document.addEventListener('click', function (e) {
+		var a = e.target.closest(menu + '.e-n-menu-title-container');
+		if (!a || !(sheet() || mq('(min-width: 1025px) and (max-width: 1279.98px) and (hover: none)'))) return;
+		var b = btn(a.parentNode);
+		if (!b) return;
+		e.preventDefault(); e.stopPropagation();
+		b.click();
+	}, true);
+
+	// Elementor's mega menu picks hover or click once, from the device mode when the page loads, and counts
+	// 1025-1279 (tablet_extra) as touch, so panels never opened on hover there. Drive the same chevron on hover.
+	var mid = function () { return mq('(min-width: 1025px) and (max-width: 1279.98px)'); };
+	document.querySelectorAll(menu + '.e-n-menu-item').forEach(function (item) {
+		var t, b = btn(item);
+		if (!b) return;
+		item.addEventListener('pointerenter', function (e) {
+			if (e.pointerType !== 'mouse' || !mid()) return;
+			clearTimeout(t);
+			if (b.getAttribute('aria-expanded') !== 'true') b.click();
+		});
+		item.addEventListener('pointerleave', function (e) {
+			if (e.pointerType !== 'mouse' || !mid()) return;
+			t = setTimeout(function () { if (b.getAttribute('aria-expanded') === 'true') b.click(); }, 250);
+		});
+	});
+
+	// Opening the sheet leaves the current page's section open, like Header.tsx's <details open>.
+	document.addEventListener('click', function (e) {
+		var t = e.target.closest(menu + '.e-n-menu-toggle');
+		if (!t) return;
+		setTimeout(function () {
+			if (!sheet() || t.getAttribute('aria-expanded') !== 'true' || document.querySelector(menu + '.e-n-menu-dropdown-icon[aria-expanded="true"]')) return;
+			var cur = document.querySelector(menu + '.e-n-menu-title-container[aria-current]');
+			if (cur) btn(cur.parentNode).click();
+		}, 0);
+	});
 })();
 </script>
 <?php });
@@ -100,6 +162,12 @@ add_action('wp_head', function () { ?>
 .elementor-element-site-menu [data-id$="-cta"] { white-space: nowrap; flex-shrink: 0; }
 .elementor-element-site-menu [data-id$="-date"] { min-width: 0; }
 /* Just above the 1024px menu breakpoint the nav no longer fits one row (it wrapped NEWS & MEDIA): tighten the gaps and the pill. */
+/* Below 360px the logo, the 166px pill and the 47px menu button no longer fit: the pill reads "Register" and shrinks to it. */
+@media (max-width: 359.98px) {
+	body .elementor [data-id="header-cta-label"] { display: none; }
+	body .elementor [data-id="header-cta-label-short"] { display: inline; }
+	body .elementor [data-id="header-cta"] { width: auto; padding-right: 13px; }
+}
 @media (min-width: 1025px) and (max-width: 1075px) {
 	body .elementor [data-id="site-bar-inner"] { gap: 20px; }
 	body .elementor [data-id="site-nav"] { gap: 14px; }
@@ -169,6 +237,7 @@ add_action('wp_footer', function () {
 .ffe-search-row button:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -10px rgb(2 93 3 / .45); }
 .ffe-search-row .ffe-search-x { width: 52px; padding: 0; background: #e2f0e4; color: #032919; font-size: 26px; line-height: 1; }
 .ffe-search-row button:focus-visible { outline: 2px solid #032919; outline-offset: 2px; }
+@media (max-width: 359.98px) { .ffe-search-row { flex-wrap: wrap; } .ffe-search-row input { flex-basis: 100%; } .ffe-search-row button[type=submit] { flex: 1; } }
 @media (max-width: 767px) { #ffe-search form { margin-top: 24px; padding: 18px; } .ffe-search-row input { padding: 0 16px; } .ffe-search-row button { height: 48px; } .ffe-search-row input { height: 48px; } .ffe-search-row button[type=submit] { padding: 0 16px; } .ffe-search-row .ffe-search-x { width: 48px; } }
 </style>
 <script id="ffe-search-js">
@@ -230,8 +299,8 @@ add_action('wp_head', function () {
 .ffe-results { max-width: 860px; margin: 0 auto; padding: 72px 32px 112px; font-family: Outfit, sans-serif; color: #4f4f4f; }
 .ffe-results h1 { margin: 0 0 12px; font: 600 clamp(32px, 5vw, 48px)/1.1 Fredoka, sans-serif; color: #025d03; text-transform: uppercase; }
 .ffe-results .ffe-count { margin: 0 0 40px; font-size: 17px; }
-.ffe-results ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-.ffe-results li a { display: block; padding: 22px 26px; background: #fff; border: 1px solid rgb(2 93 3 / .08); border-radius: 20px; text-decoration: none; transition: transform .25s, box-shadow .25s; }
+.ffe-results ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.ffe-results li a { display: block; min-width: 0; overflow-wrap: anywhere; padding: 22px 26px; background: #fff; border: 1px solid rgb(2 93 3 / .08); border-radius: 20px; text-decoration: none; transition: transform .25s, box-shadow .25s; }
 .ffe-results li a:hover, .ffe-results li a:focus-visible { transform: translateY(-2px); box-shadow: 0 16px 32px -20px rgb(2 93 3 / .45); }
 .ffe-results h2 { margin: 0 0 6px; font: 500 22px/1.3 Fredoka, sans-serif; color: rgb(0 0 0 / .78); }
 .ffe-results li a:hover h2 { color: #025d03; }
@@ -239,6 +308,12 @@ add_action('wp_head', function () {
 .ffe-results mark { background: #e2f0e4; color: #025d03; border-radius: 4px; padding: 0 2px; }
 .ffe-results .ffe-empty { padding: 40px; background: #fff; border-radius: 24px; text-align: center; }
 .ffe-results .ffe-empty a { color: #025d03; font-weight: 600; }
+/* the_posts_pagination(): "1 2 Next" as pills with 44px targets */
+.ffe-results .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 40px; }
+.ffe-results .page-numbers { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 18px; border: 1px solid rgb(2 93 3 / .15); border-radius: 999px; background: #fff; color: #025d03; font: 500 16px Outfit, sans-serif; text-decoration: none; transition: background-color .25s, transform .25s; }
+.ffe-results a.page-numbers:hover, .ffe-results a.page-numbers:focus-visible { background: #e2f0e4; transform: translateY(-1px); }
+.ffe-results .page-numbers.current { border-color: #025d03; background: #025d03; color: #fff; }
+.ffe-results .page-numbers.dots { border-color: transparent; background: transparent; }
 @media (max-width: 767px) { .ffe-results { padding: 40px 20px 72px; } }
 </style>
 <?php });

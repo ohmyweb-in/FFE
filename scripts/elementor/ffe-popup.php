@@ -61,6 +61,8 @@ html:has(#ffe-popup[open]) { overflow: hidden; }
 }
 #ffe-popup .pu-powered p { margin-right: 6px; color: #025d03; font: 600 15px Fredoka, system-ui, sans-serif; text-transform: uppercase; }
 #ffe-popup .pu-powered img { flex-shrink: 0; width: auto; height: 32px; }
+#ffe-popup .pu-powered p { white-space: nowrap; }
+@media (max-width: 359.98px) { #ffe-popup .pu-powered p { margin-right: 4px; font-size: 13px; } } /* the label wrapped to two lines at 320 */
 
 #ffe-popup .pu-options { display: grid; gap: 8px; margin-top: 14px; }
 #ffe-popup .pu-options li { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; border-radius: 16px; background: #edf6ee; }

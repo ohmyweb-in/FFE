@@ -176,7 +176,7 @@ const footer = box("site-footer", [
   ], [
     w("footer-copyright", "e-paragraph", { tag: "p", paragraph: "© 2027 Fresh Food Expo APAC. All rights reserved" }, [lead(), { mobile: { "font-size": px(17), order: 2 } }]),
     // Cookie Settings reopens the consent banner (ffe-consent.php).
-    box("footer-policy", [{ padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(0, 24) }], [
+    box("footer-policy", [{ width: "auto", padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(0, 24), flex: { flexGrow: 0, flexShrink: 1, flexBasis: "auto" } }], [
       footerLink("footer-privacy", "Privacy Policy", PRIVACY),
       footerLink("footer-cookies", "Cookie Settings", "#cookie-settings"),
     ]),
@@ -191,7 +191,9 @@ call("novamira/elementor-set-content", { post_id: ID, template_type: "footer", c
 stamp(ID);
 // Tailwind lg (1024–1279) differs from xl (1280+): smaller partner type and logos, and the footer stacks the brand above the columns (xl:flex-row).
 // Elementor has no variant for 1025–1279, so it is template CSS; `body .elementor …` (0,2,1) beats the local `.elementor .s-<id>` (0,2,0).
-const CSS = `@media (min-width: 1025px) and (max-width: 1279.98px) {
+// The copyright is one line beside the policy links (Footer.tsx lg:whitespace-nowrap); the policy box used to grow and squeeze it to two.
+const CSS = `@media (min-width: 1025px) { body .elementor [data-id="footer-copyright"] { white-space: nowrap; } }
+@media (min-width: 1025px) and (max-width: 1279.98px) {
 body .elementor [data-id="supported-t"], body .elementor [data-id^="role-"][data-id$="-label-t"] { font-size: 18px; }
 body .elementor [data-id^="logo-"] { height: 70px; }
 body .elementor [data-id="supported-logos"] { column-gap: 56px; }

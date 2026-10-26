@@ -13,7 +13,9 @@ const NA_CSS = [
   `${P} .na-body > ul { display: flex; flex-direction: column; gap: 12px; padding: 0; list-style: none; }`,
   `${P} .na-body > ul li { position: relative; padding-left: 22px; }`,
   `${P} .na-body > ul li::before { content: ""; position: absolute; top: 11px; left: 2px; width: 7px; height: 7px; border-radius: 50%; background: #28ae3d; }`,
-  `${P} .na-body figure { margin: 36px 0; padding: 32px 36px; border-left: 5px solid #28ae3d; border-radius: 22px; background: #fff; }`,
+  // .elementor-widget: Elementor's own `.elementor .elementor-widget:not(…):not(…) figure { margin: 0 }` (0,4,1) beat the plain selector.
+  `${P}.elementor-widget .na-body figure { margin: 36px 0; }`,
+  `${P} .na-body figure { padding: 32px 36px; border-left: 5px solid #28ae3d; border-radius: 22px; background: #fff; }`,
   `${P} .na-body blockquote { padding: 0; border: 0; font: 500 21px/32px Fredoka, system-ui, sans-serif; color: #025d03; }`,
   `${P} .na-body figcaption { margin-top: 18px; font-size: 15px; line-height: 22px; font-style: normal; color: #4f4f4f; text-align: left; }`,
   `${P} :is(figcaption, .na-media) span { font-weight: 600; color: #025d03; }`,

@@ -25,6 +25,24 @@ function call(ability, input) {
 }
 const php = (code) => call("novamira/execute-php", { code });
 
+// Since go-live people edit pages in Elementor, so a push must not overwrite their work. stamp() names the elements for the
+// Structure panel (names.php), records a hash of what is stored and saves a revision (a restore point under History > Revisions);
+// guard() refuses to push over a page changed since then.
+// FFE_FORCE=1 overrides, once the WordPress edit has been copied into the scripts.
+const NAMES = fs.readFileSync(path.join(__dirname, "names.php"), "utf8").replace(/^<\?php\s*/, "").replace(/return \$out;\s*$/, "");
+function guard(id) {
+  const { return_value: r } = php(`$h = get_post_meta(${id}, '_ffe_pushed_md5', true);
+return $h === '' || $h === md5(get_post_meta(${id}, '_elementor_data', true)) ? 'ok' : get_post_field('post_modified', ${id});`);
+  if (r !== "ok" && process.env.FFE_FORCE !== "1")
+    throw new Error(`post ${id} was edited in WordPress (last saved ${r}) after the last push: copy that edit into the scripts, then rerun with FFE_FORCE=1`);
+}
+function stamp(id) {
+  return php(`$ids = [${id}];\n${NAMES}\nupdate_post_meta(${id}, '_ffe_pushed_md5', md5(get_post_meta(${id}, '_elementor_data', true)));
+add_filter('wp_save_post_revision_check_for_changes', '__return_false');
+$out['revision'] = wp_save_post_revision(${id});
+return $out;`);
+}
+
 // ---- design tokens, from src/app/globals.css ------------------------------
 const T = {
   page: "#f4f8f4",
@@ -496,5 +514,5 @@ const joinBanner = (p, o = {}) => {
   ], { tag: "section", attributes: attrs([["data-trim", ""]]) });
 };
 
-module.exports = { call, php, SITE, ORIGIN, SP, T, OUTFIT, FREDOKA, px, em, pct, custom, pad, P0, AUTO, mtAuto, radius, gap, flex, link, image, V, box, div, w, attrs, media, sz, shadow, ease, lift, text, HIDE, svg , DATE, VENUE, NORMAL, stop, grad, layers, at, FILL, BRAND0, step, toLeft, rotate, scale, mix, PAGE, WIDE, reveal, btn, dateVenue,
+module.exports = { call, php, guard, stamp, SITE, ORIGIN, SP, T, OUTFIT, FREDOKA, px, em, pct, custom, pad, P0, AUTO, mtAuto, radius, gap, flex, link, image, V, box, div, w, attrs, media, sz, shadow, ease, lift, text, HIDE, svg , DATE, VENUE, NORMAL, stop, grad, layers, at, FILL, BRAND0, step, toLeft, rotate, scale, mix, PAGE, WIDE, reveal, btn, dateVenue,
   DATE_LONG, SIAW_SITE, HERO_SIZES, pageHero, heroCtas, heroVenue, joinBanner, ruleEyebrow, pill, count, video };

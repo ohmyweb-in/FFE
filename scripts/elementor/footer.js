@@ -1,7 +1,7 @@
 // Site footer (Theme Builder "Footer"): port of src/components/home/{Partners,Footer,FooterNav}.tsx.
 // Partners strip, then logo + tagline + socials, the four link columns (an accordion on phones), copyright.
 // Run: node footer.js   (FOOTER_ID=33 rebuilds the existing template)
-const { call, php, T, OUTFIT, px, pct, pad, P0, gap, link, image, box, div, w, media, HIDE, mtAuto, attrs } = require("./lib.js");
+const { call, php, guard, stamp, T, OUTFIT, px, pct, pad, P0, gap, link, image, box, div, w, media, HIDE, mtAuto, attrs } = require("./lib.js");
 
 const M = media();
 const PRIVACY = "https://www.messe-berlin.asia/en/additional-pages/privacy-policy";
@@ -186,7 +186,9 @@ const footer = box("site-footer", [
 /* ── Write ─────────────────────────────────────────────────────────────────────────────── */
 let ID = Number(process.env.FOOTER_ID || 33);
 if (!ID) ID = call("novamira/elementor-create-template", { title: "Footer", type: "footer", status: "draft" }).id;
+guard(ID);
 call("novamira/elementor-set-content", { post_id: ID, template_type: "footer", content: [partners, footer] });
+stamp(ID);
 // Tailwind lg (1024–1279) differs from xl (1280+): smaller partner type and logos, and the footer stacks the brand above the columns (xl:flex-row).
 // Elementor has no variant for 1025–1279, so it is template CSS; `body .elementor …` (0,2,1) beats the local `.elementor .s-<id>` (0,2,0).
 const CSS = `@media (min-width: 1025px) and (max-width: 1279.98px) {

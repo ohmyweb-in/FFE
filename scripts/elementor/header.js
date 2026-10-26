@@ -1,7 +1,7 @@
 // Site header (Theme Builder "Header"): port of src/components/Header.tsx + nav.ts.
 // Green utility bar that scrolls away, then the sticky bar: logo, mega menu, "Register Your Interest".
 // Sticky / scrolled behaviour lives in ffe-header.php (mu-plugin). Run: node header.js
-const { call, T, OUTFIT, FREDOKA, px, pct, pad, P0, radius, gap, link, image, box, div, w, media, sz, shadow, ease, lift, text, HIDE, svg, attrs } = require("./lib.js");
+const { call, guard, stamp, T, OUTFIT, FREDOKA, px, pct, pad, P0, radius, gap, link, image, box, div, w, media, sz, shadow, ease, lift, text, HIDE, svg, attrs } = require("./lib.js");
 
 const M = media();
 const DATE_LINE = "16-18 November 2027 | Sands Expo &amp; Convention Centre, Singapore";
@@ -304,6 +304,8 @@ const bar = box("site-bar", [{ width: pct(100), padding: P0, display: "flex", "f
 
 /* ── Write ─────────────────────────────────────────────────────────────────────────────── */
 const ID = Number(process.env.HEADER_ID || 30);
+guard(ID);
 call("novamira/elementor-set-content", { post_id: ID, template_type: "header", content: [utility, bar] });
+stamp(ID);
 const back = call("novamira/elementor-get-content", { post_id: ID });
 console.log("header", ID, "elements:", back.element_count);

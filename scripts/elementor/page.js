@@ -4,7 +4,7 @@
 // templates or a page it doesn't own (meta _ffe_page). Scratch pages: page `_test/<name>` -> pages/_test/<name>/index.js, slug ffe-test*.
 const path = require("path");
 const fs = require("fs");
-const { call, php, ORIGIN } = require("./lib.js");
+const { call, php, guard, stamp, ORIGIN } = require("./lib.js");
 
 const args = process.argv.slice(2);
 const dry = args.includes("--dry");
@@ -88,7 +88,9 @@ return $id;
 `);
 if (ID === 45) throw new Error("refusing to write post 45");
 
+guard(ID);
 call("novamira/elementor-set-content", { post_id: ID, content });
+stamp(ID);
 const back = call("novamira/elementor-get-content", { post_id: ID });
 console.log(`post ${ID} elements: ${back.element_count}`);
 

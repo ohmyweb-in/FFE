@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: FFE — launch popup
- * Description: LaunchPopup.tsx as a native <dialog> printed in wp_footer: opens 800ms after load, once per tab session (sessionStorage "popupShown"), not on /register-to-visit* or /apply-to-exhibit*, never in the Elementor editor or preview. Deployed to wp-content/mu-plugins/; this copy in scripts/elementor/ is the record. Images: media-g6.json, media.json (powered-*, chevron-sm-white) and media-g4.json (chevron-sm-accent).
+ * Description: LaunchPopup.tsx as a native <dialog> printed in wp_footer: opens 6 s after load (or after the cookie banner is answered), once per tab session (sessionStorage "popupShown"), not on /register-to-visit* or /apply-to-exhibit*, never in the Elementor editor or preview. Deployed to wp-content/mu-plugins/; this copy in scripts/elementor/ is the record. Images: media-g6.json, media.json (powered-*, chevron-sm-white) and media-g4.json (chevron-sm-accent).
  */
 
 add_action('wp_footer', function () {
@@ -23,6 +23,12 @@ add_action('wp_footer', function () {
 }
 #ffe-popup::backdrop { background: rgb(40 174 61 / .2); }
 html:has(#ffe-popup[open]) { overflow: hidden; }
+/* Eases in rather than snapping open. */
+#ffe-popup[open] { animation: pu-in .5s cubic-bezier(.22,1,.36,1); }
+#ffe-popup[open]::backdrop { animation: pu-fade .5s ease-out; }
+@keyframes pu-in { from { opacity: 0; transform: translateY(16px) scale(.98); } }
+@keyframes pu-fade { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { #ffe-popup[open], #ffe-popup[open]::backdrop { animation: none; } }
 
 /* Zero-height sticky row: the close button stays in view when the popup scrolls on short phones. */
 #ffe-popup .pu-sticky { position: sticky; top: 0; z-index: 10; height: 0; }
@@ -180,12 +186,19 @@ html:has(#ffe-popup[open]) { overflow: hidden; }
 	d.onclick = function (e) { if (e.target === d) d.close(); };
 	// Something in Elementor's frontend preventDefaults Escape on window, which blocks the dialog's native close.
 	d.onkeydown = function (e) { if (e.key === 'Escape') d.close(); };
-	setTimeout(function () {
+	function open() {
 		d.showModal();
 		try { sessionStorage.setItem('popupShown', '1'); } catch (e) {}
 		// Focus the dialog itself so the first CTA doesn’t open with a focus ring; Tab still moves into it.
 		d.focus();
-	}, 800);
+	}
+	// A few seconds in, once the visitor has had a look at the page; never on top of an unanswered cookie banner
+	// (ffe-consent.php): then it follows the answer.
+	var c = document.getElementById('ffe-consent');
+	setTimeout(function () {
+		if (c && !c.hidden) c.addEventListener('ffe-consent', function () { setTimeout(open, 1500); }, { once: true });
+		else open();
+	}, 6000);
 })();
 </script>
 <?php

@@ -175,7 +175,11 @@ const footer = box("site-footer", [
     { tablet: { "flex-direction": "column", gap: gap(5, 0), margin: pad(21, 0, 0, 0) }, mobile: { "align-items": "flex-start", gap: gap(23, 0), margin: pad(30, 0, 0, 0) } },
   ], [
     w("footer-copyright", "e-paragraph", { tag: "p", paragraph: "© 2027 Fresh Food Expo APAC. All rights reserved" }, [lead(), { mobile: { "font-size": px(17), order: 2 } }]),
-    footerLink("footer-privacy", "Privacy Policy", PRIVACY),
+    // Cookie Settings reopens the consent banner (ffe-consent.php).
+    box("footer-policy", [{ padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(0, 24) }], [
+      footerLink("footer-privacy", "Privacy Policy", PRIVACY),
+      footerLink("footer-cookies", "Cookie Settings", "#cookie-settings"),
+    ]),
   ]),
 ], { tag: "footer" });
 

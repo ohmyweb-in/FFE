@@ -10,7 +10,7 @@ const SITE_KEY = "0x4AAAAAAFgvz0fD6-Qi3FgK";
 // Terms of Service / privacy link on the forms' consent checkboxes.
 export const PRIVACY = "https://www.messe-berlin.de/en/extra-pages/data-protection";
 
-type TurnstileApi = { render: (el: HTMLElement, o: { sitekey: string }) => string; reset: (id: string) => void; remove: (id: string) => void };
+type TurnstileApi = { render: (el: HTMLElement, o: { sitekey: string; size?: "normal" | "compact" }) => string; reset: (id: string) => void; remove: (id: string) => void };
 declare global {
   interface Window {
     turnstile?: TurnstileApi;
@@ -31,7 +31,7 @@ const loadTurnstile = () =>
     document.head.append(s);
   }));
 
-/** Cloudflare Turnstile widget (300×65): adds the `cf-turnstile-response` field to its form. */
+/** Cloudflare Turnstile widget (300×65, or 150×140 compact in a narrow slot): adds the `cf-turnstile-response` field to its form. */
 export function Turnstile() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -40,7 +40,10 @@ export function Turnstile() {
     loadTurnstile()
       .then((t) => {
         if (gone || !ref.current) return;
-        id = t.render(ref.current, { sitekey: SITE_KEY });
+        // The normal widget is 300px wide and overflows form cards narrower than that (320px phones): use the 150×140 compact one.
+        const compact = ref.current.clientWidth < 300;
+        if (compact) ref.current.style.minHeight = "140px";
+        id = t.render(ref.current, { sitekey: SITE_KEY, size: compact ? "compact" : "normal" });
         ref.current.dataset.widgetId = id;
       })
       .catch(() => {});

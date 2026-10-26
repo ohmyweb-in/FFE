@@ -68,8 +68,8 @@ const card = div("au-cm-card", [
       { padding: P0, display: "flex", "flex-direction": "row", "align-items": "flex-start", gap: gap(0, 28) },
       { mobile: { "flex-direction": "column", gap: gap(16, 0) } },
     ], [
-      box("au-cm-left", [{ padding: P0, display: "flex", "flex-direction": "column", "align-items": "flex-start", gap: gap(16, 0), width: AUTO }, {}], [
-        div("au-cm-ts", [{ padding: P0, width: px(300), "max-width": pct(100) }, {}], [turnstileSlot("au")]),
+      box("au-cm-left", [{ padding: P0, display: "flex", "flex-direction": "column", "align-items": "flex-start", gap: gap(16, 0), width: AUTO, "min-width": px(0) }, { mobile: { width: pct(100), "align-items": "stretch" } }], [
+        div("au-cm-ts", [{ padding: P0, width: px(300), "max-width": pct(100) }, { mobile: { width: pct(100) } }], [turnstileSlot("au")]),
         pillSubmit("au-cm-submit", "Subscribe"),
       ]),
       box("au-cm-notes", [{ padding: P0, display: "flex", "flex-direction": "column", gap: gap(8, 0), "min-width": px(0), flex: flex(1, 1, pct(0)), width: AUTO }, {}], [

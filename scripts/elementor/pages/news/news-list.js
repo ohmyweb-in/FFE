@@ -1,6 +1,7 @@
 // NewsList (news/NewsList.tsx): the newest post as a full-width lead card (photo 54% left at lg+, stacked below).
 const { T, FREDOKA, px, pct, custom, pad, P0, AUTO, mtAuto, radius, gap, flex, link, box, div, w, attrs, image, media, svg, text, mix, reveal, at } = require("../../lib.js");
 const { LIFT } = require("../g4-shared.js");
+const { pos } = require("../g1-shared.js");
 const M = media();
 
 const POST = {
@@ -18,10 +19,10 @@ module.exports = [div("nw-list", mix([{ width: custom("min(1280px, 100% - 64px)"
   ]), [
     div("nw-card-photo", [
       { position: "relative", overflow: "hidden", padding: P0, width: pct(54), "min-height": px(360), flex: flex(0, 0, AUTO), background: { color: T.mint } },
-      { tablet: { width: pct(100), "min-height": px(0), height: px(300) }, mobile: { height: px(210) } },
+      { tablet: { width: pct(100), "min-height": px(0), height: px(380) }, mobile: { height: px(210) } },
     ], [
       w("nw-card-img", "e-image", { image: image(M["g8-signing-2"].id), attributes: attrs([["data-zoom", ""]]) }, [
-        { ...at(px(0), null, null, px(0)), width: pct(100), height: pct(100), "max-width": custom("none"), "object-fit": "cover" }, {},
+        { ...at(px(0), null, null, px(0)), width: pct(100), height: pct(100), "max-width": custom("none"), "object-fit": "cover", "object-position": pos(50, 10) }, {},
       ]),
     ]),
     box("nw-card-txt", [

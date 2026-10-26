@@ -61,7 +61,7 @@ export default function ValueChain() {
         </div>
         {/* Media 484×300: photo 444×290 at x 40. */}
         <div className="xl:relative xl:h-[300px] xl:min-w-0 xl:flex-1" data-reveal style={{ "--i": 1 } as CSSProperties}>
-          <div className="group relative aspect-[444/290] w-full max-w-[444px] overflow-hidden rounded-tl-[30px] rounded-tr-[30px] rounded-br-[30px] bg-linear-to-b from-mint to-[#c2e3c3] xl:absolute xl:top-0 xl:left-[40px] xl:h-[290px] xl:w-[444px]">
+          <div className="group relative aspect-[444/290] w-full max-w-[444px] overflow-hidden rounded-tl-[30px] rounded-tr-[30px] rounded-br-[30px] bg-linear-to-b from-mint to-[#c2e3c3] xl:absolute xl:top-0 xl:left-[40px] xl:h-auto xl:w-[min(444px,100%-40px)]">
             {/* Fill 108.7% wide from the left edge → cover, left-aligned. */}
             <Image src={hall} alt="Visitors walking past produce stands in a busy exhibition hall" placeholder="blur" sizes="(min-width: 768px) 444px, 100vw" className="zoom absolute inset-0 size-full object-cover object-left" />
           </div>

@@ -10,11 +10,11 @@ module.exports = [div("au-stm", [
 ], [
   svg("au-stm-leaf", "leaf-outline", [
     { ...at(px(2.68), px(49), null, null), width: px(440), height: px(239), "max-width": custom("none") },
-    { tablet: { ...at(px(0), px(0), null, null), width: px(260), height: px(141) }, mobile: { width: px(180), height: px(98) } },
+    { tablet: { ...at(px(0), px(0), null, null), width: px(260), height: px(141) }, mobile: { width: px(120), height: px(65) } },
   ], { attributes: attrs([["aria-hidden", "true"], ["data-noevents", ""]]) }),
   div("au-stm-head", [
     { position: "relative", padding: pad(56, 56, 0, 56) },
-    { tablet: { padding: pad(48, 32, 0, 32) }, mobile: { padding: pad(36, 20, 0, 20) } },
+    { tablet: { padding: pad(48, 32, 0, 32) }, mobile: { padding: pad(72, 20, 0, 20) } },
   ], [
     w("au-stm-eyebrow", "e-paragraph", { paragraph: "From source to market" }, EYB()),
     w("au-stm-title", "e-heading", { tag: "h2", title: "From <em>Fresh Food</em> to Market" }, mix(HSEC, [{ "line-height": px(52), "max-width": px(780), margin: pad(14, 0, 0, 0) }, { tablet: { "line-height": pct(109) }, mobile: { "line-height": NORMAL } }])),
@@ -31,5 +31,5 @@ module.exports = [div("au-stm", [
   box("au-stm-cta-row", [
     { position: "relative", padding: pad(43, 32, 26, 32), display: "flex", "flex-direction": "row", "justify-content": "center" },
     { tablet: { padding: pad(36, 32, 36, 32) }, mobile: { padding: pad(36, 20, 36, 20) } },
-  ], [pill("au-stm-cta", "Explore the Full Fresh Food Ecosystem", "/ecosystem", { color: T.white, bg: T.accent })], { attributes: attrs(reveal(0)) }),
+  ], [pill("au-stm-cta", "Explore the Full Fresh Food Ecosystem", "/ecosystem", { color: T.white, bg: T.accent, styles: [{}, { mobile: { padding: pad(12, 18), "font-size": px(15) } }] })], { attributes: attrs(reveal(0)) }),
 ], { tag: "section" })];

@@ -14,8 +14,8 @@ export default function NewsList() {
         {POSTS.map((p, k) => (
           <li key={p.slug} className={k ? "" : "lg:col-span-3"}>
             <article className={`lift group relative flex h-full flex-col overflow-hidden rounded-[22px] bg-white ${k ? "" : "lg:flex-row lg:rounded-[28px]"}`}>
-              <div className={`relative h-[210px] shrink-0 overflow-hidden bg-linear-to-b from-mint to-[#c2e3c3] ${k ? "" : "md:h-[300px] lg:h-auto lg:min-h-[360px] lg:w-[54%]"}`}>
-                <Image src={k ? p.thumb : p.img} alt={p.alt} placeholder="blur" sizes={k ? "(min-width: 1024px) 411px, (min-width: 768px) 50vw, 100vw" : "(min-width: 1024px) 690px, 100vw"} className="zoom size-full object-cover" />
+              <div className={`relative h-[210px] shrink-0 overflow-hidden bg-linear-to-b from-mint to-[#c2e3c3] ${k ? "" : "md:h-[380px] lg:h-auto lg:min-h-[360px] lg:w-[54%]"}`}>
+                <Image src={k ? p.thumb : p.img} alt={p.alt} placeholder="blur" sizes={k ? "(min-width: 1024px) 411px, (min-width: 768px) 50vw, 100vw" : "(min-width: 1024px) 690px, 100vw"} className={`zoom size-full object-cover ${k ? "" : "object-[50%_10%]"}`} />
               </div>
               <div className={`flex flex-1 flex-col justify-between gap-[22px] px-[26px] pt-[22px] pb-[26px] ${k ? "" : "lg:px-[44px] lg:py-[40px]"}`}>
                 <div className="flex flex-col gap-[12px]">

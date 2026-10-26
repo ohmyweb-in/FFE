@@ -11,10 +11,10 @@ export default function SourceToMarket() {
         src={leafOutline}
         alt=""
         aria-hidden
-        className="pointer-events-none absolute top-0 right-0 h-[98px] w-[180px] max-w-none md:h-[141px] md:w-[260px] lg:top-[2.68px] lg:right-[49px] lg:h-[239px] lg:w-[440px]"
+        className="pointer-events-none absolute top-0 right-0 h-[65px] w-[120px] max-w-none md:h-[141px] md:w-[260px] lg:top-[2.68px] lg:right-[49px] lg:h-[239px] lg:w-[440px]"
       />
 
-      <div className="relative px-[20px] pt-[36px] md:px-8 md:pt-12 lg:px-[56px] lg:pt-[56px]" data-reveal>
+      <div className="relative px-[20px] pt-[72px] md:px-8 md:pt-12 lg:px-[56px] lg:pt-[56px]" data-reveal>
         <p className="text-[15px] leading-[19px] font-medium tracking-[0.02em] text-accent uppercase">From source to market</p>
         <h2 className="h-section mt-[14px] max-w-[780px] lg:leading-[52px]">
           From <span className="text-accent">Fresh Food</span> to Market
@@ -32,7 +32,7 @@ export default function SourceToMarket() {
       </div>
 
       <div className="relative flex justify-center px-[20px] pt-[36px] pb-[36px] md:px-8 lg:pt-[43px] lg:pb-[26px]" data-reveal>
-        <Pill href="/ecosystem" className="bg-accent text-white">
+        <Pill href="/ecosystem" className="bg-accent text-white max-md:px-[18px] max-md:text-[15px]">
           Explore the Full Fresh Food Ecosystem
         </Pill>
       </div>

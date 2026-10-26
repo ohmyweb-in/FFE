@@ -45,8 +45,8 @@ module.exports = [div("au-bp", mix([{ padding: P0, display: "block" }, {}], NARR
         { padding: P0, margin: pad(24, 0, 0, 0), display: "flex", "flex-direction": "row", "align-items": "flex-start", gap: gap(14, 14), width: AUTO },
         { mobile: { "flex-direction": "column", "align-items": "stretch", gap: gap(12, 12) } },
       ], [
-        pill("au-bp-apply", "Apply to Exhibit", "/apply-to-exhibit", { color: T.white, bg: T.accent }),
-        pill("au-bp-register", "Register Your Interest", "/register-to-visit", { color: T.accent, bg: "rgba(0,0,0,0)", border: [1.5, T.accent], hoverBg: T.mint }),
+        pill("au-bp-apply", "Apply to Exhibit", "/apply-to-exhibit", { color: T.white, bg: T.accent, styles: [{}, { mobile: { padding: pad(10, 12), "font-size": px(15) } }] }),
+        pill("au-bp-register", "Register Your Interest", "/register-to-visit", { color: T.accent, bg: "rgba(0,0,0,0)", border: [1.5, T.accent], hoverBg: T.mint, styles: [{}, { mobile: { padding: pad(10, 12), "font-size": px(15) } }] }),
       ]),
     ], { attributes: attrs(reveal(0)) }),
     div("au-bp-photo", [

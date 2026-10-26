@@ -35,7 +35,7 @@ export default async function AlbumPage({ params }: { params: Promise<{ slug: st
       <Header />
       <main className="overflow-x-clip">
         {/* Same hero photo as /gallery (an album cover would put faces under the title); the title wraps to two lines. */}
-        <PageHero size="gallery" title={<span className="block lg:max-w-[760px]">{a.title}</span>} img={hero} imgBox="lg:top-0 lg:left-[16.31%] lg:w-[83.72%]" curveLeft={3.89}>
+        <PageHero size="gallery" title={<span className="block lg:max-w-[760px]">{a.title}</span>} img={hero} imgBox="lg:top-0 lg:left-[16.31%] lg:w-[83.72%]" curveLeft={3.89} curveLaptopHide>
           {a.desc}
         </PageHero>
 

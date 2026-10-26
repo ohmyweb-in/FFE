@@ -27,6 +27,7 @@ export default function GalleryPage() {
           // Homepage hero photo in the Figma photo box; cover crops off the credit along the bottom.
           imgBox="lg:top-0 lg:left-[16.31%] lg:w-[83.72%]"
           curveLeft={3.89}
+          curveLaptopHide
           stayHref="/subscribe"
         >
           Please note that these photos are intended solely for editorial use.

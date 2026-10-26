@@ -50,7 +50,7 @@ module.exports = [box("os-vc", mix([{ padding: P0 }, {}], NARROW([48, 48, 80]), 
     ], [
       div("os-vc-frame", [
         {
-          ...at(px(0), null, null, px(40)), overflow: "hidden", padding: P0, width: px(444), height: px(290), "aspect-ratio": "auto", "max-width": px(444),
+          ...at(px(0), null, null, px(40)), overflow: "hidden", padding: P0, width: custom("min(444px, 100% - 40px)"), height: AUTO, "aspect-ratio": "444/290", "max-width": px(444),
           "border-radius": { "start-start": px(30), "start-end": px(30), "end-end": px(30), "end-start": px(0) }, background: MINT_GREEN,
         },
         { tablet_extra: { position: "relative", ...AUTOS, width: pct(100), height: AUTO, "aspect-ratio": "444/290" } },

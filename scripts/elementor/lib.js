@@ -346,7 +346,7 @@ const heroVenue = (p, styles = [{}, {}]) => {
 
 // PageHero (PageHero.tsx). One section `${p}-ph` (_cssid "top"); sizes in HERO_SIZES. See the plan 2.1 for `o`.
 const pageHero = (p, o = {}) => {
-  const { size = "default", eyebrow, title, titleBr = "lg", titleAttrs = [], desc, img, imgBox, curveLeft = 0, date, stayHref, cta, cssid = "top" } = o;
+  const { size = "default", eyebrow, title, titleBr = "lg", titleAttrs = [], desc, img, imgBox, curveLeft = 0, curveLaptopHide = false, date, stayHref, cta, cssid = "top" } = o;
   const z = HERO_SIZES[size];
   if (!z) throw new Error(`pageHero: unknown size ${size}`);
   const id = `${p}-ph`, M = media();
@@ -366,7 +366,7 @@ const pageHero = (p, o = {}) => {
   const c = z.curve;
   const curve = div(`${id}-curve-box`, [
     { position: "absolute", overflow: "hidden", padding: P0, width: px(c.w), height: px(c.h), "inset-inline-start": px(curveLeft), ...(c.top !== undefined ? { "inset-block-start": px(c.top) } : { "inset-block-end": px(c.bottom) }) },
-    { tablet: HIDE },
+    { tablet: HIDE, ...(curveLaptopHide && { laptop: HIDE }) },
   ], [
     c.key
       ? svg(`${id}-curve`, c.key, [{ width: px(c.w), height: px(c.h) }, {}])

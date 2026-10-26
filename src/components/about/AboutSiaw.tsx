@@ -2,7 +2,7 @@ import SiawVideo from "./SiawVideo";
 import { Pill } from "../ui";
 
 // Long CTA on phones: full width, 20px sides, 13px top/bottom, balanced two lines.
-const MOB = "max-md:w-full max-md:px-[20px] max-md:py-[13px] max-md:leading-[22px] max-md:text-balance";
+const MOB = "max-md:w-full max-md:px-[16px] max-md:py-[12px] max-md:text-[15px] max-md:leading-[22px] max-md:text-balance";
 
 /** Figma 736:2219: 560px media (16:9 so the trailer’s text isn’t cropped), 72px gap, content column. */
 export default function AboutSiaw() {

@@ -47,10 +47,10 @@ export default function BePartOf() {
             ))}
           </ul>
           <div className="mt-[24px] flex flex-col items-stretch gap-[12px] sm:flex-row sm:items-start sm:gap-[14px]">
-            <Pill href="/apply-to-exhibit" className="bg-accent text-white">
+            <Pill href="/apply-to-exhibit" className="bg-accent text-white max-md:px-[12px] max-md:text-[15px]">
               Apply to Exhibit
             </Pill>
-            <Pill href="/register-to-visit" className="border-[1.5px] border-accent text-accent hover:bg-mint">
+            <Pill href="/register-to-visit" className="border-[1.5px] border-accent text-accent hover:bg-mint max-md:px-[12px] max-md:text-[15px]">
               Register Your Interest
             </Pill>
           </div>

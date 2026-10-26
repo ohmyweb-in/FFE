@@ -25,6 +25,8 @@ type Props = {
   date?: string;
   /** Left offset of the corner curve (image 78) inside the panel. */
   curveLeft?: number;
+  /** Hide the curve below 1440px, where it crosses the copy (Gallery). */
+  curveLaptopHide?: boolean;
   /** "Stay Connected" target; omit to render no CTAs (Subscribe). */
   stayHref?: string;
   /** Replaces the three CTAs with a single custom one (SIAW). */
@@ -204,7 +206,7 @@ const SIZES: Record<NonNullable<Props["size"]>, Size> = {
  * Inner-page hero: 1395×501 brand panel, photo on the right, two 538px fades, three CTAs.
  * Figma 736:2149 (About), 736:2710 (Contact).
  */
-export default function PageHero({ eyebrow, title, children, img, imgBox, date, curveLeft = 0, stayHref, cta, size = "default" }: Props) {
+export default function PageHero({ eyebrow, title, children, img, imgBox, date, curveLeft = 0, curveLaptopHide, stayHref, cta, size = "default" }: Props) {
   const z = SIZES[size];
   return (
     <section id="top" className="container-wide relative mt-[10px] md:mt-0">
@@ -227,7 +229,7 @@ export default function PageHero({ eyebrow, title, children, img, imgBox, date, 
           <div key={f} className={`absolute inset-y-0 -ml-[3px] hidden bg-linear-to-l from-brand/0 to-brand lg:block ${f}`} />
         ))}
         {/* image 78: 213×181 slot, Figma fill crop. */}
-        <span className={`pointer-events-none absolute hidden overflow-hidden lg:block ${z.curve}`} style={{ left: curveLeft }} aria-hidden>
+        <span className={`pointer-events-none absolute hidden overflow-hidden ${curveLaptopHide ? "min-[1440px]:block" : "lg:block"} ${z.curve}`} style={{ left: curveLeft }} aria-hidden>
           {z.curveSrc ? <Image src={z.curveSrc} alt="" className="max-w-none" /> : <Image src={heroCurve} alt="" sizes="231px" style={crop(108.45, 101.93, -8.45, 0)} />}
         </span>
 

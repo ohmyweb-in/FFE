@@ -1,5 +1,5 @@
 // About (About.tsx). Prefix ab-.
-const { T, FREDOKA, px, pct, custom, pad, P0, mtAuto, gap, flex, image, box, div, w, attrs, media, text, svg, NORMAL, at, FILL, mix, PAGE, reveal, btn } = require("../lib.js");
+const { T, FREDOKA, AUTO, px, pct, custom, pad, P0, mtAuto, gap, flex, image, box, div, w, attrs, media, text, svg, NORMAL, at, FILL, mix, PAGE, reveal, btn } = require("../lib.js");
 
 const M = media();
 const HIDE = { display: "none" };
@@ -26,11 +26,11 @@ const copy = div("ab-copy", [
 ], [
   w("ab-title", "e-heading", { tag: "h2", title: "About <br><em>Fresh Food Expo Asia Pacific (FFE APAC)</em>", attributes: attrs([["data-br-md", ""]]) }, mix(H, [
     { "max-width": px(549), margin: P0 },
-    { mobile: { "max-width": px(295) } },
+    { tablet: { "max-width": custom("none") }, mobile: { "max-width": px(295) } },
   ])),
   w("ab-lede", "e-paragraph", { paragraph: LEDE }, mix(LEAD, [
     { "max-width": px(586), margin: pad(38, 0, 0, 0) },
-    { tablet_extra: { margin: pad(38, 0, 0, 0) }, tablet: { margin: pad(28, 0, 0, 0) }, mobile: { margin: pad(24, 0, 0, 2) } },
+    { tablet: { "max-width": px(760) }, tablet_extra: { margin: pad(38, 0, 0, 0) }, tablet: { margin: pad(28, 0, 0, 0) }, mobile: { margin: pad(24, 0, 0, 2) } },
   ])),
   box("ab-ctas", [
     { padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(12), margin: pad(32, 0, 0, 1), width: pct(100) },
@@ -53,7 +53,7 @@ const media_ = div("ab-media", [
 ], [
   // Curves come before the frame so the photo paints over them.
   svg("ab-curve-m", "about-curve-mobile", [
-    { ...at(px(-6.3), null, null, px(-25.6)), width: px(441), height: px(226), "max-width": custom("none"), display: "none" },
+    { ...at(px(-6.3), null, null, px(-25.6)), width: custom("calc(100% + 25px)"), height: AUTO, "aspect-ratio": "441/226", "max-width": custom("none"), display: "none" },
     { mobile: { display: "flex" } },
   ], { attributes: aria }),
   svg("ab-curve", "about-curve", [
@@ -63,7 +63,7 @@ const media_ = div("ab-media", [
   div("ab-frame", [
     { position: "relative", width: pct(100), padding: P0, overflow: "hidden", background: { color: "#d9d9d9" }, "aspect-ratio": "559.7/425.6",
       "border-radius": { "start-start": px(30.47), "start-end": px(30.47), "end-start": px(0), "end-end": px(30.47) } },
-    { mobile: { "aspect-ratio": "388/296", "border-radius": { "start-start": px(18.2), "start-end": px(18.2), "end-start": px(18.2), "end-end": px(18.2) } } },
+    { tablet: { "aspect-ratio": "21/10" }, mobile: { "aspect-ratio": "388/296", "border-radius": { "start-start": px(18.2), "start-end": px(18.2), "end-start": px(18.2), "end-end": px(18.2) } } },
   ], [
     w("ab-photo", "e-image", { image: image(M.about.id) }, [{ ...FILL, width: pct(100), height: pct(100), "object-fit": "cover" }]),
   ]),

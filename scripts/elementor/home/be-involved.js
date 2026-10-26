@@ -23,7 +23,7 @@ const cards = [
       { ...at(pct(-17.34), null, null, pct(-13.26)), width: pct(167.77), height: pct(117.34), "object-position": pos(10, 100) },
       { tablet: { ...FILL, width: pct(100), height: pct(100) }, mobile: { ...at(pct(-2.35), null, null, pct(-13.55)), width: pct(167.77), height: pct(102.43) } },
     ],
-    box: [{ right: 36, bottom: 39, left: 36 }, { tablet: { right: 32, bottom: 24, left: 32 }, mobile: { right: 20, bottom: 32.7, left: 19.3 } }],
+    box: [{ right: 36, bottom: 39, left: 36 }, { tablet: { right: 24, bottom: 24, left: 24 }, mobile: { right: 20, bottom: 32.7, left: 19.3 } }],
     descStyle: [{ "margin-top": 28.4, "max-width": 532 }, { tablet: { "margin-top": 20 }, mobile: { "margin-top": 18.7, "max-width": 336 } }],
     ctaMt: [23, 25],
     cta: (id) => btn(id, "Apply to Exhibit", "/apply-to-exhibit", { w: 220, h: 52, pl: 33, gap: 21.66, chev: "chevron-white", color: T.white, bg: T.accent,
@@ -37,7 +37,7 @@ const cards = [
       { ...FILL, width: pct(100), height: pct(100) },
       { mobile: { ...at(px(0), null, null, pct(-21.66)), width: pct(143.32), height: pct(87.52) } },
     ],
-    box: [{ right: 36, bottom: 39, left: 42 }, { tablet: { right: 32, bottom: 24, left: 32 }, mobile: { right: 20, bottom: 29.6, left: 26 } }],
+    box: [{ right: 36, bottom: 39, left: 42 }, { tablet: { right: 24, bottom: 24, left: 24 }, mobile: { right: 20, bottom: 29.6, left: 26 } }],
     descStyle: [{ "margin-top": 28.4, "max-width": 521 }, { tablet: { "margin-top": 20 }, mobile: { "margin-top": 16.1, "max-width": 324, fs: 17 } }],
     ctaMt: [23, 18.8],
     cta: (id) => btn(id, "Register Your Interest", "/register-to-visit", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-black", color: "#000000", bg: T.white,
@@ -53,7 +53,7 @@ const card = (c, idx) => {
   return div(id, [{ padding: P0 }, {}], [
     div(`${id}-card`, [
       { position: "relative", overflow: "hidden", padding: P0, "aspect-ratio": "622/467", "border-radius": radius(30), background: { color: "#d9d9d9" }, transition: ease(250) },
-      { hover: { transform: lift, "box-shadow": CARD_SHADOW }, tablet: { "border-radius": radius(24) }, mobile: { "aspect-ratio": "auto", height: px(332), "border-radius": radius(18.6) } },
+      { hover: { transform: lift, "box-shadow": CARD_SHADOW }, tablet: { "border-radius": radius(24), "aspect-ratio": "4/5" }, mobile: { "aspect-ratio": "auto", height: px(332), "border-radius": radius(18.6) } },
     ], [
       ...(c.base ? [w(`${id}-base`, "e-image", { image: image(M["visit-base"].id), attributes: attrs([["aria-hidden", "true"]]) }, [
         { ...FILL, "object-fit": "cover", display: "none" }, { mobile: { display: "block" } }])] : []),
@@ -69,7 +69,7 @@ const card = (c, idx) => {
       ], [
         w(`${id}-title`, "e-heading", { tag: "h3", title: c.title }, [
           { "font-family": FREDOKA, "font-size": px(48), "font-weight": "600", "line-height": px(52.2), color: T.white, margin: P0 },
-          { mobile: { "font-size": px(30), "line-height": px(32.4) } },
+          { tablet: { "font-size": px(38), "line-height": px(42) }, mobile: { "font-size": px(30), "line-height": px(32.4) } },
         ]),
         w(`${id}-desc`, "e-paragraph", { paragraph: c.desc }, [
           { ...lead(T.white), "max-width": px(dd["max-width"]), margin: pad(dd["margin-top"], 0, 0, 0) },
@@ -98,8 +98,8 @@ const inv = div("inv", mix(PAGE(), [
   ], { attributes: attrs(reveal(0)) }),
   div("inv-grid", [
     { padding: P0, display: "grid", "grid-template-columns": { $$type: "string", value: "repeat(2, minmax(0, 1fr))" }, gap: gap(42), margin: pad(48, 0, 0, 0) },
-    { tablet: { "grid-template-columns": { $$type: "string", value: "minmax(0, 1fr)" }, gap: gap(24), margin: pad(40, 0, 0, 0) },
-      mobile: { gap: gap(20), margin: pad(29, 0, 0, 3), width: AUTO } },
+    { tablet: { gap: gap(24), margin: pad(40, 0, 0, 0) },
+      mobile: { "grid-template-columns": { $$type: "string", value: "minmax(0, 1fr)" }, gap: gap(20), margin: pad(29, 0, 0, 3), width: AUTO } },
   ], cards.map(card)),
 ], { tag: "section", _cssid: "be-involved", attributes: attrs([["data-trim", ""]]) });
 

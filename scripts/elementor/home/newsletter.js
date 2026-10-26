@@ -13,8 +13,8 @@ const nl = div("nl", [
   { tablet_extra: { margin: pad(133, 0, 0, 0) }, tablet: { margin: pad(64, 0, 0, 0), padding: P0 }, mobile: { margin: pad(47, 0, 0, 0) } },
 ], [
   svg("nl-leaf", "leaf-outline", [
-    { ...at(px(-165), null, null, px(-7)), width: px(303.766), height: px(165), "max-width": custom("none"), transform: scale(-1, 1) },
-    { tablet: { display: "none" } },
+    { ...at(px(-185), null, null, px(-7)), width: px(303.766), height: px(165), "max-width": custom("none"), transform: scale(-1, 1) },
+    { tablet_extra: { "inset-block-start": px(-165) }, tablet: { display: "none" } },
   ], { attributes: attrs([["aria-hidden", "true"], ["data-noevents", ""]]) }),
   div("nl-sec", mix(PAGE(), [
     { position: "relative", margin: mtAuto(0), padding: P0, display: "block", "min-height": px(304) },

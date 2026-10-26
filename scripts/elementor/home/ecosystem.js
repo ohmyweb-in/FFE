@@ -3,6 +3,7 @@ const { T, FREDOKA, px, pct, custom, pad, P0, AUTO, mtAuto, radius, gap, image, 
   mix, WIDE, PAGE, reveal, rotate, lift, shadow, ease, btn, flex } = require("../lib.js");
 
 const M = media();
+const HIDE = { display: "none" };
 const H = { "font-family": FREDOKA, "font-weight": "600", color: T.forest };
 const PILLARS = [
   { key: "fresh", title: "Fresh Food", desc: "The products at the heart of the ecosystem.", items: ["Fruit &amp; Vegetables", "Meat &amp; Poultry", "Seafood", "Eggs &amp; Dairy"] },
@@ -17,7 +18,7 @@ const pillar = (p, i) => {
   const id = `eco-p${i + 1}`;
   return div(id, [
     { width: px(392), "max-width": custom("none"), flex: flex(0, 1, AUTO), padding: P0 },
-    { tablet: { width: pct(100), "max-width": px(392) } },
+    { tablet: { width: AUTO, "min-width": px(0), "max-width": custom("none"), flex: flex(1, 1, px(0)) }, mobile: { width: pct(100), "max-width": px(392), flex: flex(0, 1, AUTO) } },
   ], [
     div(`${id}-card`, [
       { height: pct(100), "min-height": px(426), overflow: "hidden", padding: P0, "border-radius": radius(25), background: { color: T.white }, transition: ease(250) },
@@ -26,7 +27,7 @@ const pillar = (p, i) => {
       div(`${id}-media`, [{ position: "relative", "aspect-ratio": "392/171", overflow: "hidden", padding: P0 }], [cardImg(`${id}-img`, "eco-" + p.key)]),
       div(`${id}-body`, [
         { position: "relative", padding: pad(0, 27, 32, 27) },
-        { mobile: { padding: pad(0, 27, 13, 27) } },
+        { tablet: { padding: pad(0, 18, 24, 18) }, mobile: { padding: pad(0, 27, 13, 27) } },
       ], [
         // icon-ring.svg drawn with CSS: the e-svg sanitizer drops its <filter> (the 5% drop shadow, dy 4, blur 2)
         div(`${id}-ring`, [{ ...at(px(-31), null, null, px(23)), width: px(70), height: px(70), padding: P0 }], [
@@ -37,6 +38,7 @@ const pillar = (p, i) => {
         ]),
         w(`${id}-title`, "e-heading", { tag: "h3", title: p.title }, [
           { "font-family": FREDOKA, "font-weight": "600", "font-size": px(26), "line-height": pct(120), color: T.accent, margin: P0, padding: pad(57, 0, 0, 0) },
+          { tablet: { "font-size": px(22) }, mobile: { "font-size": px(26) } },
         ]),
         w(`${id}-desc`, "e-paragraph", { paragraph: p.desc }, [{ ...text(15, 500, "#000000", { "line-height": px(23) }), "max-width": px(332), margin: pad(17, 0, 0, 0) }]),
         box(`${id}-list`, [{ margin: pad(22, 0, 0, 0), padding: P0, display: "flex", "flex-direction": "column" }], p.items.map((it, k) =>
@@ -53,9 +55,9 @@ const pillar = (p, i) => {
 const arrow = (n) =>
   box(`eco-arrow${n}`, [
     { width: px(55), flex: flex(0, 0, AUTO), height: AUTO, padding: pad(198, 0, 0, 0), display: "flex", "justify-content": "center", "align-items": "flex-start" },
-    { tablet: { width: pct(100), height: px(55), padding: P0, "align-items": "center" }, mobile: { height: px(71) } },
+    { tablet: HIDE, mobile: { display: "flex", width: pct(100), height: px(71), padding: P0, "align-items": "center" } },
   ], [
-    w(`eco-arrow${n}-i`, "e-image", { image: image(M["flow-arrow"].id) }, [{ width: px(31), height: px(31), "max-width": custom("none") }, { tablet: { transform: rotate(90) } }]),
+    w(`eco-arrow${n}-i`, "e-image", { image: image(M["flow-arrow"].id) }, [{ width: px(31), height: px(31), "max-width": custom("none") }, { mobile: { transform: rotate(90) } }]),
   ], { attributes: attrs([["aria-hidden", "true"]]) });
 
 const eco = div("eco", mix(WIDE, [
@@ -64,7 +66,7 @@ const eco = div("eco", mix(WIDE, [
 ]), [
   svg("eco-leaf", "leaf-outline", [
     { ...at(px(0), px(0), null, null), width: px(440), height: px(239), "max-width": custom("none") },
-    { tablet_extra: { width: px(300), height: px(163) }, tablet: { width: px(260), height: px(141) }, mobile: { width: px(180), height: px(98) } },
+    { tablet_extra: { width: px(300), height: px(163) }, tablet: { width: px(200), height: px(109) }, mobile: { width: px(110), height: px(60), "inset-block-start": px(-12) } },
   ], { attributes: attrs([["aria-hidden", "true"], ["data-noevents", ""]]) }),
   div("eco-inner", mix(PAGE(32, 18), [
     { position: "relative", margin: mtAuto(0), padding: pad(69, 0, 54, 0), display: "block" },
@@ -80,7 +82,7 @@ const eco = div("eco", mix(WIDE, [
       ]),
       w("eco-title", "e-heading", { tag: "h2", title: "Connecting the fresh food ecosystem" }, [
         { ...H, "font-size": px(48), "line-height": px(52.2), "max-width": px(825), margin: pad(28, 0, 0, 0) },
-        { tablet: { "font-size": px(40), "line-height": pct(109), margin: pad(20, 0, 0, 0) }, mobile: { "font-size": px(30), "line-height": px(38.2), "max-width": px(354), margin: pad(28, 0, 0, 0) } },
+        { tablet: { "font-size": px(40), "line-height": pct(109), "max-width": custom("min(825px, 100% - 230px)"), margin: pad(20, 0, 0, 0) }, mobile: { "font-size": px(30), "line-height": px(38.2), "max-width": px(354), margin: pad(28, 0, 0, 0) } },
       ]),
       w("eco-lede", "e-paragraph", { paragraph: "One Platform. Fresh Food, Agri &amp; Fresh Technology, Logistics &amp; Distribution." }, [
         { ...text(18, 500, T.forest, { "line-height": NORMAL }), "max-width": px(615), margin: pad(32, 0, 0, 0) },
@@ -89,7 +91,7 @@ const eco = div("eco", mix(WIDE, [
     ], { attributes: attrs(reveal(0)) }),
     box("eco-row", [
       { margin: pad(54, 0, 0, 0), padding: P0, display: "flex", "flex-direction": "row", "align-items": "stretch" },
-      { tablet: { "flex-direction": "column", "align-items": "center", margin: pad(40, 0, 0, 0) }, mobile: { margin: pad(33, 0, 0, 0) } },
+      { tablet: { gap: gap(16), margin: pad(40, 0, 0, 0) }, mobile: { "flex-direction": "column", "align-items": "center", gap: gap(0), margin: pad(33, 0, 0, 0) } },
     ], PILLARS.flatMap((p, i) => (i ? [arrow(i + 1), pillar(p, i)] : [pillar(p, i)]))),
     box("eco-cta-row", [
       { margin: pad(42, 0, 0, 0), padding: P0, display: "flex", "flex-direction": "row", "justify-content": "center" },

@@ -20,7 +20,7 @@ export default function Newsletter() {
   return (
     <div className="relative">
       {/* Figma 359:166 — the leaf asset flipped horizontally, as in the design. */}
-      <Image src={leafOutline} alt="" aria-hidden className="pointer-events-none absolute top-[-165px] left-[-7px] hidden max-w-none -scale-x-100 lg:block" />
+      <Image src={leafOutline} alt="" aria-hidden className="pointer-events-none absolute top-[-185px] left-[-7px] hidden max-w-none -scale-x-100 lg:block" />
 
       {/* Figma 624:861: copy starts 96px below the collage top (176px under the banner); the section still ends at the collage bottom. */}
       <section id="newsletter" className="container-page relative mt-[47px] md:mt-16 lg:mt-[133px] xl:mt-[176px] xl:min-h-[304px]">

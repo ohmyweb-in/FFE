@@ -13,7 +13,7 @@ const GHOST = { color: T.white, bg: "rgba(255,255,255,0)", hoverBg: "rgba(255,25
 const content = box("hero-content", [
   { position: "relative", "z-index": 2, width: custom("calc(100% - 64px)"), "max-width": px(T.maxw), margin: mtAuto(0), padding: pad(86, 0, 0, 0),
     display: "flex", "flex-direction": "column", "align-items": "flex-start" },
-  { tablet: { padding: pad(36, 0, 141, 0) }, mobile: { width: custom("calc(100% - 52px)"), padding: pad(47, 0, 0, 0) } },
+  { tablet: { padding: pad(36, 0, 141, 0) }, mobile: { width: custom("calc(100% - 52px)"), padding: pad(47, 0, 125, 0) } },
 ], [
   w("hero-eyebrow", "e-paragraph", { paragraph: "Fresh people.  Brighter possibilities.", attributes: step(0) }, [
     { ...text(15, 500, T.white, { "letter-spacing": px(0.3), "line-height": NORMAL, "text-transform": "uppercase" }), margin: P0 },
@@ -56,7 +56,7 @@ const content = box("hero-content", [
 
 const card = div("hero-card", [
   { position: "relative", overflow: "hidden", height: px(622), padding: P0, "border-radius": radius(30), background: { color: T.brand } },
-  { tablet: { height: AUTO, "border-radius": radius(24) }, mobile: { height: px(660), "border-radius": radius(20), background: { color: "#032919" } } },
+  { tablet: { height: AUTO, "border-radius": radius(24) }, mobile: { height: AUTO, "min-height": px(660), "border-radius": radius(20), background: { color: "#032919" } } },
 ], [
   // The page's largest paint: fetched first, never lazy.
   w("hero-photo", "e-image", { image: image(M.hero.id), attributes: attrs([["loading", "eager"], ["fetchpriority", "high"]]) }, [
@@ -101,7 +101,7 @@ const hero = box("hero", [
 ], [
   card,
   // Line-art curves over the card's lower-left corner; below the copy so they never block a button.
-  svg("hero-curve", "hero-curve", [{ ...at(px(441), null, null, px(-21)), "z-index": 1, width: px(230.622), height: px(184.316) }, { tablet: HIDE }]),
+  svg("hero-curve", "hero-curve", [{ ...at(px(441), null, null, px(-16)), "z-index": 1, width: px(230.622), height: px(184.316) }, { tablet: HIDE }]),
   svg("hero-curve-m", "hero-curve-mobile", [{ ...at(px(588), null, null, px(-3)), "z-index": 1, width: px(84), height: px(71), display: "none" }, { mobile: { display: "flex" } }]),
 ], { tag: "section", _cssid: "top" });
 

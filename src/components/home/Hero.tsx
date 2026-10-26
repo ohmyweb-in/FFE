@@ -16,7 +16,7 @@ export default function Hero() {
   return (
     <section id="top" className="container-wide relative mt-[10px] md:mt-0">
       {/* Mobile = Figma 318:1796 (388×566, r20) + room for the Powered By tab. Tablet fluid. Desktop = 359:30. */}
-      <div className="relative h-[660px] overflow-hidden rounded-[20px] bg-[#032919] md:h-auto md:rounded-[24px] md:bg-brand lg:h-[622px] lg:rounded-[30px]">
+      <div className="relative min-h-[660px] overflow-hidden rounded-[20px] bg-[#032919] md:min-h-0 md:rounded-[24px] md:bg-brand lg:h-[622px] lg:rounded-[30px]">
         <div className="absolute inset-0" aria-hidden>
           <Image
             src={hero}
@@ -37,7 +37,7 @@ export default function Hero() {
         <div className="absolute inset-y-0 -ml-[3px] left-[16.34%] hidden w-[38.57%] bg-linear-to-l from-brand/0 to-brand lg:block" />
         <div className="absolute inset-y-0 -ml-[3px] left-[16.34%] hidden w-[65.88%] bg-linear-to-l from-brand/0 to-brand lg:block" />
 
-        <div className="container-page relative pt-[51px] text-white md:pt-10 md:pb-[141px] lg:pt-[90px] lg:pb-0">
+        <div className="container-page relative pt-[51px] pb-[125px] text-white md:pt-10 md:pb-[141px] lg:pt-[90px] lg:pb-0">
           <p className="eyebrow load-in max-w-[200px] md:max-w-none" style={i(0)}>
             Fresh PEOPLE.&nbsp; bRIGHTER POSSIBILITIES.
           </p>
@@ -98,7 +98,7 @@ export default function Hero() {
         <Image src={sliderDots} alt="" aria-hidden className="absolute bottom-[20px] left-1/2 hidden -translate-x-1/2 md:block lg:bottom-[34px]" />
       </div>
       <Image src={heroCurveMobile} alt="" aria-hidden className="pointer-events-none absolute top-[588px] left-[-3px] max-w-none md:hidden" />
-      <Image src={heroCurve} alt="" aria-hidden className="pointer-events-none absolute top-[441px] left-[-21px] hidden max-w-none lg:block" />
+      <Image src={heroCurve} alt="" aria-hidden className="pointer-events-none absolute top-[441px] left-[-16px] hidden max-w-none lg:block" />
     </section>
   );
 }

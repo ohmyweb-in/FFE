@@ -10,11 +10,11 @@ export default function About() {
   return (
     <section id="about" className="container-page mt-[35px] flex flex-col gap-[33px] md:mt-14 md:gap-12 lg:mt-[70.39px] lg:flex-row lg:justify-between lg:gap-10">
       <div className="min-w-0 lg:basis-[586px] lg:pt-[18.61px]" data-reveal>
-        <h2 className="h-section max-w-[295px] md:max-w-[549px]">
+        <h2 className="h-section max-w-[295px] md:max-w-none lg:max-w-[549px]">
           <span className="md:block">About </span>
           <span className="text-accent md:block">Fresh Food Expo Asia Pacific <span className="whitespace-nowrap">(FFE APAC)</span></span>
         </h2>
-        <p className="text-lead mt-[24px] ml-[2px] max-w-[586px] md:mt-[28px] md:ml-0 lg:mt-[38px]">
+        <p className="text-lead mt-[24px] ml-[2px] max-w-[586px] md:mt-[28px] md:max-w-[760px] lg:max-w-[586px] md:ml-0 lg:mt-[38px]">
           Fresh Food Expo Asia Pacific (FFE APAC) is a premier B2B trade fair connecting fresh food with the technologies, logistics and
           distribution solutions that help preserve quality, maintain freshness and move products efficiently to market.
           <br />
@@ -52,7 +52,7 @@ export default function About() {
 
       <div className="relative w-full min-w-0 shrink lg:mr-[1.2px] lg:basis-[559.7px]" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
         {/* Mobile curve (318:1869) bleeds to both screen edges; desktop curve (359:76). */}
-        <Image src={aboutCurveMobile} alt="" aria-hidden className="pointer-events-none absolute top-[-6.3px] left-[-25.6px] max-w-none md:hidden" />
+        <Image src={aboutCurveMobile} alt="" aria-hidden className="pointer-events-none absolute top-[-6.3px] left-[-25.6px] h-auto w-[calc(100%+25px)] max-w-none md:hidden" />
         <Image src={aboutCurve} alt="" aria-hidden className="pointer-events-none absolute top-[-25.38px] left-[-100.23px] hidden max-w-none xl:block" />
         <div className="relative aspect-[388/296] overflow-hidden rounded-[18.2px] bg-[#d9d9d9] md:aspect-[559.7/425.6] md:rounded-[30.47px] md:rounded-bl-none">
           <Image

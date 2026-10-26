@@ -79,7 +79,7 @@ const stats = div("org-stats-wrap", [
 
 const map = div("org-map-wrap", [
   { position: "static", padding: P0, width: AUTO, margin: mt(0) },
-  { laptop: { position: "relative", margin: mt(32) }, mobile: { margin: mt(36, -26), width: custom("100vw") } },
+  { laptop: { position: "relative", margin: mt(32) }, mobile: { margin: mt(36, -26), width: custom("100vw"), overflow: "hidden" } },
 ], [
   div("org-map", [
     { ...at(px(17), custom("calc((100% - 100vw) / 2 + 2px)"), null, null), width: px(718), padding: P0 },

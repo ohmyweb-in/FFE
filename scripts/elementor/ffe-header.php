@@ -59,8 +59,16 @@ add_action('wp_head', function () { ?>
 @media (max-width: 767px) {
 	.elementor-element-site-menu .e-n-menu-wrapper .e-n-menu-heading { margin-inline: 26px; }
 }
+/* The utility bar's flex row squeezed the 18px search icon to 14px wide. */
+.s-util-search { flex-shrink: 0; object-fit: contain; }
 </style>
 <?php });
+
+// Hello's "Skip to content" link targets #content, which Elementor pages don't have: wrap the page in <main id="content">
+// (also gives screen readers the main landmark). Elementor renders the page through the_content at priority 9.
+add_filter('the_content', function ($c) {
+  return is_singular() && in_the_loop() && is_main_query() ? '<main id="content">' . $c . '</main>' : $c;
+}, 99);
 
 add_action('wp_footer', function () { ?>
 <script id="ffe-header-js">

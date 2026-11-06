@@ -4,7 +4,7 @@ const { CW, H, LIFT, GRID, GRIDC } = require("../g4-shared.js");
 const M = media();
 
 const CARDS = [
-  ["g4-res-visa", "Visa Information", 'Contact <a href="mailto:marketing@freshfoodexpoapac.com">marketing@freshfoodexpoapac.com</a> if you need help with visa requirements, application processes, or travel guidelines to ensure a hassle-free entry.', "Contact Us", "/contact", false],
+  ["g4-res-visa", "Visa Information", 'Contact <a href="mailto:marketing@freshfoodexpoapac.com">marketing@freshfoodexpoapac.com</a> if you need help with visa requirements, application processes, or travel guidelines to ensure a hassle-free entry.', "Contact Us", "/contact/", false],
   ["g4-res-mbs", "Marina Bay Sands Privileges", "Access special promotions across world-renowned luxury brands, lifestyle stores and premium restaurants located within MBS.", "Unlock Your Privileges", "https://www.marinabaysands.com/shopping/guest-privileges.html", true],
   ["g4-res-tips", "Useful Tips", "Everything you need to ensure a smooth and enjoyable visit to <em>FFE APAC.</em>", "Get Helpful Tips", "https://www.visitsingapore.com/travel-tips/essential-travel-information/", true],
   ["g4-res-singapore", "Visit Singapore", "A dynamic city where innovation, culture, and business thrive—see what makes it the perfect destination.", "Explore Now", "https://www.visitsingapore.com", true],

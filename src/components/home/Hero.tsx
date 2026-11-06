@@ -20,7 +20,7 @@ export default function Hero() {
         <div className="absolute inset-0" aria-hidden>
           <Image
             src={hero}
-            alt=""
+            alt="Visitors walking through a busy exhibition hall at a Messe Berlin trade fair"
             preload
             quality={90}
             placeholder="blur"

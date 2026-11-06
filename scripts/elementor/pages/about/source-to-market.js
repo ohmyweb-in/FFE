@@ -31,5 +31,5 @@ module.exports = [div("au-stm", [
   box("au-stm-cta-row", [
     { position: "relative", padding: pad(43, 32, 26, 32), display: "flex", "flex-direction": "row", "justify-content": "center" },
     { tablet: { padding: pad(36, 32, 36, 32) }, mobile: { padding: pad(36, 20, 36, 20) } },
-  ], [pill("au-stm-cta", "Explore the Full Fresh Food Ecosystem", "/ecosystem", { color: T.white, bg: T.accent, styles: [{}, { mobile: { padding: pad(12, 18), "font-size": px(15) } }] })], { attributes: attrs(reveal(0)) }),
+  ], [pill("au-stm-cta", "Explore the Full Fresh Food Ecosystem", "/ecosystem/", { color: T.white, bg: T.accent, styles: [{}, { mobile: { padding: pad(12, 18), "font-size": px(15) } }] })], { attributes: attrs(reveal(0)) }),
 ], { tag: "section" })];

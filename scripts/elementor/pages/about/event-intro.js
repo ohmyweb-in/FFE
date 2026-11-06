@@ -6,7 +6,7 @@ const M = media();
 const rad = (ss, se, ee, es) => ({ "start-start": px(ss), "start-end": px(se), "end-end": px(ee), "end-start": px(es) });
 const CARDS = [
   { title: "The Event", lead: "Connecting the Fresh Food Industry", body: "Fresh Food Expo APAC connects the fresh food ecosystem across the source-to-market value chain, bringing businesses and decision-makers together in Singapore.", textW: 254, ml: 12, imgH: 203 },
-  { title: "The Ecosystem", lead: "From Source to Market", body: "Discover fresh food, post-harvest technologies, cooling, packaging, cold chain, logistics, distribution and market access—all within one platform.", textW: 264, ml: 12, imgH: 203 },
+  { title: "The Ecosystem", lead: "From Source to Market", body: "Discover fresh food, post-harvest technologies, cooling, packaging, cold chain, logistics, distribution and market access—all within one platform.", textW: 264, ml: 12, imgH: 203, img: "join" },
   { title: "The Opportunity", lead: "Connect. Source. Grow.", body: "Meet growers, producers, exporters, suppliers, technology providers, buyers and industry partners from Asia Pacific and global markets.", textW: 250, ml: 14, imgH: 187 },
 ];
 
@@ -23,7 +23,7 @@ const card = (c, i) => {
     ], [
       div(`${id}-media`, [{ ...at(px(0), px(0), null, null), width: px(119), height: px(c.imgH), overflow: "hidden", padding: P0, "border-radius": rad(75, 15, 75, 0), background: { color: "#d9d9d9" } },
         { mobile: { position: "relative", ...AUTOS, width: custom("calc(100% + 44px)"), height: px(170), margin: pad(0, -22, 12, -22), "border-radius": rad(0, 0, 0, 0) } }], [
-        w(`${id}-img`, "e-image", { image: image(M[`g1-event${i + 1}`].id), attributes: attrs([["data-zoom", ""]]) }, [{ ...FILL, width: pct(100), height: pct(100), "max-width": custom("none"), "object-fit": "cover" }, {}]),
+        w(`${id}-img`, "e-image", { image: image(M[c.img || `g1-event${i + 1}`].id), attributes: attrs([["data-zoom", ""]]) }, [{ ...FILL, width: pct(100), height: pct(100), "max-width": custom("none"), "object-fit": "cover" }, {}]),
       ]),
       div(`${id}-bar`, [{ position: "relative", "min-height": px(37), padding: pad(8, 0, 0, 0) }, {}], [
         div(`${id}-rule`, [{ ...at(px(0), null, px(0), px(0)), width: px(4), "min-width": px(0), padding: P0, "border-radius": { "start-start": px(999), "start-end": px(999), "end-end": px(999), "end-start": px(999) }, background: { color: T.accent } }, {}], [], { attributes: attrs([["aria-hidden", "true"]]) }),

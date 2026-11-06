@@ -9,8 +9,8 @@ const CARDS = [
     desc: "For buyers and industry professionals seeking new fresh food products, suppliers, technologies, solutions and business partners.",
     tags: "Wholesalers | Importers | Exporters | Retailers | Food Service Operators...",
     btns: (c) => [
-      btn(`${c}-why`, "Why Visit", "/why-visit", { w: 162, h: 52, pl: 33, gap: 9.73, chev: "chevron-black", color: "#000000", bg: T.white, border: [1.5, T.white], m: { w: 125, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
-      btn(`${c}-reg`, "Register Your Interest", "/register-to-visit", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-white", color: T.white, border: [1.5, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 200, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
+      btn(`${c}-why`, "Why Visit", "/why-visit/", { w: 162, h: 52, pl: 33, gap: 9.73, chev: "chevron-black", color: "#000000", bg: T.white, border: [1.5, T.white], m: { w: 125, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
+      btn(`${c}-reg`, "Register Your Interest", "/register-to-visit/", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-white", color: T.white, border: [1.5, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 200, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
     ],
   },
   {
@@ -18,8 +18,8 @@ const CARDS = [
     desc: "For companies looking to showcase fresh food products, technologies and logistics solutions, enter new markets and build commercial relationships across Asia Pacific's fresh food ecosystem",
     tags: "Producer | Packaging Companies | Cold Chain Operators...",
     btns: (c) => [
-      btn(`${c}-why`, "Why Exhibit", "/why-exhibit", { w: 172, h: 52, pl: 27, gap: 10.14, chev: "chevron-white", color: T.white, bg: T.accent, border: [1.5, T.accent], m: { w: 142, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
-      btn(`${c}-who`, "Who Should Exhibit", "/who-should-exhibit", { w: 241, h: 52, pl: 33, gap: 8.83, chev: "chevron-white", color: T.white, border: [1.5, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 197, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
+      btn(`${c}-why`, "Why Exhibit", "/why-exhibit/", { w: 172, h: 52, pl: 27, gap: 10.14, chev: "chevron-white", color: T.white, bg: T.accent, border: [1.5, T.accent], m: { w: 142, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
+      btn(`${c}-who`, "Who Should Exhibit", "/who-should-exhibit/", { w: 241, h: 52, pl: 33, gap: 8.83, chev: "chevron-white", color: T.white, border: [1.5, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 197, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
     ],
   },
 ];

@@ -36,11 +36,11 @@ const copy = div("ab-copy", [
     { padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(12), margin: pad(32, 0, 0, 1), width: pct(100) },
     { tablet: { margin: pad(32, 0, 0, 0) }, mobile: { gap: gap(7), margin: pad(18, 0, 0, 0) } },
   ], [
-    btn("ab-discover", "Discover The Expo", "/about", {
+    btn("ab-discover", "Discover The Expo", "/about/", {
       w: 220, h: 52, pl: 24, gap: 17.66, chev: "chevron-accent", color: T.accent, bg: T.mint, border: [1.5, T.accent],
       m: { w: 197, h: 43, pl: 27, gap: 8, fs: 15, chev: 0.828 },
     }),
-    btn("ab-story", "Our Story", "/our-story", {
+    btn("ab-story", "Our Story", "/our-story/", {
       w: 172, h: 52, pl: 37, gap: 17.66, chev: "chevron-ink", color: T.ink, bg: "rgba(0,0,0,0)", mBg: "#f4f6f4", border: [1.5, T.ink],
       m: { w: 129, h: 43, pl: 23, gap: 8, fs: 15, chev: 0.828 },
     }),

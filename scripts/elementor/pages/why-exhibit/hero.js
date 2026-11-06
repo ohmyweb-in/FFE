@@ -8,7 +8,7 @@ module.exports = [
     img: "ph-exhibit", imgBox: { top: -60.26, left: 16.63, w: 109.89, h: 226.9 }, curveLeft: 4.37,
     cta: [
       heroVenue("we-ph"),
-      heroCtas("we-ph", { stayHref: "/subscribe", styles: [{ margin: pad(29, 0, 0, 0) }, { mobile: { margin: pad(24, 0, 0, 0) } }] }),
+      heroCtas("we-ph", { stayHref: "/subscribe/", styles: [{ margin: pad(29, 0, 0, 0) }, { mobile: { margin: pad(24, 0, 0, 0) } }] }),
     ],
   }),
 ];

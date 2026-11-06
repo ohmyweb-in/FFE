@@ -42,7 +42,7 @@ MEDIA = {
     "partner-sg": ("partners/sg.png", "ffe-partner-sg.png", "Singapore: Passion Made Possible", None),
     "partner-siaw": ("partners/siaw.png", "ffe-partner-siaw.png", "Singapore International Agri-Food Week", None),
     # Home hero (Hero.tsx, ui.tsx DateVenue / Button).
-    "hero": ("hero.jpg", "ffe-hero.jpg", "", 1920),
+    "hero": ("hero.jpg", "ffe-hero.jpg", "Visitors walking through a busy exhibition hall at a Messe Berlin trade fair", 1920),
     "hero-curve": ("hero-curve.svg", "ffe-hero-curve.svg", "", None),
     "hero-curve-mobile": ("hero-curve-mobile.svg", "ffe-hero-curve-mobile.svg", "", None),
     "slider-dots": ("slider-dots.svg", "ffe-slider-dots.svg", "", None),
@@ -86,7 +86,7 @@ MEDIA = {
     "logo-fl": ("logo-fruit-logistica.svg", "ffe-logo-fl.svg", "", None),
     "logo-afl": ("logo-asia-fruit-logistica.png", "ffe-logo-afl.png", "", ((0, 0, 1274, 577), (212, 96))),
     "logo-fli": ("logo-fruit-logistica-india.png", "ffe-logo-fli.png", "", ((7, 0, 1219, 675), (140, 78))),
-    "join": ("join.jpg", "ffe-join.jpg", "", 1918),
+    "join": ("join.jpg", "ffe-join.jpg", "Audience watching a keynote on a green-lit stage", 1918),
     "newsletter-main": ("newsletter-main.jpg", "ffe-newsletter-main.jpg", "Exhibitors talking beside a robotics demo at a trade fair stand", ((25, 0, 1720, 1122), 1000)),
     "newsletter-small": ("newsletter-small.jpg", "ffe-newsletter-small.jpg", "Robotic arm harvesting in a greenhouse", ((25, 94, 761, 629), 480)),
     "dots": ("dots.svg", "ffe-dots.svg", "", None),

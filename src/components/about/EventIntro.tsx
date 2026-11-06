@@ -1,7 +1,7 @@
 import Image, { type StaticImageData } from "next/image";
 import type { CSSProperties } from "react";
 import event1 from "@/assets/about/event-1.jpg";
-import event2 from "@/assets/about/event-2.jpg";
+import join from "@/assets/join.jpg"; // production (28 Oct): the wide keynote photo, not the event-2 crop
 import event3 from "@/assets/about/event-3.jpg";
 
 type Card = { title: string; lead: string; body: string; img: StaticImageData; alt: string; textW: number; titleX: number; imgH: number };
@@ -22,7 +22,7 @@ const CARDS: Card[] = [
     title: "The Ecosystem",
     lead: "From Source to Market",
     body: "Discover fresh food, post-harvest technologies, cooling, packaging, cold chain, logistics, distribution and market access—all within one platform.",
-    img: event2,
+    img: join,
     alt: "Audience watching a keynote on a green-lit stage",
     textW: 264,
     titleX: 34,

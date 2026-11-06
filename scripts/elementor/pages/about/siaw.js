@@ -28,7 +28,7 @@ module.exports = [box("au-sv", mix([{ padding: P0 }, {}], NARROW([46]), [
     ]),
     w("au-sv-note", "e-paragraph", { paragraph: "Supported by Singapore Food Agency, Enterprise Singapore, Temasek and Singapore Tourism Board.*" }, [{ ...text(15, 600, "#000000", { "line-height": px(22) }), margin: P0 }, {}]),
     div("au-sv-cta", [{ padding: pad(6, 0, 0, 0) }, {}], [
-      pill("au-sv-pill", "Discover Singapore International Agri‑Week 2027", "/siaw", {
+      pill("au-sv-pill", "Discover Singapore International Agri‑Week 2027", "/siaw/", {
         color: T.accent, bg: T.mint, border: [1.5, T.accent],
         styles: [{}, { mobile: { width: pct(100), padding: pad(12, 16), "font-size": px(15), "line-height": px(22) } }],
       }),

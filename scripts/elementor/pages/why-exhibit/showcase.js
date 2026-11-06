@@ -52,8 +52,8 @@ module.exports = [
       { padding: pad(4, 0, 0, 0), width: AUTO, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", "align-items": "flex-start", gap: gap(14) },
       { mobile: { "flex-direction": "column", "flex-wrap": "nowrap", "align-items": "stretch" } },
     ], [
-      pill("we-show-exhibit", "Who Should Exhibit", "/who-should-exhibit"),
-      pill("we-show-eco", "Explore the Fresh Food Ecosystem", "/ecosystem", { ...OUTLINE, styles: [{}, { mobile: { padding: pad(10, 18) } }] }),
+      pill("we-show-exhibit", "Who Should Exhibit", "/who-should-exhibit/"),
+      pill("we-show-eco", "Explore the Fresh Food Ecosystem", "/ecosystem/", { ...OUTLINE, styles: [{}, { mobile: { padding: pad(10, 18) } }] }),
     ], { attributes: attrs(reveal(0)) }),
   ], { tag: "section" }),
 ];

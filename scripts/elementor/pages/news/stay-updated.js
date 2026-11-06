@@ -19,7 +19,7 @@ module.exports = [div("nw-stay", mix(CW(1360), [{ padding: P0, margin: mtAuto(41
       w("nw-stay-lede", "e-paragraph", { paragraph: "Subscribe to receive the latest news, programme announcements, industry insights and opportunities." }, [
         { ...text(18, 500, T.body, { "line-height": px(23) }), margin: pad(16, 0, 0, 0) }, { mobile: { "font-size": px(17) } },
       ]),
-      div("nw-stay-cta", [{ padding: P0, margin: pad(24, 0, 0, 0) }, {}], [pill("nw-stay-pill", "Subscribe Now", "/subscribe")]),
+      div("nw-stay-cta", [{ padding: P0, margin: pad(24, 0, 0, 0) }, {}], [pill("nw-stay-pill", "Subscribe Now", "/subscribe/")]),
       box("nw-stay-sprig", [
         { ...at(px(8.31), null, null, px(705.1)), width: px(126.885), height: px(125.81), padding: P0, display: "flex", "justify-content": "center", "align-items": "center" },
         { laptop: { display: "none" } },

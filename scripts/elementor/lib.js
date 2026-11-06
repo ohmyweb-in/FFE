@@ -305,7 +305,7 @@ const HERO_SIZES = {
 
 // HeroCtas (PageHero.tsx): Register / Apply / Stay Connected, 200/162/162 x 40 white pills. o = { stayHref, registerHref, styles, attributes /* extra attr pairs */ }.
 const heroCtas = (p, o = {}) => {
-  const { stayHref = "/subscribe", registerHref = "/register-to-visit", styles = [{}, {}], attributes = [] } = o;
+  const { stayHref = "/subscribe/", registerHref = "/register-to-visit/", styles = [{}, {}], attributes = [] } = o;
   const HB = { h: 40, fs: 15, border: [1, T.white] };
   const GHOST = { color: T.white, bg: "rgba(255,255,255,0)", hoverBg: "rgba(255,255,255,0.1)", chev: "chevron-sm-white" };
   return box(
@@ -316,7 +316,7 @@ const heroCtas = (p, o = {}) => {
     ], styles),
     [
       btn(`${p}-ctas-register`, "Register Your Interest", registerHref, { ...HB, w: 200, pl: 19, gap: 12, color: T.brand, bg: T.white, chev: "chevron-sm-brand", m: { w: 202, h: 43, pl: 25, gap: 7, fs: 15 } }),
-      btn(`${p}-ctas-apply`, "Apply To Exhibit", "/apply-to-exhibit", { ...HB, w: 162, pl: 19, gap: 12, ...GHOST, m: { w: 178, h: 43, pl: 25, gap: 9, fs: 15 } }),
+      btn(`${p}-ctas-apply`, "Apply To Exhibit", "/apply-to-exhibit/", { ...HB, w: 162, pl: 19, gap: 12, ...GHOST, m: { w: 178, h: 43, pl: 25, gap: 9, fs: 15 } }),
       btn(`${p}-ctas-stay`, "Stay Connected", stayHref, { ...HB, w: 162, pl: 19, gap: 14, ...GHOST, m: { w: 178, h: 43, pl: 25, gap: 9, fs: 15 } }),
     ],
     attributes.length ? { attributes: attrs(attributes) } : {},
@@ -506,8 +506,8 @@ const joinBanner = (p, o = {}) => {
               { padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(10), margin: pad(26, 0, 0, 0), width: AUTO },
               { mobile: { "flex-direction": "column", "align-items": "flex-start", gap: gap(11), margin: pad(23, 0, 0, 0) } },
             ], [
-              btn(`${id}-apply`, "Apply To Exhibit", "/apply-to-exhibit", { w: 220, h: 52, pl: 34, gap: 17.66, chev: "chevron-brand", color: T.brand, mColor: "#31a834", bg: T.white, m: { w: 178, h: 43, pl: 25, gap: 7, fs: 15, chev: 0.828 } }),
-              btn(`${id}-register`, "Register Your Interest", "/register-to-visit", { w: 255, h: 52, pl: 31, gap: 13.66, chev: "chevron-white", color: T.white, border: [1, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 202, h: 43, pl: 25, gap: 9, fs: 15, chev: 0.828 } }),
+              btn(`${id}-apply`, "Apply To Exhibit", "/apply-to-exhibit/", { w: 220, h: 52, pl: 34, gap: 17.66, chev: "chevron-brand", color: T.brand, mColor: "#31a834", bg: T.white, m: { w: 178, h: 43, pl: 25, gap: 7, fs: 15, chev: 0.828 } }),
+              btn(`${id}-register`, "Register Your Interest", "/register-to-visit/", { w: 255, h: 52, pl: 31, gap: 13.66, chev: "chevron-white", color: T.white, border: [1, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 202, h: 43, pl: 25, gap: 9, fs: 15, chev: 0.828 } }),
             ]),
       ], { attributes: attrs(reveal(1)) }),
     ]),

@@ -7,5 +7,5 @@ module.exports = [pageHero("os", {
   img: "ph-about",
   imgBox: { top: -46.08, left: 17.42, w: 82.6, h: 191.99 },
   curveLeft: -20.98,
-  stayHref: "/subscribe",
+  stayHref: "/subscribe/",
 })];

@@ -26,7 +26,7 @@ const cards = [
     box: [{ right: 36, bottom: 39, left: 36 }, { tablet: { right: 24, bottom: 24, left: 24 }, mobile: { right: 20, bottom: 32.7, left: 19.3 } }],
     descStyle: [{ "margin-top": 28.4, "max-width": 532 }, { tablet: { "margin-top": 20 }, mobile: { "margin-top": 18.7, "max-width": 336 } }],
     ctaMt: [23, 25],
-    cta: (id) => btn(id, "Apply to Exhibit", "/apply-to-exhibit", { w: 220, h: 52, pl: 33, gap: 21.66, chev: "chevron-white", color: T.white, bg: T.accent,
+    cta: (id) => btn(id, "Apply to Exhibit", "/apply-to-exhibit/", { w: 220, h: 52, pl: 33, gap: 21.66, chev: "chevron-white", color: T.white, bg: T.accent,
       border: [1.5, T.accent], m: { w: 136.5, h: 32.3, pl: 20.5, gap: 8.6, fs: 11.17, chev: 0.617 } }),
   },
   {
@@ -40,7 +40,7 @@ const cards = [
     box: [{ right: 36, bottom: 39, left: 42 }, { tablet: { right: 24, bottom: 24, left: 24 }, mobile: { right: 20, bottom: 29.6, left: 26 } }],
     descStyle: [{ "margin-top": 28.4, "max-width": 521 }, { tablet: { "margin-top": 20 }, mobile: { "margin-top": 16.1, "max-width": 324, fs: 17 } }],
     ctaMt: [23, 18.8],
-    cta: (id) => btn(id, "Register Your Interest", "/register-to-visit", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-black", color: "#000000", bg: T.white,
+    cta: (id) => btn(id, "Register Your Interest", "/register-to-visit/", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-black", color: "#000000", bg: T.white,
       border: [1.5, T.white], m: { w: 153, h: 32.4, pl: 16.7, gap: 8.4, fs: 11.2, chev: 0.617 } }),
   },
 ];

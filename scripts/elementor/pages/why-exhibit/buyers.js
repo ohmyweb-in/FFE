@@ -34,7 +34,7 @@ const copy = box("we-buy-copy", [{ padding: P0, display: "flex", "flex-direction
     ], TILES.map(tile), { attributes: attrs([["role", "list"]]) }),
   ]),
   para("we-buy-close", "Build new relationships, reconnect with existing customers and put your business in front of prospective buyers from across Asia Pacific and global markets.", SMALL),
-  pill("we-buy-pill", "Who Should Visit", "/who-should-visit", OUTLINE),
+  pill("we-buy-pill", "Who Should Visit", "/who-should-visit/", OUTLINE),
 ], { attributes: attrs(reveal(0)) });
 
 const media_ = box("we-buy-media", [

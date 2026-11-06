@@ -9,53 +9,53 @@ const DATE_LINE = "16-18 November 2027 | Sands Expo &amp; Convention Centre, Sin
 // nav.ts, verbatim. `img` = media key of the section photo.
 const NAV = [
   {
-    key: "about", label: "About", href: "/about", img: "nav-about",
+    key: "about", label: "About", href: "/about/", img: "nav-about",
     blurb: "Asia Pacific’s premier trade fair for fresh food, 16–18 November 2027 in Singapore.",
-    cta: ["Contact Us", "/contact"],
+    cta: ["Contact Us", "/contact/"],
     links: [
-      ["Overview", "/about", "The event at a glance"],
-      ["Our Story", "/our-story", "Why Fresh Food Expo exists"],
-      ["Fresh Food Ecosystem", "/ecosystem", "The sectors we bring together"],
-      ["SIAW", "/siaw", "Singapore International Agri-Food Week"],
-      ["Messe Berlin", "/messe-berlin", "Meet the organiser"],
-      ["Contact Us", "/contact", "Talk to our team"],
+      ["Overview", "/about/", "The event at a glance"],
+      ["Our Story", "/our-story/", "Why Fresh Food Expo exists"],
+      ["Fresh Food Ecosystem", "/ecosystem/", "The sectors we bring together"],
+      ["SIAW", "/siaw/", "Singapore International Agri-Food Week"],
+      ["Messe Berlin", "/messe-berlin/", "Meet the organiser"],
+      ["Contact Us", "/contact/", "Talk to our team"],
     ],
   },
   {
-    key: "exhibit", label: "Exhibit", href: "/why-exhibit", img: "nav-exhibit",
+    key: "exhibit", label: "Exhibit", href: "/why-exhibit/", img: "nav-exhibit",
     blurb: "Put your brand in front of fresh food buyers from across Asia Pacific.",
-    cta: ["Apply to Exhibit", "/apply-to-exhibit"],
+    cta: ["Apply to Exhibit", "/apply-to-exhibit/"],
     links: [
-      ["Why Exhibit", "/why-exhibit", "Grow your business in the region"],
-      ["Who Should Exhibit", "/who-should-exhibit", "Sectors and exhibitor profiles"],
-      ["Apply to Exhibit", "/apply-to-exhibit", "Secure your stand"],
+      ["Why Exhibit", "/why-exhibit/", "Grow your business in the region"],
+      ["Who Should Exhibit", "/who-should-exhibit/", "Sectors and exhibitor profiles"],
+      ["Apply to Exhibit", "/apply-to-exhibit/", "Secure your stand"],
     ],
   },
   {
-    key: "visit", label: "Visit", href: "/why-visit", img: "nav-visit",
+    key: "visit", label: "Visit", href: "/why-visit/", img: "nav-visit",
     blurb: "Source, connect and discover what’s next in fresh food.",
-    cta: ["Register to Visit", "/register-to-visit"],
+    cta: ["Register to Visit", "/register-to-visit/"],
     links: [
-      ["Why Visit", "/why-visit", "What’s waiting on the show floor"],
-      ["Who Should Visit", "/who-should-visit", "Buyers, retailers and more"],
-      ["Plan Your Visit", "/plan-your-visit", "Venue, travel and stay"],
-      ["Register to Visit", "/register-to-visit", "Get your trade pass"],
+      ["Why Visit", "/why-visit/", "What’s waiting on the show floor"],
+      ["Who Should Visit", "/who-should-visit/", "Buyers, retailers and more"],
+      ["Plan Your Visit", "/plan-your-visit/", "Venue, travel and stay"],
+      ["Register to Visit", "/register-to-visit/", "Get your trade pass"],
     ],
   },
   {
-    key: "news", label: "News & Media", href: "/news", img: "nav-news",
+    key: "news", label: "News & Media", href: "/news/", img: "nav-news",
     blurb: "The latest announcements and stories from Fresh Food Expo APAC.",
-    cta: ["Subscribe", "/subscribe"],
+    cta: ["Subscribe", "/subscribe/"],
     links: [
-      ["News & Press Release", "/news", "Announcements and media"],
-      ["Gallery", "/gallery", "Photos from our events"],
-      ["Subscribe Newsletter", "/subscribe", "Updates in your inbox"],
+      ["News & Press Release", "/news/", "Announcements and media"],
+      ["Gallery", "/gallery/", "Photos from our events"],
+      ["Subscribe Newsletter", "/subscribe/", "Updates in your inbox"],
     ],
   },
 ];
 const UTIL = [
-  ["Newsletter", "/subscribe"],
-  ["Press", "/news"],
+  ["Newsletter", "/subscribe/"],
+  ["Press", "/news/"],
 ];
 
 // Section photo under the green gradient (bg-linear-to-t from-forest via-forest/70 to-brand/10).
@@ -285,7 +285,7 @@ const cta = box("header-cta", [
   // Below 360px the pill reads just "Register" so logo, pill and menu button fit (swap + width in ffe-header.php).
   w("header-cta-label-short", "e-paragraph", { tag: "span", paragraph: "Register" }, [{ color: T.white, display: "none" }]),
   svg("header-cta-chev", "chevron-contact", [{ width: px(6), height: px(12) }, { mobile: { width: px(5.5), height: px(11) } }]),
-], { tag: "a", link: link("/register-to-visit"), attributes: attrs([["aria-label", "Register Your Interest"]]) });
+], { tag: "a", link: link("/register-to-visit/"), attributes: attrs([["aria-label", "Register Your Interest"]]) });
 
 const bar = box("site-bar", [{ width: pct(100), padding: P0, display: "flex", "flex-direction": "column", "align-items": "center", "z-index": 50 }], [
   box("site-bar-inner", [

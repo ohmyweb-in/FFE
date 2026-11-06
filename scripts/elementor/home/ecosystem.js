@@ -97,7 +97,7 @@ const eco = div("eco", mix(WIDE, [
       { margin: pad(42, 0, 0, 0), padding: P0, display: "flex", "flex-direction": "row", "justify-content": "center" },
       { tablet: { margin: pad(40, 0, 0, 0) }, mobile: { margin: pad(44, 0, 0, 0) } },
     ], [
-      btn("eco-cta", "Explore the Full Fresh Food Ecosystem", "/ecosystem", {
+      btn("eco-cta", "Explore the Full Fresh Food Ecosystem", "/ecosystem/", {
         w: 398, h: 52, pl: 35, gap: 18.66, chev: "chevron-white", color: T.white, bg: T.brand, border: [1.5, T.brand],
         m: { w: 294, h: 87, fs: 18, lh: 25, tw: 210, center: true },
       }),

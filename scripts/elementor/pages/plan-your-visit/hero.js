@@ -5,7 +5,7 @@ module.exports = [pageHero("pv", {
   img: "ph-plan", imgBox: { top: -43.35, left: 35.16, w: 64.85, h: 200.74 }, curveLeft: 3.88,
   cta: [
     heroVenue("pv-ph", [{ margin: P0 }, {}]),
-    heroCtas("pv-ph", { stayHref: "/subscribe",
+    heroCtas("pv-ph", { stayHref: "/subscribe/",
       styles: [{ margin: pad(29, 0, 0, -4) }, { tablet: { margin: pad(29, 0, 0, 0) }, mobile: { margin: pad(24, 0, 0, 0) } }] }),
   ],
 })];

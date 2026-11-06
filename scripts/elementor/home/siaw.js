@@ -75,9 +75,9 @@ const body = div("sw-body", [
         tag: "span", paragraph: "Discover Singapore International Agri‑Food Week⁠<span>›</span>",
         attributes: attrs([["data-untrim", ""], ["data-balance", ""], ["data-pill", ""]]),
       }, [{ ...text(16, 500, T.accent, { "letter-spacing": px(0.32), "line-height": px(22) }), margin: P0, "text-align": "center" }]),
-    ], { tag: "a", link: link("/siaw"), attributes: attrs([["data-btn", ""]]) }),
+    ], { tag: "a", link: link("/siaw/"), attributes: attrs([["data-btn", ""]]) }),
     (() => {
-      const b = btn("sw-discover", "Discover Singapore International Agri-Food Week", "/siaw", {
+      const b = btn("sw-discover", "Discover Singapore International Agri-Food Week", "/siaw/", {
         w: 488, h: 52, pl: 28, gap: 16.66, chev: "chevron-accent", color: T.accent, bg: T.mint, border: [1.5, T.accent],
       });
       // hide on phones: add display none to the box's mobile variant

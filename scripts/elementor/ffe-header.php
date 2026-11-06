@@ -108,7 +108,7 @@ add_action('wp_footer', function () { ?>
 
 	// Newsletter / Press join the sheet (Header.tsx #mobile-menu); the utility bar hides them below 1025px.
 	var list = document.querySelector(menu + '.e-n-menu-heading');
-	if (list) [['Newsletter', '/subscribe'], ['Press', '/news']].forEach(function (l, i) {
+	if (list) [['Newsletter', '/subscribe/'], ['Press', '/news/']].forEach(function (l, i) {
 		var li = document.createElement('li');
 		li.className = 'ffe-util' + (i ? '' : ' ffe-util-first');
 		li.innerHTML = '<a href="' + l[1] + '">' + l[0] + '</a>';

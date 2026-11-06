@@ -36,7 +36,7 @@ const nl = div("nl", [
         { margin: pad(25, 0, 0, 1), padding: P0, display: "flex", "flex-direction": "row" },
         { tablet: { margin: pad(25, 0, 0, 0) }, mobile: { margin: pad(24, 0, 0, 0) } },
       ], [
-        btn("nl-subscribe", "Subscribe", "/subscribe", { w: 181, h: 56, pl: 41, gap: 18.66, chev: "chevron-white", color: T.white, bg: T.brand }),
+        btn("nl-subscribe", "Subscribe", "/subscribe/", { w: 181, h: 56, pl: 41, gap: 18.66, chev: "chevron-white", color: T.white, bg: T.brand }),
       ]),
     ], { attributes: attrs(reveal(0)) }),
     // Collage (Figma 359:340, 644×400) in %: absolute beside the copy at xl, stacked below it under that.

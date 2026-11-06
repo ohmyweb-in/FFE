@@ -18,7 +18,7 @@ module.exports = [
         para("we-elev-lede", "Looking to go beyond your exhibition stand?", LEADX("#000000")),
         para("we-elev-text", "From high-impact branding to tailored sponsorship opportunities, position your business more prominently within the Fresh Food Expo APAC experience.", SMALL),
         div("we-elev-cta", [{ padding: pad(8, 0, 0, 0) }, {}], [
-          pill("we-elev-pill", "Explore Sponsorship &amp; Branding Opportunities", "/contact#enquiry", {
+          pill("we-elev-pill", "Explore Sponsorship &amp; Branding Opportunities", "/contact/#enquiry", {
             color: "#000000", bg: "rgba(0,0,0,0)", border: [1.5, "#000000"], hoverBg: "rgba(0,0,0,0.05)", styles: [{}, { mobile: { padding: pad(10, 18) } }],
           }),
         ]),

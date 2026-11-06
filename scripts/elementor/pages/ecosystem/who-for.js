@@ -14,15 +14,15 @@ const CARDS = [
     text: "Discover fresh food suppliers, technologies and supply chain solutions while connecting with businesses from across regional and global markets.",
     roles: "Wholesalers | Importers | Exporters | Retailers | Food Service Operators...",
     ctas: (c) => [
-      btn(`${c}-why`, "Why Visit", "/why-visit", { w: 162, h: 52, pl: 33, gap: 16.39, chev: "chevron-black", color: "#000000", bg: WHITE, border: [1.5, WHITE] }),
-      btn(`${c}-register`, "Register Your Interest", "/register-to-visit", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-white", color: WHITE, ...OB }),
+      btn(`${c}-why`, "Why Visit", "/why-visit/", { w: 162, h: 52, pl: 33, gap: 16.39, chev: "chevron-black", color: "#000000", bg: WHITE, border: [1.5, WHITE] }),
+      btn(`${c}-register`, "Register Your Interest", "/register-to-visit/", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-white", color: WHITE, ...OB }),
     ] },
   { c: "e", title: "Looking to Exhibit?", img: "exhibit", pl: 36, textW: 532, rolesW: 549, textMt: [28.41, 26], rolesMt: [28.83, 28], ctaMt: [36.83, 36], ctaGap: 11,
     text: "Showcase your fresh food products, technologies or logistics and distribution solutions to buyers, partners and industry stakeholders from across Asia Pacific.",
     roles: "Producer | Packaging Companies | Cold Chain Operators...",
     ctas: (c) => [
-      btn(`${c}-why`, "Why Exhibit", "/why-exhibit", { w: 172, h: 52, pl: 27, gap: 16.8, chev: "chevron-white", color: WHITE, bg: T.accent, border: [1.5, T.accent] }),
-      btn(`${c}-who`, "Who Should Exhibit", "/who-should-exhibit", { w: 240, h: 52, pl: 33, gap: 15.49, chev: "chevron-white", color: WHITE, ...OB }),
+      btn(`${c}-why`, "Why Exhibit", "/why-exhibit/", { w: 172, h: 52, pl: 27, gap: 16.8, chev: "chevron-white", color: WHITE, bg: T.accent, border: [1.5, T.accent] }),
+      btn(`${c}-who`, "Who Should Exhibit", "/who-should-exhibit/", { w: 240, h: 52, pl: 33, gap: 15.49, chev: "chevron-white", color: WHITE, ...OB }),
     ] },
 ];
 

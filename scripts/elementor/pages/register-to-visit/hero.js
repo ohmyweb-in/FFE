@@ -14,7 +14,7 @@ module.exports = [
         { tablet: { margin: P0 } },
       ]),
       heroVenue("rv-ph", [{ margin: pad(23.38, 0, 0, 3.5) }, { tablet: { margin: pad(23.38, 0, 0, 0) }, mobile: { margin: pad(20, 0, 0, 0) } }]),
-      heroCtas("rv-ph", { stayHref: "/subscribe", registerHref: "/register-to-visit/form",
+      heroCtas("rv-ph", { stayHref: "/subscribe/", registerHref: "/register-to-visit/form/",
         styles: [{ margin: pad(25.52, 0, 0, -0.5) }, { tablet: { margin: pad(25.52, 0, 0, 0) }, mobile: { margin: pad(24, 0, 0, 0) } }] }),
     ],
   }),

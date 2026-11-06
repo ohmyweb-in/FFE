@@ -40,17 +40,17 @@ const content = box("hero-content", [
     { margin: pad(28, 0, 0, 0), padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(13), width: AUTO },
     { mobile: HIDE },
   ], [
-    btn("hero-register", "Register Your Interest", "/register-to-visit", { ...HB, w: 200, pl: 19, gap: 12, color: T.brand, bg: T.white, chev: "chevron-sm-brand" }),
-    btn("hero-apply", "Apply To Exhibit", "/apply-to-exhibit", { ...HB, w: 162, pl: 19, gap: 12, ...GHOST }),
-    btn("hero-stay", "Stay Connected", "/subscribe", { ...HB, w: 162, pl: 19, gap: 14, ...GHOST }),
+    btn("hero-register", "Register Your Interest", "/register-to-visit/", { ...HB, w: 200, pl: 19, gap: 12, color: T.brand, bg: T.white, chev: "chevron-sm-brand" }),
+    btn("hero-apply", "Apply To Exhibit", "/apply-to-exhibit/", { ...HB, w: 162, pl: 19, gap: 12, ...GHOST }),
+    btn("hero-stay", "Stay Connected", "/subscribe/", { ...HB, w: 162, pl: 19, gap: 14, ...GHOST }),
   ], { attributes: step(4) }),
   // Phones (318:1811): stacked, Apply first as the solid pill.
   box("hero-ctas-m", [
     { display: "none", margin: pad(19, 0, 0, 0), padding: P0, "flex-direction": "column", "align-items": "flex-start", gap: gap(11), width: AUTO },
     { mobile: { display: "flex" } },
   ], [
-    btn("hero-apply-m", "Apply To Exhibit", "/apply-to-exhibit", { ...HB, w: 178, h: 43, pl: 25, gap: 7, color: "#31a834", bg: T.white, border: null, chev: "chevron-sm-brand", m: { w: 178, h: 43, pl: 25, gap: 7, fs: 15 } }),
-    btn("hero-register-m", "Register Your Interest", "/register-to-visit", { ...HB, w: 202, h: 43, pl: 25, gap: 9, ...GHOST, m: { w: 202, h: 43, pl: 25, gap: 9, fs: 15 } }),
+    btn("hero-apply-m", "Apply To Exhibit", "/apply-to-exhibit/", { ...HB, w: 178, h: 43, pl: 25, gap: 7, color: "#31a834", bg: T.white, border: null, chev: "chevron-sm-brand", m: { w: 178, h: 43, pl: 25, gap: 7, fs: 15 } }),
+    btn("hero-register-m", "Register Your Interest", "/register-to-visit/", { ...HB, w: 202, h: 43, pl: 25, gap: 9, ...GHOST, m: { w: 202, h: 43, pl: 25, gap: 9, fs: 15 } }),
   ], { attributes: step(4) }),
 ]);
 

@@ -68,6 +68,6 @@ module.exports = [box("os-vc", mix([{ padding: P0 }, {}], NARROW([48, 48, 80]), 
     { mobile: { "flex-direction": "column", "align-items": "flex-start", gap: gap(20, 0), padding: pad(20, 20, 20, 20) } },
   ], [
     w("os-vc-obj-t", "e-paragraph", { paragraph: "The objective is to create stronger connections between those who produce fresh food, those who provide the technologies and solutions that preserve it, those who move and distribute it, and the buyers and markets that ultimately need it." }, mix(B15(), [{ "min-width": px(0), flex: flex(1, 1, pct(0)) }, {}])),
-    pill("os-vc-cta", "Explore the Fresh Food Ecosystem", "/ecosystem", { color: T.white, bg: T.accent, styles: [{ flex: flex(0, 0, AUTO) }, { mobile: { padding: pad(10, 18) } }] }),
+    pill("os-vc-cta", "Explore the Fresh Food Ecosystem", "/ecosystem/", { color: T.white, bg: T.accent, styles: [{ flex: flex(0, 0, AUTO) }, { mobile: { padding: pad(10, 18) } }] }),
   ], { attributes: attrs(reveal(0)) }),
 ], { tag: "section" })];

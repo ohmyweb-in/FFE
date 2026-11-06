@@ -25,8 +25,8 @@ const el = (id, elType, [desktop, more = {}], children = [], settings = {}) =>
   ({ id, elType, settings, styles: V(id, typedAll(desktop), Object.fromEntries(Object.entries(more).map(([bp, p]) => [bp, typedAll(p)]))), elements: children });
 const ITEMS = [
   { title: "Part of Singapore International Agri-Food Week", body: "Fresh Food Expo APAC is part of Singapore International Agri-Food Week (SIAW), Singapore’s premier agri-food convention and flagship platform for advancing sustainable and resilient food systems in Asia.", label: "SIAW 2027", href: SIAW_SITE, w: 135 },
-  { title: "Built on Global Industry Expertise", body: "Fresh Food Expo APAC is brought to you by Messe Berlin Asia Pacific, the organiser behind FRUIT LOGISTICA and Grüne Woche.", label: "Organiser", href: "/messe-berlin", w: 128 },
-  { title: "Our Strategic Priorities", body: "Fresh Food Expo APAC is built around strategic priorities that guide the development of the platform and its role within Asia Pacific’s fresh food ecosystem.", label: "Fresh Food Ecosystem", href: "/ecosystem", w: 215 },
+  { title: "Built on Global Industry Expertise", body: "Fresh Food Expo APAC is brought to you by Messe Berlin Asia Pacific, the organiser behind FRUIT LOGISTICA and Grüne Woche.", label: "Organiser", href: "/messe-berlin/", w: 128 },
+  { title: "Our Strategic Priorities", body: "Fresh Food Expo APAC is built around strategic priorities that guide the development of the platform and its role within Asia Pacific’s fresh food ecosystem.", label: "Fresh Food Ecosystem", href: "/ecosystem/", w: 215 },
 ];
 
 const item = (it, i) => {

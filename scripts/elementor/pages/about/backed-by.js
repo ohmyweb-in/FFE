@@ -26,6 +26,6 @@ module.exports = [box("au-bb", mix([{ padding: P0 }, {}], NARROW([46, 46, 61]), 
       w("au-bb-p1", "e-paragraph", { paragraph: "Messe Berlin Asia Pacific is the regional headquarters of Messe Berlin GmbH for the Asia Pacific region, headquartered in Singapore with a growing presence in key markets including India. It leads the development and expansion of Messe Berlin’s business across Asia, connecting global industries with high-growth regional opportunities." }, B15()),
       w("au-bb-p2", "e-paragraph", { paragraph: "Messe Berlin Asia Pacific develops and delivers leading platforms including ITB Asia, InnoTrans Asia, CMS Asia, Smart Health Asia, ITB India, MICE Show Asia, Travel Tech Asia and Travel Meet Asia. The organisation also oversees Messe Berlin India, supporting the group’s growth in the Indian market." }, B15()),
     ]),
-    div("au-bb-cta", [{ padding: pad(6, 0, 0, 0) }, {}], [pill("au-bb-pill", "Discover Messe Berlin", "/messe-berlin", { color: T.accent, bg: T.mint, border: [1.5, T.accent] })]),
+    div("au-bb-cta", [{ padding: pad(6, 0, 0, 0) }, {}], [pill("au-bb-pill", "Discover Messe Berlin", "/messe-berlin/", { color: T.accent, bg: T.mint, border: [1.5, T.accent] })]),
   ], { attributes: attrs(reveal(1)) }),
 ], { tag: "section" })];

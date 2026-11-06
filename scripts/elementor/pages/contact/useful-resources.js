@@ -3,10 +3,10 @@ const { T, px, pct, custom, pad, P0, AUTO, mtAuto, radius, gap, flex, link, box,
 const { CW, EYE, H, LIFT, GRID, GRIDC } = require("../g4-shared.js");
 
 const LINKS = [
-  ["/about", "Event Overview", "Key dates, venue and<br> what to expect", "g4-icon-calendar-26"],
-  ["/why-exhibit", "Why Exhibit", "Reasons to exhibit and<br> key benefits", "g4-icon-users"],
-  ["/why-visit", "Why Visit", "Who should attend and<br> what you’ll discover", "g4-icon-users"],
-  ["/register-to-visit", "Register Your Interest", "Join Asia Pacific Fresh Food Ecosystem", "g4-icon-file"],
+  ["/about/", "Event Overview", "Key dates, venue and<br> what to expect", "g4-icon-calendar-26"],
+  ["/why-exhibit/", "Why Exhibit", "Reasons to exhibit and<br> key benefits", "g4-icon-users"],
+  ["/why-visit/", "Why Visit", "Who should attend and<br> what you’ll discover", "g4-icon-users"],
+  ["/register-to-visit/", "Register Your Interest", "Join Asia Pacific Fresh Food Ecosystem", "g4-icon-file"],
 ];
 
 const items = LINKS.map(([href, title, desc, icon], k) => {

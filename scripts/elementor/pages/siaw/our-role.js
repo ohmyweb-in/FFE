@@ -51,6 +51,6 @@ module.exports = [dv("si-or", d, m, [
   pg("si-or-close", "By bringing these sectors together, Fresh Food Expo APAC creates a one-stop platform for suppliers, solution providers, buyers and industry stakeholders to source, discover, connect and build new partnerships.",
     mix(LEAD, [{ width: AUTO }, {}]), { attributes: attrs(reveal(0)) }),
   dv("si-or-cta", { padding: pad(8, 0, 0, 0), width: AUTO }, {}, [
-    pill("si-or-pill", "Explore the Fresh Food Ecosystem", "/ecosystem", { color: T.white, bg: T.accent, styles: [{}, { mobile: { padding: pad(10, 18) } }] }),
+    pill("si-or-pill", "Explore the Fresh Food Ecosystem", "/ecosystem/", { color: T.white, bg: T.accent, styles: [{}, { mobile: { padding: pad(10, 18) } }] }),
   ], { attributes: attrs(reveal(0)) }),
 ], { tag: "section", _cssid: "our-role" })];

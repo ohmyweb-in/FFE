@@ -5,5 +5,5 @@ module.exports = [
   box("rv-cta", [
     { width: pct(100), margin: pad(32, 0, 0, 0), padding: pad(0, 32, 0, 32), display: "flex", "flex-direction": "row", "justify-content": "center" },
     { mobile: { padding: pad(0, 26, 0, 26) } },
-  ], [pill("rv-cta-pill", "Register Your Interest", "/register-to-visit/form", { bg: T.brand, color: T.white })], { attributes: attrs(reveal(0)) }),
+  ], [pill("rv-cta-pill", "Register Your Interest", "/register-to-visit/form/", { bg: T.brand, color: T.white })], { attributes: attrs(reveal(0)) }),
 ];

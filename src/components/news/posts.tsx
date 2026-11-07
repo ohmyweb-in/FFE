@@ -63,7 +63,28 @@ export const POSTS: Post[] = [
     ),
     body: (
       <>
-        <p>
+        <aside aria-labelledby="na-facts-h" className="rounded-[22px] bg-mint p-[24px] md:px-[30px] md:py-[26px]">
+          <h2 id="na-facts-h" className="!m-0 font-display !text-[22px] !leading-[28px] font-semibold text-forest">
+            Key facts
+          </h2>
+          <dl className="mt-[16px] grid grid-cols-1 gap-[2px] text-[16px] leading-[24px] md:grid-cols-[max-content_minmax(0,1fr)] md:gap-x-[24px] md:gap-y-[10px]">
+            <dt className="font-semibold text-forest max-md:mt-[10px] max-md:first:mt-0">What</dt>
+            <dd>Fresh Food Expo Asia Pacific (FFE APAC), a B2B trade fair for the fresh food value chain</dd>
+            <dt className="font-semibold text-forest max-md:mt-[10px] max-md:first:mt-0">When</dt>
+            <dd>16–18 November 2027</dd>
+            <dt className="font-semibold text-forest max-md:mt-[10px] max-md:first:mt-0">Where</dt>
+            <dd>Sands Expo &amp; Convention Centre, Singapore</dd>
+            <dt className="font-semibold text-forest max-md:mt-[10px] max-md:first:mt-0">Organiser</dt>
+            <dd>Messe Berlin Asia Pacific</dd>
+            <dt className="font-semibold text-forest max-md:mt-[10px] max-md:first:mt-0">Part of</dt>
+            <dd>Singapore International Agri-Food Week (SIAW) 2027</dd>
+            <dt className="font-semibold text-forest max-md:mt-[10px] max-md:first:mt-0">Sectors</dt>
+            <dd>Fresh Food, Agri &amp; Fresh Technology, Logistics &amp; Distribution</dd>
+            <dt className="font-semibold text-forest max-md:mt-[10px] max-md:first:mt-0">For</dt>
+            <dd>Producers, suppliers, buyers, technology providers and logistics specialists</dd>
+          </dl>
+        </aside>
+        <p className="!mt-[32px]">
           <em>Singapore, 27 October 2026</em> – Building on its global expertise in fresh produce, food and agriculture,{" "}
           <strong>Messe Berlin today announced the launch of Fresh Food Expo Asia Pacific (FFE APAC)</strong>, a new international B2B trade show bringing together the
           broader fresh food value chain across Asia Pacific.

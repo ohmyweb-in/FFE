@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: FFE — share this article
- * Description: Fills every <div data-ffe-share> (the last block of pages/news-article/article.html, so duplicated article pages get it too) with a "Share this article" bar: native Share (only where navigator.share exists), copy link, LinkedIn, WhatsApp, email, Facebook, X, Telegram, WeChat (a panel with a QR code of the article URL, drawn client-side by ffe-qr.js, loaded on first click). Links are built at runtime from link[rel=canonical] and og:title. Plain links, no third-party scripts or cookies; sends the GA4 "share" event only if gtag exists (i.e. after consent). Mirrors src/components/news/ShareBar.tsx. Deployed to wp-content/mu-plugins/ together with ffe-qr.js; this copy in scripts/elementor/ is the record.
+ * Description: Fills every <div data-ffe-share> (the last block of templates/news-article/tail.html, the closing blocks of every News & Press post) with a "Share this article" bar: native Share (only where navigator.share exists), copy link, LinkedIn, WhatsApp, email, Facebook, X, Telegram, WeChat (a panel with a QR code of the article URL, drawn client-side by ffe-qr.js, loaded on first click). Links are built at runtime from link[rel=canonical] and og:title. Plain links, no third-party scripts or cookies; sends the GA4 "share" event only if gtag exists (i.e. after consent). Mirrors src/components/news/ShareBar.tsx. Deployed to wp-content/mu-plugins/ together with ffe-qr.js; this copy in scripts/elementor/ is the record.
  */
 
 add_action('wp_head', function () { ?>

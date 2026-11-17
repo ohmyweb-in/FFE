@@ -155,11 +155,12 @@ add_action('wp_head', function () {
 function ffe_seo_inner_graph() {
   $home = home_url('/');
   $p = get_queried_object();
-  if (!is_singular('page') || !($p instanceof WP_Post)) return [];
+  if (!is_singular(['page', 'post']) || !($p instanceof WP_Post)) return [];
+  $news = get_page_by_path('news'); // a post (News & Press, ffe-content.php) sits under the News page, as the release page did
 
   $url = get_permalink($p);
   [$title, $desc] = ffe_seo_meta($p);
-  $parent = $p->post_parent ? get_post($p->post_parent) : null;
+  $parent = $p->post_type === 'post' ? $news : ($p->post_parent ? get_post($p->post_parent) : null);
   $under = $parent ? $parent->post_name : '';
   $pageRef = ['@id' => $url . '#webpage'];
   $published = get_post_time('c', false, $p);
@@ -178,7 +179,7 @@ function ffe_seo_inner_graph() {
 
   // Home → ancestors → this page.
   $crumbs = [['Home', $home]];
-  foreach (array_reverse(get_post_ancestors($p)) as $aid) $crumbs[] = [ffe_seo_title($aid), get_permalink($aid)];
+  foreach ($p->post_type === 'post' ? ($news ? [$news->ID] : []) : array_reverse(get_post_ancestors($p)) as $aid) $crumbs[] = [ffe_seo_title($aid), get_permalink($aid)];
   $crumbs[] = [ffe_seo_title($p), $url];
   $crumb = ['@type' => 'BreadcrumbList', '@id' => $url . '#breadcrumb', 'itemListElement' => array_map(
     fn($c, $i) => ['@type' => 'ListItem', 'position' => $i + 1, 'name' => $c[0], 'item' => $c[1]], $crumbs, array_keys($crumbs))];
@@ -187,7 +188,7 @@ function ffe_seo_inner_graph() {
   if ($img) $g['ffe_primaryimage'] = ['@id' => $url . '#primaryimage'] + $img;
 
   if ($under === 'news') {
-    // A press release (any child of /news/): duplicated article pages get this automatically.
+    // A press release: any post (News & Press), or a child page of /news/.
     $head = ffe_seo_title($p);
     $g['ffe_article'] = array_filter([
       '@type' => 'NewsArticle', '@id' => $url . '#article', 'headline' => mb_strlen($head) > 110 ? mb_substr($head, 0, 109) . '…' : $head,
@@ -195,7 +196,7 @@ function ffe_seo_inner_graph() {
       'datePublished' => $published, 'dateModified' => $modified,
       'author' => ffe_seo_organiser(), 'publisher' => ['@id' => $home . '#organization'],
       'mainEntityOfPage' => $pageRef, 'isPartOf' => $pageRef, 'url' => $url,
-      'articleSection' => 'Press Release', 'inLanguage' => 'en', 'isAccessibleForFree' => true,
+      'articleSection' => $p->post_type === 'post' && ($c = get_the_category($p->ID)) ? $c[0]->name : 'Press Release', 'inLanguage' => 'en', 'isAccessibleForFree' => true,
       'about' => ['@id' => $home . '#event'],
     ]);
     $g['ffe_event'] = ffe_seo_event($home);
@@ -206,7 +207,8 @@ function ffe_seo_inner_graph() {
     $parts = [];
     foreach (ffe_seo_photos($p) as $i => $ph) {
       $aid = attachment_url_to_postid($ph['href']);
-      $cap = ($aid ? (get_post_field('post_excerpt', $aid) ?: get_post_meta($aid, '_wp_attachment_image_alt', true)) : '') ?: $ph['caption'];
+      // Alt text first: a photo's Caption may be a press caption (the news article's featured image shows it).
+      $cap = ($aid ? (get_post_meta($aid, '_wp_attachment_image_alt', true) ?: get_post_field('post_excerpt', $aid)) : '') ?: $ph['caption'];
       $id = $url . '#photo-' . ($i + 1);
       $parts[] = ['@id' => $id];
       $im = ffe_seo_image($aid);

@@ -212,4 +212,4 @@ const pillSubmit = (id, label, o = {}) => {
   ], styles));
 };
 
-module.exports = { form, field, input, textarea, select, phone, dialOptions, countrySelect, check, radio, honeypot, turnstileSlot, pillSubmit, slug };
+module.exports = { form, field, input, textarea, select, phone, dialOptions, countrySelect, check, radio, honeypot, turnstileSlot, pillSubmit, slug, typedStyles };

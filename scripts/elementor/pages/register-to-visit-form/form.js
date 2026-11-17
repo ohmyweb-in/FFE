@@ -29,13 +29,17 @@ const INTEREST = [["Exhibiting", "Exhibit"], ["Visiting"], ["Speaking"]];
 const intList = box("rf-int-list", [{ padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(14, 24) }, {}],
   INTEREST.map(([l, v = l], k) => S.li(`rf-int-li${k + 1}`, radio("interestType", l, { p: "rf", value: v, required: true, ...S.BOX }), true, true)), { attributes: attrs([["role", "list"]]) });
 
-// Hosted Buyers Programme (production only, 17 Nov 2026): Ruben's question, options and disclaimer as he wrote them in Elementor.
-const HOSTED = ["I would like to receive more information before deciding.", "Yes, I am interested.", "No, not at this moment."];
-const hostedNote = w("rf-g-hostedbuyers-note", "e-paragraph", {
+// Hosted Buyers Programme (production only, 17 Nov 2026): one optional tick box and its disclaimer, in Ruben's words (WhatsApp, 17 Nov;
+// it replaced his three-answer version the same day). Keeps the id rf-g-hostedbuyers, which wp-admin > Registration form shows or hides.
+const hosted = div("rf-g-hostedbuyers", [{ padding: P0, display: "flex", "flex-direction": "column", gap: gap(12, 0), "min-width": px(0) }, {}], [
+  check("hostedBuyers", "I am interested in the Hosted Buyers Programme at FFE APAC 2027.", {
+    p: "rf", value: "Yes", ...S.BOX, labelStyles: [{ ...text(15, 500, "#000", { "line-height": px(19) }) }, {}],
+  }),
   // Italic by style, not <em>: site.js turns <em> in a paragraph into the green accent word.
-  paragraph: "Disclaimer: The Hosted Buyers Programme is by invitation only. Only individuals who have been formally invited by the Organiser and meet the eligibility criteria will be considered qualified buyers. Indicating interest does not guarantee participation.",
-}, [{ ...text(13, 400, T.body, { "line-height": px(19) }), "font-style": "italic", margin: P0 }, {}]);
-const hostedList = S.optionList("rf-hb-list", "rf-hb-li", HOSTED.map((x) => radio("hostedBuyers", x, { p: "rf", value: x, required: true, ...S.BOX })));
+  w("rf-g-hostedbuyers-note", "e-paragraph", {
+    paragraph: "Disclaimer: Participation in the Hosted Buyers Programme is by invitation only. Only individuals contacted and invited by the Organiser will be considered for qualification. Indicating interest does not guarantee participation.",
+  }, [{ ...text(13, 400, T.body, { "line-height": px(19) }), "font-style": "italic", margin: P0 }, {}]),
+], { attributes: attrs([["data-span", ""]]) });
 
 const actIn = div("rf-act-in", [{ padding: P0, display: "flex", "flex-direction": "column", gap: gap(14, 0) }, {}], [
   S.optionList("rf-act-list", "rf-act-li", [
@@ -66,7 +70,7 @@ const grid = div("rf-f-grid", [
   // questions show (it wins over this Display setting) and adds the editor's own questions.
   S.group("rf", "activity", "Company Business Activity", [actIn], { hidden: true }),
   S.group("rf", "products", "What are the products/services that you are interested in?", [prodList], { radio: true, hidden: true }),
-  S.group("rf", "hostedBuyers", "Are you interested in participating in the Hosted Buyers Programme at FFE APAC 2027?", [hostedList, hostedNote], { radio: true, gap: 12 }),
+  hosted,
   S.consent("rf", "marketingConsent", S.MKT_VISIT),
   S.consent("rf", "termsConsent", S.TERMS_VISIT),
 ]);

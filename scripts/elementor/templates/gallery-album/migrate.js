@@ -24,7 +24,7 @@ $arr = [
   'post_content' => base64_decode('${b64(CONTENT)}'), 'post_status' => 'draft',
   'post_date' => $page ? $page->post_date : current_time('mysql'), 'post_date_gmt' => $page ? $page->post_date_gmt : current_time('mysql', true), 'edit_date' => true,
 ];
-if ($found) { $arr['ID'] = $found[0]->ID; if ($found[0]->post_status === 'publish') unset($arr['post_status']); }
+if ($found) { $arr['ID'] = $found[0]->ID; $arr['post_status'] = $found[0]->post_status; unset($arr['post_date'], $arr['post_date_gmt'], $arr['edit_date']); } // and its date (the old page is gone after cutover) // keep its status: wp_insert_post treats a missing one as draft (17 Nov 2026: a re-run unpublished the article for ~1 minute)
 $id = wp_insert_post(wp_slash($arr), true);
 if (is_wp_error($id)) throw new Exception($id->get_error_message());
 set_post_thumbnail($id, ${photos[0].id});

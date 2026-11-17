@@ -33,11 +33,20 @@ add_action('template_redirect', function () {
 /* 4. Block patterns for articles: Insert (+) > Patterns > FFE. */
 add_action('init', function () {
   register_block_pattern_category('ffe', ['label' => 'FFE']);
-  // Key facts panel (approved by Ruben 7 Nov): the event's facts, styled as the mint card. Edit the text in the HTML block if a fact changes.
+  // Key facts panel (approved by Ruben 7 Nov): a Group (class na-facts) with a heading and a two-column Table, so editors change a fact by
+  // clicking its cell (it was a raw HTML block until 17 Nov 2026). Markup as the block editor serializes it, so it opens without warnings.
   register_block_pattern('ffe/key-facts', [
     'title' => 'Key facts panel', 'categories' => ['ffe'], 'postTypes' => ['post'],
-    'description' => 'The mint "Key facts" card: what, when, where, organiser, sectors.',
-    'content' => '<!-- wp:html --><aside class="na-facts" aria-labelledby="na-facts-h"><h2 id="na-facts-h">Key facts</h2><dl><div><dt>What</dt><dd>Fresh Food Expo Asia Pacific (FFE APAC), a B2B trade fair for the fresh food value chain</dd></div><div><dt>When</dt><dd>16–18 November 2027</dd></div><div><dt>Where</dt><dd>Sands Expo &amp; Convention Centre, Singapore</dd></div><div><dt>Organiser</dt><dd>Messe Berlin Asia Pacific</dd></div><div><dt>Part of</dt><dd>Singapore International Agri-Food Week (SIAW) 2027</dd></div><div><dt>Sectors</dt><dd>Fresh Food, Agri &amp; Fresh Technology, Logistics &amp; Distribution</dd></div><div><dt>For</dt><dd>Producers, suppliers, buyers, technology providers and logistics specialists</dd></div></dl></aside><!-- /wp:html -->',
+    'description' => 'The mint "Key facts" card: what, when, where, organiser, sectors. Click a cell to change it.',
+    'content' => '<!-- wp:group {"className":"na-facts","layout":{"type":"default"}} -->
+<div class="wp-block-group na-facts"><!-- wp:heading -->
+<h2 class="wp-block-heading">Key facts</h2>
+<!-- /wp:heading -->
+
+<!-- wp:table {"hasFixedLayout":false,"className":"na-facts-table"} -->
+<figure class="wp-block-table na-facts-table"><table><tbody><tr><td>What</td><td>Fresh Food Expo Asia Pacific (FFE APAC), a B2B trade fair for the fresh food value chain</td></tr><tr><td>When</td><td>16–18 November 2027</td></tr><tr><td>Where</td><td>Sands Expo &amp; Convention Centre, Singapore</td></tr><tr><td>Organiser</td><td>Messe Berlin Asia Pacific</td></tr><tr><td>Part of</td><td>Singapore International Agri-Food Week (SIAW) 2027</td></tr><tr><td>Sectors</td><td>Fresh Food, Agri &amp; Fresh Technology, Logistics &amp; Distribution</td></tr><tr><td>For</td><td>Producers, suppliers, buyers, technology providers and logistics specialists</td></tr></tbody></table></figure>
+<!-- /wp:table --></div>
+<!-- /wp:group -->',
   ]);
   // Link to a gallery album: mint box with a line of text and a green button.
   register_block_pattern('ffe/photos-link', [

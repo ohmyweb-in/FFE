@@ -17,7 +17,11 @@ const CAPTION =
 const src = fs.readFileSync(path.join(__dirname, "body.html"), "utf8").replace(/^<!--.*-->\n/, "").replace(/^<div class="na-body">/, "");
 const blocks = [];
 for (const [el, tag, inner] of src.matchAll(/<(aside|p|h2|ul|figure)\b[^>]*>([\s\S]*?)<\/\1>/g)) {
-  if (tag === "aside" && el.includes("na-facts")) blocks.push(`<!-- wp:html -->${el}<!-- /wp:html -->`);
+  if (tag === "aside" && el.includes("na-facts")) {
+    // Key facts: a Group + Table (as the block editor writes them; ffe/key-facts pattern), not raw HTML, so a fact is a cell to click.
+    const rows = [...el.matchAll(/<dt>([\s\S]*?)<\/dt><dd>([\s\S]*?)<\/dd>/g)].map(([, k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
+    blocks.push(`<!-- wp:group {"className":"na-facts","layout":{"type":"default"}} -->\n<div class="wp-block-group na-facts"><!-- wp:heading -->\n<h2 class="wp-block-heading">Key facts</h2>\n<!-- /wp:heading -->\n\n<!-- wp:table {"hasFixedLayout":false,"className":"na-facts-table"} -->\n<figure class="wp-block-table na-facts-table"><table><tbody>${rows}</tbody></table></figure>\n<!-- /wp:table --></div>\n<!-- /wp:group -->`);
+  }
   else if (tag === "aside") {
     const [, text] = el.match(/<p>([\s\S]*?)<\/p>/);
     const [, href, label] = el.match(/<a [^>]*href="([^"]+)"[^>]*>([^<]+)/);
@@ -51,7 +55,7 @@ $arr = [
   'post_category' => [(int) (is_array($cat) ? $cat['term_id'] : $cat)],
   'edit_date' => true, // keep that date on a draft (WordPress otherwise floats a draft's date to now)
 ];
-if ($found) { $arr['ID'] = $found[0]->ID; if ($found[0]->post_status === 'publish') unset($arr['post_status']); }
+if ($found) { $arr['ID'] = $found[0]->ID; $arr['post_status'] = $found[0]->post_status; unset($arr['post_date'], $arr['post_date_gmt'], $arr['edit_date']); } // and its date (the old page is gone after cutover) // keep its status: wp_insert_post treats a missing one as draft (17 Nov 2026: a re-run unpublished the article for ~1 minute)
 kses_remove_filters(); // the Key facts HTML block (aside, dl) as written
 $id = wp_insert_post(wp_slash($arr), true);
 kses_init_filters();

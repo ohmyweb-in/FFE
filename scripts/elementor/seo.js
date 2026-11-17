@@ -82,6 +82,9 @@ $set('rank-math-options-titles', [
   // Posts (News & Press since 17 Nov 2026) too: ffe-seo.php writes their NewsArticle; Rank Math's BlogPosting would add a Person (the account).
   'pt_post_default_rich_snippet' => 'off',
   'pt_ffe_album_default_rich_snippet' => 'off', // albums: ffe-seo.php writes their ImageGallery
+  // Albums like posts: "<title> | Fresh Food Expo Asia Pacific", the Excerpt as description, indexed, Rank Math box in the editor.
+  'pt_ffe_album_title' => '%title% %sep% %sitename%', 'pt_ffe_album_description' => '%excerpt%',
+  'pt_ffe_album_robots' => ['index'], 'pt_ffe_album_custom_robots' => 'off', 'pt_ffe_album_add_meta_box' => 'on',
   'disable_author_archives' => 'on',
 ]);
 // Sitemap: pages and posts (News & Press); no categories (they redirect to /news/); images listed with their page.

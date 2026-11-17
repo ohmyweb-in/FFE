@@ -68,7 +68,7 @@ const NA_CSS = [
   'body .elementor [data-id="na-back"] a { color: #025d03; text-decoration: none; font-weight: 600; } body .elementor [data-id="na-back"] a:hover { color: #28ae3d; }',
   'body .elementor [data-id="na-date"] { text-transform: uppercase; }',
   'body .elementor [data-id="na-cat"] { text-transform: uppercase; } body .elementor [data-id="na-cat"]:empty { display: none; }',
-  'body .elementor [data-id="na-caption"]:empty { display: none; }',
+  'body .elementor [data-id="na-caption"]:empty, body .elementor [data-id="na-standfirst"]:empty { display: none; }',
   'body .elementor [data-id="na-caption"] strong { font-weight: 600; color: #025d03; }',
   "/* N3 StayUpdated sprig min-[1424px]:flex (as on News) */",
   '@media (min-width: 1424px) and (max-width: 1439px) { body .elementor [data-id="na-stay-sprig"] { display: flex; } }',

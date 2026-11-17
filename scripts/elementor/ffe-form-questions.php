@@ -31,51 +31,59 @@ function ffe_fq_get(?bool $test = null): array {
 }
 
 /* 1. The screen. */
-add_filter('option_page_capability_ffe_form_questions', fn() => 'ffe_manage_content'); // administrators and Content managers (ffe-content.php)
+// The screen saves ffe_form_questions; with &test=1 it saves ffe_form_questions_test, which only the scratch copy of the form reads
+// (for trying questions out and for the how-to videos without touching the live form).
+function ffe_fq_sanitize($in) {
+  $in = is_array($in) ? $in : [];
+  // WordPress runs this twice when the option is first created, the second time on this function's own output ({hidden, questions},
+  // no "show"): read that shape too, or every built-in question would come out hidden (17 Nov 2026, caught on the first save).
+  $show = isset($in['show']) || !isset($in['hidden']) ? (array) ($in['show'] ?? []) : array_fill_keys(array_diff(array_keys(FFE_FQ_BUILTIN), (array) $in['hidden']), 1);
+  $out = ['hidden' => [], 'questions' => []];
+  foreach (array_keys(FFE_FQ_BUILTIN) as $k) if (!in_array($k, FFE_FQ_FIXED, true) && empty($show[$k])) $out['hidden'][] = $k;
+  foreach ((array) ($in['questions'] ?? []) as $q) {
+    $text = sanitize_text_field($q['question'] ?? '');
+    if ($text === '') continue; // an emptied question is deleted
+    $type = array_key_exists($q['type'] ?? '', FFE_FQ_TYPES) ? $q['type'] : 'text';
+    $raw = $q['options'] ?? '';
+    $opts = array_values(array_filter(array_map('sanitize_text_field', is_array($raw) ? $raw : preg_split('/\r\n|\r|\n/', (string) $raw))));
+    if (in_array($type, ['select', 'radio', 'checkbox'], true) && !$opts) $type = 'text'; // a choice without options becomes a text box
+    $id = preg_match('/^q[a-f0-9]{6}$/', $q['id'] ?? '') ? $q['id'] : 'q' . substr(md5(uniqid('', true)), 0, 6);
+    $before = array_key_exists($q['before'] ?? '', FFE_FQ_BUILTIN) ? $q['before'] : 'rf-c-marketingconsent';
+    $out['questions'][] = ['id' => $id, 'question' => $text, 'type' => $type, 'options' => array_slice($opts, 0, 60), 'required' => !empty($q['required']), 'note' => sanitize_text_field($q['note'] ?? ''), 'before' => $before];
+  }
+  return $out;
+}
+foreach (['ffe_form_questions', 'ffe_form_questions_test'] as $opt) add_filter("option_page_capability_$opt", fn() => 'ffe_manage_content'); // administrators and Content managers (ffe-content.php)
 add_action('init', function () { // init, not admin_init: the sanitize filter then exists wherever the option is written
-  register_setting('ffe_form_questions', 'ffe_form_questions', ['sanitize_callback' => function ($in) {
-    $in = is_array($in) ? $in : [];
-    // WordPress runs this twice when the option is first created, the second time on this function's own output ({hidden, questions},
-    // no "show"): read that shape too, or every built-in question would come out hidden (17 Nov 2026, caught on the first save).
-    $show = isset($in['show']) || !isset($in['hidden']) ? (array) ($in['show'] ?? []) : array_fill_keys(array_diff(array_keys(FFE_FQ_BUILTIN), (array) $in['hidden']), 1);
-    $out = ['hidden' => [], 'questions' => []];
-    foreach (array_keys(FFE_FQ_BUILTIN) as $k) if (!in_array($k, FFE_FQ_FIXED, true) && empty($show[$k])) $out['hidden'][] = $k;
-    foreach ((array) ($in['questions'] ?? []) as $q) {
-      $text = sanitize_text_field($q['question'] ?? '');
-      if ($text === '') continue; // an emptied question is deleted
-      $type = array_key_exists($q['type'] ?? '', FFE_FQ_TYPES) ? $q['type'] : 'text';
-      $raw = $q['options'] ?? '';
-      $opts = array_values(array_filter(array_map('sanitize_text_field', is_array($raw) ? $raw : preg_split('/\r\n|\r|\n/', (string) $raw))));
-      if (in_array($type, ['select', 'radio', 'checkbox'], true) && !$opts) $type = 'text'; // a choice without options becomes a text box
-      $id = preg_match('/^q[a-f0-9]{6}$/', $q['id'] ?? '') ? $q['id'] : 'q' . substr(md5(uniqid('', true)), 0, 6);
-      $before = array_key_exists($q['before'] ?? '', FFE_FQ_BUILTIN) ? $q['before'] : 'rf-c-marketingconsent';
-      $out['questions'][] = ['id' => $id, 'question' => $text, 'type' => $type, 'options' => array_slice($opts, 0, 60), 'required' => !empty($q['required']), 'note' => sanitize_text_field($q['note'] ?? ''), 'before' => $before];
-    }
-    return $out;
-  }]);
+  foreach (['ffe_form_questions', 'ffe_form_questions_test'] as $opt) register_setting($opt, $opt, ['sanitize_callback' => 'ffe_fq_sanitize']);
 });
-add_action('update_option_ffe_form_questions', fn() => do_action('litespeed_purge_all'));
-add_action('add_option_ffe_form_questions', fn() => do_action('litespeed_purge_all'));
+foreach (['ffe_form_questions', 'ffe_form_questions_test'] as $opt) {
+  add_action("update_option_$opt", fn() => do_action('litespeed_purge_all'));
+  add_action("add_option_$opt", fn() => do_action('litespeed_purge_all'));
+}
 
 add_action('admin_menu', function () {
   add_menu_page('Registration form', 'Registration form', 'ffe_manage_content', 'ffe-form-questions', function () {
-    $o = ffe_fq_get(false);
+    $test = !empty($_GET['test']);
+    $opt = $test ? 'ffe_form_questions_test' : 'ffe_form_questions';
+    $o = ffe_fq_get($test);
     $rows = array_merge($o['questions'], array_fill(0, 2, ['id' => '', 'question' => '', 'type' => 'text', 'options' => [], 'required' => false, 'note' => '', 'before' => 'rf-c-marketingconsent']));
     $url = home_url('/' . FFE_FQ_PAGE . '/');
+    if ($test) { $tp = get_posts(['post_type' => 'page', 'post_status' => 'publish', 'meta_key' => '_ffe_page', 'meta_value' => '_test/form', 'numberposts' => 1]); $url = $tp ? get_permalink($tp[0]) : $url; }
     ?>
-    <div class="wrap"><h1>Registration form</h1>
+    <div class="wrap"><h1>Registration form<?php if ($test) echo ' <span style="font-size:13px;background:#fcf0f1;color:#8a2424;padding:2px 8px;border-radius:3px;vertical-align:middle">Test copy: the live form is not changed</span>'; ?></h1>
     <p>The questions on <a href="<?php echo esc_url($url); ?>" target="_blank">Register Your Interest</a>. Visitors see changes within about 5 minutes. Answers arrive in the team email and under Elementor &gt; Submissions, named by the question.</p>
-    <form method="post" action="options.php"><?php settings_fields('ffe_form_questions'); ?>
+    <form method="post" action="options.php"><?php settings_fields($opt); ?>
     <h2>Questions already on the form</h2>
     <p>Untick a question to hide it (its answers are then not asked or sent). Name, email and the two consent boxes always show.</p>
     <table class="form-table"><tr><th>Show</th><td>
     <?php foreach (FFE_FQ_BUILTIN as $k => $label) : $fixed = in_array($k, FFE_FQ_FIXED, true); ?>
-      <label style="display:block;margin:0 0 6px"><input type="checkbox" name="ffe_form_questions[show][<?php echo esc_attr($k); ?>]" value="1" <?php checked($fixed || !in_array($k, $o['hidden'], true)); disabled($fixed); ?>> <?php echo esc_html($label); ?></label>
+      <label style="display:block;margin:0 0 6px"><input type="checkbox" name="<?php echo $opt; ?>[show][<?php echo esc_attr($k); ?>]" value="1" <?php checked($fixed || !in_array($k, $o['hidden'], true)); disabled($fixed); ?>> <?php echo esc_html($label); ?></label>
     <?php endforeach; ?>
     </td></tr></table>
     <h2>Your own questions</h2>
     <p>Fill in a question and Save. To add more, Save and two new empty boxes appear. To delete a question, empty its "Question" box and Save. For a dropdown, round buttons or tick boxes, write one option per line.</p>
-    <?php foreach ($rows as $i => $q) : $n = "ffe_form_questions[questions][$i]"; ?>
+    <?php foreach ($rows as $i => $q) : $n = "{$opt}[questions][$i]"; ?>
     <fieldset style="background:#fff;border:1px solid #c3c4c7;border-radius:4px;padding:6px 16px;margin:0 0 14px;max-width:900px">
       <legend style="padding:0 6px;font-weight:600"><?php echo $q['question'] === '' ? 'New question' : 'Question ' . ($i + 1); ?></legend>
       <input type="hidden" name="<?php echo $n; ?>[id]" value="<?php echo esc_attr($q['id']); ?>">

@@ -9,6 +9,7 @@ module.exports = {
   css: [
     "/* Hero title: the album page broke it after \"Launch\" with <br>; a dynamic title wraps in the text column instead, balanced. */",
     'body .elementor [data-id="ga-ph-title"] { max-width: 640px; text-wrap: balance; }',
+    'body .elementor [data-id="ga-ph-desc"]:empty { display: none; } /* an album without an Excerpt */',
     "/* Album note: text-accent underline links, hover forest */",
     'body .elementor [data-id="ga-note"] a { color: #28ae3d; text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }',
     'body .elementor [data-id="ga-note"] a:hover { color: #025d03; }',

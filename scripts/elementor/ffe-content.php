@@ -171,3 +171,19 @@ add_action('wp_dashboard_setup', function () {
 add_action('transition_post_status', function ($new, $old, $post) {
   if (in_array($post->post_type, ['post', 'ffe_album'], true) && ($new === 'publish' || $old === 'publish')) do_action('litespeed_purge_all');
 }, 10, 3);
+
+/* 9. An article saved without an Excerpt gets its first paragraph as the Excerpt (40 words), which the editor then shows and can change.
+ * Elementor's Post Excerpt tag prints only a real Excerpt, so without this the line under the title and the News card's summary stay blank.
+ * Albums don't: their hero simply has no line (the template hides the empty paragraph). */
+function ffe_fill_excerpt($id, $post) {
+  if (wp_is_post_revision($id) || wp_is_post_autosave($id) || trim($post->post_excerpt) !== '' || $post->post_status === 'auto-draft') return;
+  foreach (parse_blocks($post->post_content) as $b) {
+    if ($b['blockName'] === 'core/paragraph' && ($t = trim(wp_strip_all_tags($b['innerHTML']))) !== '') {
+      remove_action('save_post_post', 'ffe_fill_excerpt', 10);
+      wp_update_post(['ID' => $id, 'post_excerpt' => wp_trim_words($t, 40)]);
+      add_action('save_post_post', 'ffe_fill_excerpt', 10, 2);
+      return;
+    }
+  }
+}
+add_action('save_post_post', 'ffe_fill_excerpt', 10, 2);

@@ -51,7 +51,8 @@ add_action('init', function () {
  * album. The first photo is the cover unless a Featured image is set. */
 add_action('init', function () {
   register_post_type('ffe_album', [
-    'labels' => ['name' => 'Albums', 'singular_name' => 'Album', 'add_new_item' => 'Add new album', 'edit_item' => 'Edit album', 'all_items' => 'All albums', 'menu_name' => 'Albums (Gallery)'],
+    'labels' => ['name' => 'Albums', 'singular_name' => 'Album', 'add_new' => 'Add New Album', 'add_new_item' => 'Add New Album', 'edit_item' => 'Edit Album', 'new_item' => 'New Album',
+      'view_item' => 'View Album', 'all_items' => 'All Albums', 'search_items' => 'Search Albums', 'not_found' => 'No albums yet', 'menu_name' => 'Albums', 'item_published' => 'Album published.', 'item_updated' => 'Album updated.'],
     'public' => true, 'show_in_rest' => true, 'menu_icon' => 'dashicons-format-gallery', 'menu_position' => 6, 'has_archive' => false,
     'rewrite' => ['slug' => 'gallery', 'with_front' => false], // with_front false: posts use /news/%postname%/, albums must not land under /news/
     'supports' => ['title', 'editor', 'excerpt', 'thumbnail', 'revisions'],
@@ -158,8 +159,8 @@ add_filter('map_meta_cap', function ($caps, $cap, $uid, $args) {
 add_action('wp_dashboard_setup', function () {
   if (!current_user_can('ffe_manage_content')) return;
   wp_add_dashboard_widget('ffe_howto', 'Update the website', function () { ?>
-    <p><strong>News or press release:</strong> Posts &gt; Add New. Title; the article in blocks (Insert + &gt; Patterns &gt; FFE has the Key facts panel and a link to photos); on the right: Category, Featured image (its Caption shows under the photo), Excerpt (the line under the title and on the News page). Publish. It appears first on <a href="<?php echo esc_url(home_url('/news/')); ?>" target="_blank">News &amp; Press</a>.</p>
-    <p><strong>Photo album:</strong> Albums (Gallery) &gt; Add New. Title, Excerpt, then drop the photos into the Gallery box and give each a caption (click the photo). Drag to reorder; the first is the cover. Publish. Camera and location data are removed from uploads.</p>
+    <p><strong>News or press release:</strong> Posts &gt; Add Post. Title; the article in blocks (the + button &gt; Patterns &gt; FFE has the Key facts panel and Link to photos); on the right: Set featured image (its Caption shows under the photo), Add an excerpt (the line under the title and on the News page; empty = the first paragraph), Categories. Publish. It appears first on <a href="<?php echo esc_url(home_url('/news/')); ?>" target="_blank">News &amp; Press</a>.</p>
+    <p><strong>Photo album:</strong> Albums &gt; Add New Album. Title, Add an excerpt, then drop the photos into the Gallery box and give each a caption (click the photo). Drag to reorder; the first is the cover. Publish. Camera and location data are removed from uploads.</p>
     <p><strong>Registration form:</strong> Registration form (left menu). Show or hide questions, add your own.</p>
     <p><strong>Launch popup:</strong> Launch popup (left menu). Text, buttons, links, on/off.</p>
     <p>Visitors see changes within about 5 minutes.</p>

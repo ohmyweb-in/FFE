@@ -204,8 +204,11 @@ document.querySelectorAll('form.e-form-base label[for]').forEach(function (l, i,
 add_action('wp_footer', function () { ?>
 <script id="ffe-form-choices">
 document.querySelectorAll('form.e-form-base').forEach(function (form) {
-  var ps = [].filter.call(form.querySelectorAll('p'), function (p) { return !p.closest('label'); }), owner = {}, d = document.createElement('div');
-  form.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(function (f) {
+  var ps = [].filter.call(form.querySelectorAll('p'), function (p) { return !p.closest('label'); }), owner = {}, count = {}, d = document.createElement('div');
+  var all = form.querySelectorAll('input[type=radio], input[type=checkbox]');
+  all.forEach(function (f) { count[f.name] = (count[f.name] || 0) + 1; });
+  all.forEach(function (f) {
+    var options = f.type === 'radio' || count[f.name] > 1; // a lone tick box ("I agree", "yes") keeps its value
     var n = f.name, q = '';
     // The question: the paragraph's first line (a note may follow a <br>), without the required star.
     for (var i = ps.length - 1; i >= 0; i--) if (ps[i].compareDocumentPosition(f) & Node.DOCUMENT_POSITION_FOLLOWING) { d.innerHTML = ps[i].innerHTML.split(/<br\b[^>]*>/i)[0]; q = d.textContent.replace(/[\s*]+$/, '').trim().slice(0, 120); break; }
@@ -213,7 +216,7 @@ document.querySelectorAll('form.e-form-base').forEach(function (form) {
     if (n && q && owner[n] !== q) f.name = q;
     // The option's own label: its row's, as a copy may repeat the original's id.
     var l = f.parentElement.querySelector('label[for="' + CSS.escape(f.id) + '"]') || f.parentElement.querySelector('label'), t = l && l.textContent.trim();
-    if (t) f.value = t;
+    if (t && options) f.value = t;
   });
 });
 </script>

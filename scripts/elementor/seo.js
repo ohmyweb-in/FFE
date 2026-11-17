@@ -81,14 +81,15 @@ $set('rank-math-options-titles', [
   'pt_page_default_rich_snippet' => 'off',
   // Posts (News & Press since 17 Nov 2026) too: ffe-seo.php writes their NewsArticle; Rank Math's BlogPosting would add a Person (the account).
   'pt_post_default_rich_snippet' => 'off',
+  'pt_ffe_album_default_rich_snippet' => 'off', // albums: ffe-seo.php writes their ImageGallery
   'disable_author_archives' => 'on',
 ]);
 // Sitemap: pages and posts (News & Press); no categories (they redirect to /news/); images listed with their page.
-$set('rank-math-options-sitemap', ['pt_page_sitemap' => 'on', 'pt_post_sitemap' => 'on', 'pt_attachment_sitemap' => 'off', 'tax_category_sitemap' => 'off', 'tax_post_tag_sitemap' => 'off', 'authors_sitemap' => 'off', 'include_images' => 'on']);
+$set('rank-math-options-sitemap', ['pt_page_sitemap' => 'on', 'pt_post_sitemap' => 'on', 'pt_ffe_album_sitemap' => 'on', 'pt_attachment_sitemap' => 'off', 'tax_category_sitemap' => 'off', 'tax_post_tag_sitemap' => 'off', 'authors_sitemap' => 'off', 'include_images' => 'on']);
 $done = [];
 foreach (json_decode(base64_decode('${b64(PAGES)}'), true) as $path => [$t, $d]) {
-  // A News & Press article is a post since 17 Nov 2026 (same address): look it up by its slug.
-  $p = get_page_by_path($path) ?: (get_posts(['post_type' => 'post', 'name' => basename($path), 'numberposts' => 1])[0] ?? null);
+  // A News & Press article is a post and an album an Albums post since 17 Nov 2026 (same addresses): look them up by slug.
+  $p = get_page_by_path($path) ?: (get_posts(['post_type' => ['post', 'ffe_album'], 'name' => basename($path), 'numberposts' => 1])[0] ?? null);
   if (!$p) throw new Exception("no page or post $path");
   update_post_meta($p->ID, 'rank_math_title', wp_slash($t));
   update_post_meta($p->ID, 'rank_math_description', wp_slash($d));
@@ -96,7 +97,7 @@ foreach (json_decode(base64_decode('${b64(PAGES)}'), true) as $path => [$t, $d])
 }
 // The album and the press release: a shared link previews the signing photo, not the site-wide poster.
 foreach (['gallery/partner-event-launch-signing-ceremony', 'news/messe-berlin-launches-fresh-food-expo-asia-pacific'] as $path) {
-  $a = get_page_by_path($path) ?: (get_posts(['post_type' => 'post', 'name' => basename($path), 'numberposts' => 1])[0] ?? null);
+  $a = get_page_by_path($path) ?: (get_posts(['post_type' => ['post', 'ffe_album'], 'name' => basename($path), 'numberposts' => 1])[0] ?? null);
   if (!$a) continue;
   update_post_meta($a->ID, 'rank_math_facebook_image', '${M["g8-signing-2"].url}');
   update_post_meta($a->ID, 'rank_math_facebook_image_id', ${M["g8-signing-2"].id});

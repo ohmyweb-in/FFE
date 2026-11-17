@@ -1,6 +1,8 @@
 // Gallery (G8): GalleryGrid.tsx tiles + its photo lightbox, shared by /gallery and the album pages.
 const { T, px, pct, custom, pad, P0, mtAuto, radius, gap, link, box, div, w, attrs, image, text, mix, reveal, PAGE, at, media } = require("../lib.js");
 
+// The launch album as the Next.js build has it (src/components/gallery/albums.ts). Since 17 Nov 2026 albums are Albums posts in WordPress
+// (templates/gallery-album); this is what templates/gallery-album/migrate.js moved, and the lightbox below is still the album template's.
 // The albums (src/components/gallery/albums.ts). photos: [key, alt, download]; media keys g8-<key> (1600px) and g8-<key>-thumb (800px); the first photo
 // is the cover. download: the client's full-resolution original (metadata stripped with `jpegtran -copy none`), a plain file in DOWNLOADS, not a media item.
 const DOWNLOADS = "/wp-content/uploads/2026/10/downloads/";

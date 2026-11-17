@@ -155,12 +155,13 @@ add_action('wp_head', function () {
 function ffe_seo_inner_graph() {
   $home = home_url('/');
   $p = get_queried_object();
-  if (!is_singular(['page', 'post']) || !($p instanceof WP_Post)) return [];
+  if (!is_singular(['page', 'post', 'ffe_album']) || !($p instanceof WP_Post)) return [];
   $news = get_page_by_path('news'); // a post (News & Press, ffe-content.php) sits under the News page, as the release page did
 
   $url = get_permalink($p);
   [$title, $desc] = ffe_seo_meta($p);
-  $parent = $p->post_type === 'post' ? $news : ($p->post_parent ? get_post($p->post_parent) : null);
+  // An album (ffe-content.php) sits under the Gallery page, as the album page did.
+  $parent = $p->post_type === 'post' ? $news : ($p->post_type === 'ffe_album' ? get_page_by_path('gallery') : ($p->post_parent ? get_post($p->post_parent) : null));
   $under = $parent ? $parent->post_name : '';
   $pageRef = ['@id' => $url . '#webpage'];
   $published = get_post_time('c', false, $p);
@@ -179,7 +180,7 @@ function ffe_seo_inner_graph() {
 
   // Home → ancestors → this page.
   $crumbs = [['Home', $home]];
-  foreach ($p->post_type === 'post' ? ($news ? [$news->ID] : []) : array_reverse(get_post_ancestors($p)) as $aid) $crumbs[] = [ffe_seo_title($aid), get_permalink($aid)];
+  foreach ($p->post_type !== 'page' ? ($parent ? [$parent->ID] : []) : array_reverse(get_post_ancestors($p)) as $aid) $crumbs[] = [ffe_seo_title($aid), get_permalink($aid)];
   $crumbs[] = [ffe_seo_title($p), $url];
   $crumb = ['@type' => 'BreadcrumbList', '@id' => $url . '#breadcrumb', 'itemListElement' => array_map(
     fn($c, $i) => ['@type' => 'ListItem', 'position' => $i + 1, 'name' => $c[0], 'item' => $c[1]], $crumbs, array_keys($crumbs))];
@@ -205,8 +206,12 @@ function ffe_seo_inner_graph() {
   if ($under === 'gallery') {
     // An album (any child of /gallery/): each photo as an ImageObject with credit and licence (the page states editorial use).
     $parts = [];
-    foreach (ffe_seo_photos($p) as $i => $ph) {
-      $aid = attachment_url_to_postid($ph['href']);
+    // An Albums post: its Gallery block's photos; an album page (before 17 Nov 2026): its Elementor tiles.
+    $photos = $p->post_type === 'ffe_album' && function_exists('ffe_album_photos')
+      ? array_map(fn($ph) => ['aid' => $ph['id'], 'href' => $ph['big'], 'thumb' => 0, 'thumbUrl' => wp_get_attachment_image_url($ph['id'], 'medium_large'), 'caption' => $ph['caption']], ffe_album_photos($p))
+      : ffe_seo_photos($p);
+    foreach ($photos as $i => $ph) {
+      $aid = $ph['aid'] ?? attachment_url_to_postid($ph['href']);
       // Alt text first: a photo's Caption may be a press caption (the news article's featured image shows it).
       $cap = ($aid ? (get_post_meta($aid, '_wp_attachment_image_alt', true) ?: get_post_field('post_excerpt', $aid)) : '') ?: $ph['caption'];
       $id = $url . '#photo-' . ($i + 1);
@@ -214,7 +219,7 @@ function ffe_seo_inner_graph() {
       $im = ffe_seo_image($aid);
       $g['ffe_photo_' . ($i + 1)] = array_filter([
         '@type' => 'ImageObject', '@id' => $id, 'url' => $ph['href'], 'contentUrl' => $ph['href'],
-        'thumbnailUrl' => $ph['thumb'] ? wp_get_attachment_url($ph['thumb']) : null,
+        'thumbnailUrl' => $ph['thumbUrl'] ?? ($ph['thumb'] ? wp_get_attachment_url($ph['thumb']) : null),
         'width' => $im['width'] ?? null, 'height' => $im['height'] ?? null,
         'name' => $cap, 'caption' => $cap, 'isPartOf' => $pageRef, 'inLanguage' => 'en',
         'creator' => ffe_seo_organiser(), 'creditText' => 'Messe Berlin Asia Pacific', 'copyrightNotice' => '© Messe Berlin Asia Pacific',

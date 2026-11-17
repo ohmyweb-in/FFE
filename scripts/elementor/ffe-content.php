@@ -171,6 +171,7 @@ add_action('wp_dashboard_setup', function () {
   if (!current_user_can('ffe_manage_content')) return;
   wp_add_dashboard_widget('ffe_howto', 'Update the website', function () { ?>
     <p><strong>News or press release:</strong> Posts &gt; Add Post. Title; the article in blocks (the + button &gt; Patterns &gt; FFE has the Key facts panel and Link to photos); on the right: Set featured image (its Caption shows under the photo), Add an excerpt (the line under the title and on the News page; empty = the first paragraph), Categories. Publish. It appears first on <a href="<?php echo esc_url(home_url('/news/')); ?>" target="_blank">News &amp; Press</a>.</p>
+    <p><strong>Already written in Word?</strong> Posts &gt; Import from Word and choose the .docx: title, headings, quotes and photos come in as a draft (the first photo becomes the Featured image). Check it, tick a Category, Preview, Publish.</p>
     <p><strong>Photo album:</strong> Albums &gt; Add New Album. Title, Add an excerpt, then drop the photos into the Gallery box and give each a caption (click the photo). Drag to reorder; the first is the cover. Publish. Camera and location data are removed from uploads.</p>
     <p><strong>Registration form:</strong> Registration form (left menu). Show or hide questions, add your own.</p>
     <p><strong>Launch popup:</strong> Launch popup (left menu). Text, buttons, links, on/off.</p>
@@ -199,3 +200,16 @@ function ffe_fill_excerpt($id, $post) {
   }
 }
 add_action('save_post_post', 'ffe_fill_excerpt', 10, 2);
+// On the article itself that summary would repeat the paragraph right below the photo, so the line under the title is left out when
+// the Excerpt is just the start of the first paragraph (the News card still uses it). A summary someone wrote still shows.
+add_action('wp_head', function () {
+  if (!is_singular('post')) return;
+  $norm = fn($t) => trim(preg_replace('/\s+/u', ' ', html_entity_decode(wp_strip_all_tags($t), ENT_QUOTES, 'UTF-8')));
+  $ex = preg_replace('/[\s…]+$/u', '', $norm(get_post_field('post_excerpt', get_queried_object_id())));
+  if ($ex === '') return;
+  foreach (parse_blocks(get_post_field('post_content', get_queried_object_id())) as $b) {
+    if ($b['blockName'] !== 'core/paragraph' || ($t = $norm($b['innerHTML'])) === '') continue;
+    if (str_starts_with($t, $ex)) echo '<style>body .elementor [data-id="na-standfirst"]{display:none}</style>' . "\n";
+    return;
+  }
+});

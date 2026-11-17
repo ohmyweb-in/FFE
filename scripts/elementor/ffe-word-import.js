@@ -42,6 +42,7 @@
       var form = new FormData();
       form.append('file', new Blob([data], { type: type }), base + '-' + (++n) + '.' + ext);
       if (image.altText) form.append('alt_text', image.altText);
+      form.append('post', String(select('core/editor').getCurrentPostId())); // Media Library: "Uploaded to" this article
       say('Uploading photo ' + n + '…');
       var m = await wp.apiFetch({ path: '/wp/v2/media', method: 'POST', body: form });
       return { src: m.source_url, alt: image.altText || '', 'class': 'wp-image-' + m.id, 'data-id': String(m.id) };

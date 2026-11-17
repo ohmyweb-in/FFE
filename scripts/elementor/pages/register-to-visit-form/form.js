@@ -62,7 +62,8 @@ const grid = div("rf-f-grid", [
   fF("company", "Company Name", inp("company", "Enter your company name", { ac: "organization" })),
   fF("jobTitle", "Job Title", inp("jobTitle", "Enter your job title", { ac: "organization-title" })),
   fF("country", "Country / Region", countrySelect("country", { p: "rf", placeholder: "Search country / region", required: true })),
-  // Hidden by Ruben in Elementor, 16 Nov 2026.
+  // Hidden by Ruben in Elementor, 16 Nov 2026. Since 17 Nov wp-admin > Registration form (ffe-form-questions.php) decides which built-in
+  // questions show (it wins over this Display setting) and adds the editor's own questions.
   S.group("rf", "activity", "Company Business Activity", [actIn], { hidden: true }),
   S.group("rf", "products", "What are the products/services that you are interested in?", [prodList], { radio: true, hidden: true }),
   S.group("rf", "hostedBuyers", "Are you interested in participating in the Hosted Buyers Programme at FFE APAC 2027?", [hostedList, hostedNote], { radio: true, gap: 12 }),

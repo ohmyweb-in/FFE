@@ -33,11 +33,14 @@
   async function convert(file, say) {
     if (!/\.docx$/i.test(file.name)) throw new Error('Please choose a .docx file. In Word: File > Save As > Word Document (.docx). In Google Docs: File > Download > Microsoft Word (.docx).');
     var base = file.name.replace(/\.docx$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'article';
-    var n = 0, skipped = [];
+    var n = 0, skipped = [], small = 0, removed = [];
     var convertImage = mammoth.images.imgElement(async function (image) {
       var type = image.contentType || '';
       if (!/^image\/(jpeg|png|gif|webp)$/.test(type)) { skipped.push(type || 'unknown'); return { src: '' }; }
       var data = await image.readAsArrayBuffer();
+      // A logo or icon (letterheads, footers) is small; press photos aren't. Left out, and counted for the editor.
+      var bmp = await createImageBitmap(new Blob([data], { type: type })).catch(function () { return null; });
+      if (bmp && (bmp.width < 500 || bmp.height < 200)) { small++; return { src: '' }; }
       var ext = { jpeg: 'jpg', png: 'png', gif: 'gif', webp: 'webp' }[type.split('/')[1]];
       var form = new FormData();
       form.append('file', new Blob([data], { type: type }), base + '-' + (++n) + '.' + ext);
@@ -55,11 +58,17 @@
     // Title: Word's Title style, else a heading at the very top. Subtitle: the summary under the title.
     var title = '', excerpt = '';
     // Many documents aren't styled: a short, all-bold line with no full stop is a heading (and, at the very top, the title).
-    var boldLine = function (e) { var x = e.textContent.trim(); return e.tagName === 'P' && x && x.length <= 160 && !/[.!?:]$/.test(x) && !e.querySelector('img') && Array.prototype.every.call(e.childNodes, function (c) { return /^(STRONG|B)$/.test(c.nodeName) || !c.textContent.trim(); }); };
+    // Labels above the headline ("PRESS RELEASE", "FOR IMMEDIATE RELEASE", an embargo line) and empty lines at the top are left out.
+    while (body.firstElementChild && !body.firstElementChild.querySelector('img') && (!body.firstElementChild.textContent.trim() || /^((press|media|news) release|for immediate release|embargoed\b.*)$/i.test(body.firstElementChild.textContent.trim()))) {
+      if (body.firstElementChild.textContent.trim()) removed.push(body.firstElementChild.textContent.trim());
+      body.firstElementChild.remove();
+    }
+    var dateline = function (x) { return x.split(/\s+/).length <= 6 && /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\b[\s\S]*\b\d{4}\b/i.test(x); };
+    var boldLine = function (e) { var x = e.textContent.trim(); return e.tagName === 'P' && x && x.length <= 160 && !/[.!?:]$/.test(x) && !dateline(x) && !e.querySelector('img') && Array.prototype.every.call(e.childNodes, function (c) { return /^(STRONG|B)$/.test(c.nodeName) || !c.textContent.trim(); }); };
     var first = body.firstElementChild;
     var t = body.querySelector('h1.ffe-title') || (first && (/^H[1-4]$/.test(first.tagName) || boldLine(first)) ? first : null);
     if (t) { title = t.textContent.trim(); t.remove(); }
-    body.querySelectorAll('p').forEach(function (p) { if (boldLine(p) && p.textContent.trim().length <= 120) { var h = doc.createElement('h2'); h.textContent = p.textContent.trim(); p.replaceWith(h); } });
+    body.querySelectorAll(':scope > p').forEach(function (p) { if (boldLine(p) && p.textContent.trim().length <= 120) { var h = doc.createElement('h2'); h.textContent = p.textContent.trim(); p.replaceWith(h); } });
     var st = body.querySelector('p.ffe-subtitle');
     if (st) { excerpt = st.textContent.trim(); st.remove(); }
     body.querySelectorAll('h1').forEach(function (h) { var h2 = doc.createElement('h2'); h2.innerHTML = h.innerHTML; h.replaceWith(h2); });
@@ -89,7 +98,7 @@
     if (f0) { var fc0 = f0.querySelector('figcaption'); featured = { id: +f0.querySelector('img').dataset.id, caption: fc0 ? fc0.innerHTML : '' }; f0.remove(); }
 
     // Closing boilerplate, only in the second half of the document: from the first such heading or line to the end.
-    var removed = [], kids = Array.prototype.slice.call(body.children);
+    var kids = Array.prototype.slice.call(body.children);
     var cut = kids.findIndex(function (e, i) { return i >= kids.length / 2 && (/^H[2-6]$/.test(e.tagName) || (e.tagName === 'P' && e.textContent.trim().length < 60)) && BOILER.test(e.textContent.trim()); });
     if (cut > 0) kids.slice(cut).forEach(function (e) { if (/^H[2-6]$/.test(e.tagName) || BOILER.test(e.textContent.trim())) removed.push(e.textContent.trim()); e.remove(); });
 
@@ -102,7 +111,7 @@
       return wp.blocks.cloneBlock(b, { citation: '<strong>' + esc(who.trim()) + '</strong>' + esc(role) }, b.innerBlocks.slice(0, -1));
     }).filter(function (b) { return !(b.name === 'core/paragraph' && !text(b.attributes.content)); });
 
-    return { title: title, excerpt: excerpt, featured: featured, blocks: blocks, photos: n, removed: removed, skipped: skipped,
+    return { title: title, excerpt: excerpt, featured: featured, blocks: blocks, photos: n, removed: removed, skipped: skipped, small: small,
       warnings: res.messages.filter(function (m) { return m.type !== 'info'; }).map(function (m) { return m.message; }) };
   }
 
@@ -144,6 +153,7 @@
           el('li', null, r.photos ? r.photos + (r.photos === 1 ? ' photo' : ' photos') + ' uploaded; the first is the Featured image.' : 'No photos in the document: add a Featured image.'),
           r.excerpt ? el('li', null, 'Summary taken from the Subtitle.') : null,
           r.removed.length ? el('li', null, 'Left out (the page adds these itself): ' + r.removed.join('; ') + '.') : null,
+          r.small ? el('li', null, r.small + (r.small === 1 ? ' small picture (a logo?) was' : ' small pictures (logos?) were') + ' left out. If one is a photo, add it with the + button.') : null,
           r.skipped.length ? el('li', null, r.skipped.length + ' picture(s) in a format the web can’t show (' + r.skipped.join(', ') + '): add them as photos.') : null,
           r.warnings.length ? el('li', null, 'Notes from the conversion: ' + r.warnings.slice(0, 3).join('; ')) : null),
         el('p', { style: { marginTop: '12px' } }, 'Now check the text, choose a Category, then Preview and Publish.'));

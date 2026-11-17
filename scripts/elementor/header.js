@@ -285,7 +285,7 @@ const cta = box("header-cta", [
   // Below 360px the pill reads just "Register" so logo, pill and menu button fit (swap + width in ffe-header.php).
   w("header-cta-label-short", "e-paragraph", { tag: "span", paragraph: "Register" }, [{ color: T.white, display: "none" }]),
   svg("header-cta-chev", "chevron-contact", [{ width: px(6), height: px(12) }, { mobile: { width: px(5.5), height: px(11) } }]),
-], { tag: "a", link: link("/register-to-visit/"), attributes: attrs([["aria-label", "Register Your Interest"]]) });
+], { tag: "a", link: link("/register-to-visit/form/"), attributes: attrs([["aria-label", "Register Your Interest"]]) });
 
 const bar = box("site-bar", [{ width: pct(100), padding: P0, display: "flex", "flex-direction": "column", "align-items": "center", "z-index": 50 }], [
   box("site-bar-inner", [

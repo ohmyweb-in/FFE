@@ -44,7 +44,7 @@ const jb = div("jb", mix(WIDE, [
       ], [
         btn("jb-apply", "Apply To Exhibit", "/apply-to-exhibit/", { w: 220, h: 52, pl: 34, gap: 17.66, chev: "chevron-brand", color: T.brand, mColor: "#31a834", bg: T.white,
           m: { w: 178, h: 43, pl: 25, gap: 7, fs: 15, chev: 0.828 } }),
-        btn("jb-register", "Register Your Interest", "/register-to-visit/", { w: 255, h: 52, pl: 31, gap: 13.66, chev: "chevron-white", color: T.white, border: [1, T.white],
+        btn("jb-register", "Register Your Interest", "/register-to-visit/form/", { w: 255, h: 52, pl: 31, gap: 13.66, chev: "chevron-white", color: T.white, border: [1, T.white],
           hoverBg: "rgba(255,255,255,0.1)", m: { w: 202, h: 43, pl: 25, gap: 9, fs: 15, chev: 0.828 } }),
       ]),
     ], { attributes: attrs(reveal(1)) }),

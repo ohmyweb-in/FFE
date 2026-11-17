@@ -46,8 +46,9 @@ const optionList = (id, liPrefix, nodes, { cols, allLast } = {}) =>
 
 const REQ = "<span> *</span>";
 const label15 = { ...text(15, 500, "#000", { "line-height": px(19) }), margin: P0 };
-const group = (p, key, label, children, { radio = false, required = true, gap: g = 16 } = {}) =>
-  div(`${p}-g-${slug(key)}`, [{ padding: P0, display: "flex", "flex-direction": "column", gap: gap(g, 0), "min-width": px(0) }, {}], [
+// hidden: Display None, as an editor sets it in Elementor (ffe-forms.php then leaves the question out of the form).
+const group = (p, key, label, children, { radio = false, required = true, gap: g = 16, hidden = false } = {}) =>
+  div(`${p}-g-${slug(key)}`, [{ padding: P0, display: hidden ? "none" : "flex", "flex-direction": "column", gap: gap(g, 0), "min-width": px(0) }, {}], [
     w(`${p}-g-${slug(key)}-label`, "e-paragraph", { paragraph: label + (required ? REQ : ""), _cssid: `${key}-label`, ...(required && { attributes: attrs([["data-req", ""]]) }) }, [label15, {}]),
     ...children,
   ], { attributes: attrs([["role", radio ? "radiogroup" : "group"], ["aria-labelledby", `${key}-label`], ...(radio ? [["aria-required", "true"]] : []), ["data-span", ""]]) });

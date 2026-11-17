@@ -31,9 +31,21 @@ function ffe_staging(): bool {
 }
 
 // A posted field by the end of its element id: $form_data is keyed by element id (`${p}-f-${name}`, forms.js), not by the field's name.
+// An editor who deletes and re-adds a field in Elementor gives it a random id (17 Nov: the marketing box became "b149ba4"), so the
+// field's name, which Elementor posts beside it and keeps, is the fallback.
 function ffe_field(array $data, string $name): string {
-  foreach ($data as $k => $v) if (str_ends_with((string) $k, "-f-$name")) return is_string($v) ? trim($v) : '';
+  foreach ($data as $k => $v) if (ffe_is($k, $name)) return is_string($v) ? trim($v) : '';
   return '';
+}
+function ffe_is($id, string $name): bool {
+  static $names = null;
+  if ($names === null) { // id => name, from the post Elementor already checked the nonce of
+    $names = [];
+    foreach ((array) ($_POST['form_fields'] ?? []) as $f) {
+      if (is_array($f) && isset($f['id'], $f['name']) && is_string($f['id']) && is_string($f['name'])) $names[sanitize_text_field(wp_unslash($f['id']))] = sanitize_text_field(wp_unslash($f['name']));
+    }
+  }
+  return str_ends_with((string) $id, "-f-$name") || strcasecmp($names[(string) $id] ?? '', $name) === 0;
 }
 
 /* 1. Every atomic form post, after Elementor's nonce check and before any action: honeypot, then Turnstile. Fails closed. */
@@ -99,7 +111,7 @@ add_action('elementor_pro/atomic_forms/actions/register', function ($runner) {
     public function execute(array $form_data, array $widget_settings, array $context): array {
       $emails = in_array('email', (array) ($widget_settings['actions-after-submit'] ?? []), true);
       $consent = false;
-      foreach ($form_data as $k => $v) if (str_contains((string) $k, '-f-marketingconsent') && $v !== '' && $v !== []) $consent = true;
+      foreach ($form_data as $k => $v) if ((str_contains((string) $k, '-f-marketingconsent') || ffe_is($k, 'marketingConsent')) && $v !== '' && $v !== []) $consent = true;
       $ok = ['status' => 'success', 'message' => 'ok'];
       // The error text reaches the visitor's browser: keep it generic, details go to the PHP log.
       $fail = ['status' => 'failed', 'error' => 'Sign-up failed'];
@@ -150,3 +162,59 @@ function ffe_mailchimp(array $data, string $source): bool {
   if ($tc !== 204 && $tc !== 200) { error_log("FFE Mailchimp tag: $tc"); return false; }
   return true;
 }
+
+/* 5. A question an editor hides in Elementor (Style > Layout > Display: None, on any breakpoint) is left out of the form: just before the
+ * browser checks it, its fields are disabled, so they are neither required nor sent. Showing the question again brings them back. */
+add_action('wp_footer', function () { ?>
+<script id="ffe-form-hidden">
+document.addEventListener('click', function (e) {
+  var b = e.target.closest && e.target.closest('form.e-form-base [type=submit]');
+  if (!b || !b.form) return;
+  b.form.querySelectorAll('input, select, textarea').forEach(function (f) {
+    if (f.type === 'hidden' || !(f.required || f.dataset.ffeOff || f.closest('[data-require-one]'))) return;
+    // The "Other" text box is hidden until its box is ticked (site.js): judge it by its question instead.
+    var off = !(f.hasAttribute('data-other-text') ? f.parentElement : f).getClientRects().length;
+    if (off && !f.disabled) { f.disabled = true; f.dataset.ffeOff = '1'; }
+    else if (!off && f.dataset.ffeOff) { f.disabled = false; delete f.dataset.ffeOff; }
+  });
+}, true); // capture: runs before the browser's own validation
+</script>
+<?php }, 99);
+
+/* 6. Questions copied in Elementor: Elementor names an answer in the email by the field's aria-label, which forms.js sets to the original
+ * question and a copy keeps. So each text box, select and textarea takes it from the label beside it instead, and a copy's repeated id
+ * becomes unique (its label then focuses its own box). Multiple-choice questions are grouped by name and aren't covered. */
+add_action('wp_footer', function () { ?>
+<script id="ffe-form-labels">
+document.querySelectorAll('form.e-form-base label[for]').forEach(function (l, i, all) {
+  var f = l.htmlFor && l.parentElement.querySelector('#' + CSS.escape(l.htmlFor));
+  if (!f || /^(radio|checkbox|hidden)$/.test(f.type)) return;
+  var t = l.textContent.replace(/\s*\*\s*$/, '').trim();
+  if (t) f.setAttribute('aria-label', t);
+  if (document.getElementById(f.id) !== f) { f.id = l.htmlFor = f.id + '-' + i; }
+});
+</script>
+<?php }, 99);
+
+/* 7. Multiple-choice questions copied in Elementor (17 Nov: Ruben copied Interest Type for a Hosted Buyers question). Elementor groups
+ * options by their hidden name and sends each option's hidden value, and a copy keeps both, so the copy's answers merged into the
+ * original question (and the browser let a visitor pick only one option across both). On load, so the browser groups them right too:
+ * every option sends the words beside it, and options whose name an earlier question already uses are renamed after their own
+ * question (the nearest paragraph above them), which is also how the email labels them. */
+add_action('wp_footer', function () { ?>
+<script id="ffe-form-choices">
+document.querySelectorAll('form.e-form-base').forEach(function (form) {
+  var ps = [].filter.call(form.querySelectorAll('p'), function (p) { return !p.closest('label'); }), owner = {}, d = document.createElement('div');
+  form.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(function (f) {
+    var n = f.name, q = '';
+    // The question: the paragraph's first line (a note may follow a <br>), without the required star.
+    for (var i = ps.length - 1; i >= 0; i--) if (ps[i].compareDocumentPosition(f) & Node.DOCUMENT_POSITION_FOLLOWING) { d.innerHTML = ps[i].innerHTML.split(/<br\b[^>]*>/i)[0]; q = d.textContent.replace(/[\s*]+$/, '').trim().slice(0, 120); break; }
+    if (n && !(n in owner)) owner[n] = q;
+    if (n && q && owner[n] !== q) f.name = q;
+    // The option's own label: its row's, as a copy may repeat the original's id.
+    var l = f.parentElement.querySelector('label[for="' + CSS.escape(f.id) + '"]') || f.parentElement.querySelector('label'), t = l && l.textContent.trim();
+    if (t) f.value = t;
+  });
+});
+</script>
+<?php }, 99);

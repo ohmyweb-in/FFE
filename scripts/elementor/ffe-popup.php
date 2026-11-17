@@ -2,11 +2,68 @@
 /**
  * Plugin Name: FFE — launch popup
  * Description: LaunchPopup.tsx as a native <dialog> printed in wp_footer: opens 6 s after load (or after the cookie banner is answered), once per tab session (sessionStorage "popupShown"), not on /register-to-visit* or /apply-to-exhibit*, never in the Elementor editor or preview. Deployed to wp-content/mu-plugins/; this copy in scripts/elementor/ is the record. Images: media-g6.json, media.json (powered-*, chevron-sm-white) and media-g4.json (chevron-sm-accent).
+ * The copy is editable in wp-admin > Launch popup (option "ffe_popup", Editors and up); the defaults below are the record.
  */
+
+function ffe_popup_defaults() {
+	return [
+		'enabled' => '1',
+		'badge' => 'Registration is now open!',
+		'title' => 'Be Part of Asia Pacific’s Fresh Food Ecosystem!',
+		'visit_label' => 'Planning to visit?',
+		'visit_btn' => 'Register Your Interest',
+		'visit_url' => '/register-to-visit/form/',
+		'exhibit_label' => 'Looking to exhibit?',
+		'exhibit_btn' => 'Book Your Booth',
+		'exhibit_url' => '/apply-to-exhibit/',
+		'date' => '16-18 Nov. 2027',
+		'venue' => 'Sands Expo & Convention Centre, Singapore',
+	];
+}
+
+// Editors save this page too (options.php asks for manage_options otherwise).
+add_filter('option_page_capability_ffe_popup', fn() => 'edit_pages');
+add_action('admin_init', function () {
+	register_setting('ffe_popup', 'ffe_popup', ['sanitize_callback' => function ($in) {
+		$out = [];
+		foreach (ffe_popup_defaults() as $k => $v) {
+			$out[$k] = $k === 'enabled' ? (empty($in[$k]) ? '' : '1')
+				: (str_ends_with($k, '_url') ? esc_url_raw(trim($in[$k] ?? '')) : sanitize_text_field($in[$k] ?? ''));
+			if ($k !== 'enabled' && $out[$k] === '') $out[$k] = $v; // an emptied field goes back to the default, never blank
+		}
+		return $out;
+	}]);
+});
+// LiteSpeed purges on post saves, not option saves.
+add_action('update_option_ffe_popup', fn() => do_action('litespeed_purge_all'));
+add_action('admin_menu', function () {
+	add_menu_page('Launch popup', 'Launch popup', 'edit_pages', 'ffe-popup', function () {
+		$o = wp_parse_args(get_option('ffe_popup', []), ffe_popup_defaults());
+		$labels = ['badge' => 'Badge', 'title' => 'Heading', 'visit_label' => 'Visit box: label', 'visit_btn' => 'Visit box: button', 'visit_url' => 'Visit box: link',
+			'exhibit_label' => 'Exhibit box: label', 'exhibit_btn' => 'Exhibit box: button', 'exhibit_url' => 'Exhibit box: link', 'date' => 'Date', 'venue' => 'Venue'];
+		?>
+		<div class="wrap"><h1>Launch popup</h1>
+		<p>Shows 6 seconds after a page loads, once per visit. Visitors see changes within about 5 minutes. An emptied field goes back to its original text.</p>
+		<form method="post" action="options.php"><?php settings_fields('ffe_popup'); ?>
+		<table class="form-table">
+			<tr><th>Show the popup</th><td><label><input type="checkbox" name="ffe_popup[enabled]" value="1" <?php checked($o['enabled'], '1'); ?>> On</label></td></tr>
+			<?php foreach ($labels as $k => $l) : ?>
+			<tr><th><label for="ffe-<?php echo $k; ?>"><?php echo esc_html($l); ?></label></th>
+				<td><input class="large-text" id="ffe-<?php echo $k; ?>" name="ffe_popup[<?php echo $k; ?>]" value="<?php echo esc_attr($o[$k]); ?>"></td></tr>
+			<?php endforeach; ?>
+		</table><?php submit_button(); ?></form></div>
+		<?php
+	}, 'dashicons-megaphone', 59);
+});
 
 add_action('wp_footer', function () {
 	if (is_admin() || is_customize_preview() || isset($_GET['elementor-preview'])) return;
 	if (class_exists('\Elementor\Plugin') && (\Elementor\Plugin::$instance->editor->is_edit_mode() || \Elementor\Plugin::$instance->preview->is_preview_mode())) return;
+	$d = ffe_popup_defaults();
+	$o = wp_parse_args(get_option('ffe_popup', []), $d);
+	if (!$o['enabled']) return;
+	// Buttons are sized to the design's labels; new wording sizes to fit instead.
+	$w = fn($k, $px) => $o[$k] === $d[$k] ? "--w:{$px}px" : '--w:auto;padding-right:var(--pl)';
 	$u = content_url('uploads/2026/10/');
 	?>
 <style id="ffe-popup-css">
@@ -153,8 +210,8 @@ html:has(#ffe-popup[open]) { overflow: hidden; }
 	<div class="pu-body">
 		<div class="pu-poster"><img src="<?php echo esc_url($u . 'ffe-g6-poster.jpg'); ?>" alt="Fresh Food Expo APAC 2027 poster" width="1282" height="904"></div>
 		<div class="pu-text">
-			<p class="pu-badge"><span aria-hidden="true"></span>Registration is now open!</p>
-			<h2 id="ffe-popup-title">Be Part of Asia Pacific’s Fresh Food Ecosystem!</h2>
+			<p class="pu-badge"><span aria-hidden="true"></span><?php echo esc_html($o['badge']); ?></p>
+			<h2 id="ffe-popup-title"><?php echo esc_html($o['title']); ?></h2>
 			<div class="pu-powered">
 				<p>Powered By:</p>
 				<img src="<?php echo esc_url($u . 'ffe-powered-fl.png'); ?>" alt="Fruit Logistica" width="306" height="138">
@@ -162,17 +219,17 @@ html:has(#ffe-popup[open]) { overflow: hidden; }
 			</div>
 			<ul class="pu-options">
 				<li>
-					<p>Planning to visit?</p>
-					<a class="pu-btn pu-fill" href="/register-to-visit/" style="--w:207px;--pl:21px;--gap:15px"><span style="text-box:trim-both cap alphabetic">Register Your Interest</span><img src="<?php echo esc_url($u . 'ffe-chevron-sm-white.svg'); ?>" alt="" width="6" height="11"></a>
+					<p><?php echo esc_html($o['visit_label']); ?></p>
+					<a class="pu-btn pu-fill" href="<?php echo esc_url($o['visit_url']); ?>" style="<?php echo $w('visit_btn', 207); ?>;--pl:21px;--gap:15px"><span style="text-box:trim-both cap alphabetic"><?php echo esc_html($o['visit_btn']); ?></span><img src="<?php echo esc_url($u . 'ffe-chevron-sm-white.svg'); ?>" alt="" width="6" height="11"></a>
 				</li>
 				<li>
-					<p>Looking to exhibit?</p>
-					<a class="pu-btn pu-line" href="/apply-to-exhibit/" style="--w:176px;--pl:27px;--gap:10px"><span style="text-box:trim-both cap alphabetic">Book Your Booth</span><img src="<?php echo esc_url($u . 'ffe-g4-chevron-sm-accent.svg'); ?>" alt="" width="6" height="11"></a>
+					<p><?php echo esc_html($o['exhibit_label']); ?></p>
+					<a class="pu-btn pu-line" href="<?php echo esc_url($o['exhibit_url']); ?>" style="<?php echo $w('exhibit_btn', 176); ?>;--pl:27px;--gap:10px"><span style="text-box:trim-both cap alphabetic"><?php echo esc_html($o['exhibit_btn']); ?></span><img src="<?php echo esc_url($u . 'ffe-g4-chevron-sm-accent.svg'); ?>" alt="" width="6" height="11"></a>
 				</li>
 			</ul>
 			<ul class="pu-meta">
-				<li><img src="<?php echo esc_url($u . 'ffe-g6-calendar.png'); ?>" alt="" width="69" height="69">16-18 Nov. 2027</li>
-				<li><img src="<?php echo esc_url($u . 'ffe-g6-pin.png'); ?>" alt="" width="69" height="69">Sands Expo &amp; Convention Centre, Singapore</li>
+				<li><img src="<?php echo esc_url($u . 'ffe-g6-calendar.png'); ?>" alt="" width="69" height="69"><?php echo esc_html($o['date']); ?></li>
+				<li><img src="<?php echo esc_url($u . 'ffe-g6-pin.png'); ?>" alt="" width="69" height="69"><?php echo esc_html($o['venue']); ?></li>
 			</ul>
 		</div>
 	</div>

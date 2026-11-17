@@ -15,7 +15,7 @@ const CARDS = [
     roles: "Wholesalers | Importers | Exporters | Retailers | Food Service Operators...",
     ctas: (c) => [
       btn(`${c}-why`, "Why Visit", "/why-visit/", { w: 162, h: 52, pl: 33, gap: 16.39, chev: "chevron-black", color: "#000000", bg: WHITE, border: [1.5, WHITE] }),
-      btn(`${c}-register`, "Register Your Interest", "/register-to-visit/", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-white", color: WHITE, ...OB }),
+      btn(`${c}-register`, "Register Your Interest", "/register-to-visit/form/", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-white", color: WHITE, ...OB }),
     ] },
   { c: "e", title: "Looking to Exhibit?", img: "exhibit", pl: 36, textW: 532, rolesW: 549, textMt: [28.41, 26], rolesMt: [28.83, 28], ctaMt: [36.83, 36], ctaGap: 11,
     text: "Showcase your fresh food products, technologies or logistics and distribution solutions to buyers, partners and industry stakeholders from across Asia Pacific.",

@@ -101,6 +101,7 @@ $s = get_post_meta($id, '_elementor_page_settings', true); if (!is_array($s)) $s
 $s['custom_css'] = base64_decode('${b64(pageCss)}');
 update_post_meta($id, '_elementor_page_settings', wp_slash($s)); // wp_slash: update_post_meta unslashes, which would eat the backslashes in the CSS ("\\201C", \\[ escapes)
 \\Elementor\\Core\\Files\\CSS\\Post::create($id)->update();
+do_action('litespeed_purge_post', $id); // set-content doesn't fire save_post, so LiteSpeed would keep serving the old page
 return true;
 `);
 console.log(`${ORIGIN}/${fpath}/`);

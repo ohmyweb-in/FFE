@@ -23,6 +23,20 @@ const head = box("rf-head", [{ padding: P0, display: "flex", "flex-direction": "
 const salList = box("rf-sal-list", [{ padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(14, 24) }, { mobile: { display: "grid", "grid-template-columns": "repeat(2, minmax(0, 1fr))", gap: gap(14, 16) } }],
   S.SALUTATION.map((s, k) => S.li(`rf-sal-li${k + 1}`, radio("salutation", s, { p: "rf", value: s, required: true, ...S.BOX }), true, true)), { attributes: attrs([["role", "list"]]) });
 
+// Interest Type (production only, 16 Nov 2026: Ruben's request; not in VisitorForm.tsx). [label, value]: Ruben renamed "Exhibit" to
+// "Exhibiting" in Elementor on 17 Nov; the value keeps the element id (ffe-forms.php sends the label's words anyway).
+const INTEREST = [["Exhibiting", "Exhibit"], ["Visiting"], ["Speaking"]];
+const intList = box("rf-int-list", [{ padding: P0, display: "flex", "flex-direction": "row", "flex-wrap": "wrap", gap: gap(14, 24) }, {}],
+  INTEREST.map(([l, v = l], k) => S.li(`rf-int-li${k + 1}`, radio("interestType", l, { p: "rf", value: v, required: true, ...S.BOX }), true, true)), { attributes: attrs([["role", "list"]]) });
+
+// Hosted Buyers Programme (production only, 17 Nov 2026): Ruben's question, options and disclaimer as he wrote them in Elementor.
+const HOSTED = ["I would like to receive more information before deciding.", "Yes, I am interested.", "No, not at this moment."];
+const hostedNote = w("rf-g-hostedbuyers-note", "e-paragraph", {
+  // Italic by style, not <em>: site.js turns <em> in a paragraph into the green accent word.
+  paragraph: "Disclaimer: The Hosted Buyers Programme is by invitation only. Only individuals who have been formally invited by the Organiser and meet the eligibility criteria will be considered qualified buyers. Indicating interest does not guarantee participation.",
+}, [{ ...text(13, 400, T.body, { "line-height": px(19) }), "font-style": "italic", margin: P0 }, {}]);
+const hostedList = S.optionList("rf-hb-list", "rf-hb-li", HOSTED.map((x) => radio("hostedBuyers", x, { p: "rf", value: x, required: true, ...S.BOX })));
+
 const actIn = div("rf-act-in", [{ padding: P0, display: "flex", "flex-direction": "column", gap: gap(14, 0) }, {}], [
   S.optionList("rf-act-list", "rf-act-li", [
     ...S.VISIT_ACTIVITY.map((a) => check("activity", S.esc(a), { p: "rf", value: a, ...S.BOX })),
@@ -37,6 +51,7 @@ const grid = div("rf-f-grid", [
   { padding: P0, display: "grid", "grid-template-columns": "repeat(2, minmax(0, 1fr))", gap: gap(24, 24), "align-items": "end" },
   { mobile: { "grid-template-columns": "minmax(0, 1fr)", "align-items": "stretch" } },
 ], [
+  S.group("rf", "interestType", "Interest Type", [intList], { radio: true }),
   S.group("rf", "salutation", "Salutation", [salList], { radio: true }),
   fF("firstName", "First Name", inp("firstName", "Enter your first name", { ac: "given-name" })),
   fF("lastName", "Last Name", inp("lastName", "Enter your last name", { ac: "family-name" })),
@@ -47,8 +62,10 @@ const grid = div("rf-f-grid", [
   fF("company", "Company Name", inp("company", "Enter your company name", { ac: "organization" })),
   fF("jobTitle", "Job Title", inp("jobTitle", "Enter your job title", { ac: "organization-title" })),
   fF("country", "Country / Region", countrySelect("country", { p: "rf", placeholder: "Search country / region", required: true })),
-  S.group("rf", "activity", "Company Business Activity", [actIn]),
-  S.group("rf", "products", "What are the products/services that you are interested in?", [prodList], { radio: true }),
+  // Hidden by Ruben in Elementor, 16 Nov 2026.
+  S.group("rf", "activity", "Company Business Activity", [actIn], { hidden: true }),
+  S.group("rf", "products", "What are the products/services that you are interested in?", [prodList], { radio: true, hidden: true }),
+  S.group("rf", "hostedBuyers", "Are you interested in participating in the Hosted Buyers Programme at FFE APAC 2027?", [hostedList, hostedNote], { radio: true, gap: 12 }),
   S.consent("rf", "marketingConsent", S.MKT_VISIT),
   S.consent("rf", "termsConsent", S.TERMS_VISIT),
 ]);

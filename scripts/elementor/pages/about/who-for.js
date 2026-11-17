@@ -10,7 +10,7 @@ const CARDS = [
     tags: "Wholesalers | Importers | Exporters | Retailers | Food Service Operators...",
     btns: (c) => [
       btn(`${c}-why`, "Why Visit", "/why-visit/", { w: 162, h: 52, pl: 33, gap: 9.73, chev: "chevron-black", color: "#000000", bg: T.white, border: [1.5, T.white], m: { w: 125, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
-      btn(`${c}-reg`, "Register Your Interest", "/register-to-visit/", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-white", color: T.white, border: [1.5, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 200, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
+      btn(`${c}-reg`, "Register Your Interest", "/register-to-visit/form/", { w: 248, h: 52, pl: 27, gap: 13.66, chev: "chevron-white", color: T.white, border: [1.5, T.white], hoverBg: "rgba(255,255,255,0.1)", m: { w: 200, h: 43, pl: 22, gap: 8, fs: 15, chev: 0.828 } }),
     ],
   },
   {

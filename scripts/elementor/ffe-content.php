@@ -17,8 +17,10 @@ add_filter('the_content', function ($html) {
 }, 20);
 
 /* 2. [ffe_post_category]: the post's first category, for the template's pill (atomic text takes the "Shortcode" dynamic tag, not "Post Terms"). */
+// A post saved before a category is ticked lands in the default one (News); if the editor then ticks Press Release, show that.
 add_shortcode('ffe_post_category', function () {
   $c = get_the_category();
+  if (count($c) > 1) $c = array_values(array_filter($c, fn($t) => $t->term_id !== (int) get_option('default_category'))) ?: $c;
   return $c ? esc_html($c[0]->name) : '';
 });
 

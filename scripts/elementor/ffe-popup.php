@@ -43,6 +43,7 @@ add_action('admin_menu', function () {
 			'exhibit_label' => 'Exhibit box: label', 'exhibit_btn' => 'Exhibit box: button', 'exhibit_url' => 'Exhibit box: link', 'date' => 'Date', 'venue' => 'Venue'];
 		?>
 		<div class="wrap"><h1>Launch popup</h1>
+		<?php settings_errors(); // "Settings saved." after Save (shown by itself only on WordPress's own Settings pages) ?>
 		<p>Shows 6 seconds after a page loads, once per visit. Visitors see changes within about 5 minutes. An emptied field goes back to its original text.</p>
 		<form method="post" action="options.php"><?php settings_fields('ffe_popup'); ?>
 		<table class="form-table">

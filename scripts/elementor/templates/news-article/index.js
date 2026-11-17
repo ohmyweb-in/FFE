@@ -18,7 +18,7 @@ const NA_CSS = [
   // A Group with a heading and a two-column Table (labels in the first column); Table block defaults (borders, padding) undone.
   `${P} .na-facts .wp-block-table { margin: 16px 0 0; overflow: visible; }`,
   `${P} .na-facts table { width: 100%; border: 0; border-collapse: collapse; font-size: 16px; line-height: 24px; }`,
-  `${P} .na-facts td { padding: 5px 24px 5px 0; border: 0; vertical-align: top; }`,
+  `${P} .na-facts td { padding: 5px 24px 5px 0; border: 0; vertical-align: top; background: none !important; }`, // Hello Elementor stripes every table's odd rows
   `${P} .na-facts tr:first-child td { padding-top: 0; } ${P} .na-facts tr:last-child td { padding-bottom: 0; }`,
   `${P} .na-facts td:first-child { width: 1%; white-space: nowrap; font-weight: 600; color: #025d03; }`,
   `${B} > .na-facts + p { margin-top: 32px; }`,

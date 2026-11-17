@@ -72,6 +72,7 @@ add_action('admin_menu', function () {
     if ($test) { $tp = get_posts(['post_type' => 'page', 'post_status' => 'publish', 'meta_key' => '_ffe_page', 'meta_value' => '_test/form', 'numberposts' => 1]); $url = $tp ? get_permalink($tp[0]) : $url; }
     ?>
     <div class="wrap"><h1>Registration form<?php if ($test) echo ' <span style="font-size:13px;background:#fcf0f1;color:#8a2424;padding:2px 8px;border-radius:3px;vertical-align:middle">Test copy: the live form is not changed</span>'; ?></h1>
+    <?php settings_errors(); // "Settings saved." after Save: WordPress shows it by itself only on its own Settings pages ?>
     <p>The questions on <a href="<?php echo esc_url($url); ?>" target="_blank">Register Your Interest</a>. Visitors see changes within about 5 minutes. Answers arrive in the team email and under Elementor &gt; Submissions, named by the question.</p>
     <form method="post" action="options.php"><?php settings_fields($opt); ?>
     <h2>Questions already on the form</h2>

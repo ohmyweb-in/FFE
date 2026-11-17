@@ -133,7 +133,7 @@ add_filter('wp_handle_sideload', $ffe_clean_upload); // REST uploads of raw data
  * the design can't be changed by accident. Posts are written in the block editor only: Elementor editing is for pages (an article turned
  * into an Elementor page would skip the article template). Applied once per version. */
 add_action('init', function () {
-  if ((int) get_option('ffe_roles_v') >= 1) return;
+  if ((int) get_option('ffe_roles_v') >= 2) return;
   remove_role('ffe_content_manager');
   add_role('ffe_content_manager', 'Content manager', array_fill_keys([
     'read', 'upload_files', 'edit_posts', 'edit_others_posts', 'edit_published_posts', 'edit_private_posts', 'publish_posts',
@@ -141,8 +141,18 @@ add_action('init', function () {
   ], true));
   get_role('administrator')->add_cap('ffe_manage_content');
   update_option('elementor_cpt_support', ['page']);
-  update_option('ffe_roles_v', 1);
+  // Elementor > Role Manager "No access to editor" for Content managers (v2).
+  update_option('elementor_exclude_user_roles', array_values(array_unique(array_merge((array) get_option('elementor_exclude_user_roles', []), ['ffe_content_manager']))));
+  update_option('ffe_roles_v', 2);
 });
+// Elementor's templates (header, footer, the article and album templates) are posts with the ordinary post permissions: keep Content
+// managers out of them, so they can't change or trash the design.
+add_filter('map_meta_cap', function ($caps, $cap, $uid, $args) {
+  if (!in_array($cap, ['edit_post', 'delete_post', 'publish_post'], true) || empty($args[0])) return $caps;
+  if (!in_array(get_post_type($args[0]), ['elementor_library', 'e-floating-buttons'], true)) return $caps;
+  $u = get_userdata($uid);
+  return $u && in_array('ffe_content_manager', (array) $u->roles, true) ? ['do_not_allow'] : $caps;
+}, 10, 4);
 
 // Dashboard: how to update the site, for whoever logs in.
 add_action('wp_dashboard_setup', function () {
@@ -155,3 +165,9 @@ add_action('wp_dashboard_setup', function () {
     <p>Visitors see changes within about 5 minutes.</p>
   <?php });
 });
+
+/* 8. /news/ and /gallery/ are ordinary pages holding a Loop, which LiteSpeed doesn't purge when a post or album changes (it purges the
+ * post, the home page and archives). So publishing, updating or unpublishing one clears the whole page cache; Bunny follows within 5 min. */
+add_action('transition_post_status', function ($new, $old, $post) {
+  if (in_array($post->post_type, ['post', 'ffe_album'], true) && ($new === 'publish' || $old === 'publish')) do_action('litespeed_purge_all');
+}, 10, 3);

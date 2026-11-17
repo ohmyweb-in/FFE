@@ -64,7 +64,10 @@ if (${cutover ? "true" : "false"}) {
   if (!$page) throw new Exception('page news/' . $slug . ' not found');
   $before = get_option('rewrite_rules');
   wp_update_post(['ID' => $id, 'post_status' => 'publish', 'post_date' => $arr['post_date'], 'post_date_gmt' => $arr['post_date_gmt'], 'edit_date' => true]);
-  update_option('permalink_structure', '/news/%postname%/'); // posts at /news/<slug>/; pages keep their addresses
+  // Posts at /news/<slug>/; pages keep their addresses. set_permalink_structure, not update_option: the flush below builds the rules from
+  // $wp_rewrite in memory, and with only the option changed it rebuilt the old ones (17 Nov 2026: the article was a 404 for ~2 minutes).
+  global $wp_rewrite;
+  $wp_rewrite->set_permalink_structure('/news/%postname%/');
   flush_rewrite_rules(false);
   wp_trash_post($page->ID); // restorable from Pages > Trash
   do_action('litespeed_purge_all');

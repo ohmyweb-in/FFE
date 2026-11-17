@@ -7,6 +7,8 @@ module.exports = {
   conditions: [{ type: "include", name: "singular", sub_name: "ffe_album" }],
   prefix: "ga", footer: [64, 48, 48],
   css: [
+    "/* Hero title: the album page broke it after \"Launch\" with <br>; a dynamic title wraps in the text column instead, balanced. */",
+    'body .elementor [data-id="ga-ph-title"] { max-width: 640px; text-wrap: balance; }',
     "/* Album note: text-accent underline links, hover forest */",
     'body .elementor [data-id="ga-note"] a { color: #28ae3d; text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }',
     'body .elementor [data-id="ga-note"] a:hover { color: #025d03; }',

@@ -22,7 +22,7 @@ function ffe_popup_defaults() {
 }
 
 // Editors save this page too (options.php asks for manage_options otherwise).
-add_filter('option_page_capability_ffe_popup', fn() => 'edit_pages');
+add_filter('option_page_capability_ffe_popup', fn() => 'ffe_manage_content'); // administrators and Content managers (ffe-content.php)
 add_action('admin_init', function () {
 	register_setting('ffe_popup', 'ffe_popup', ['sanitize_callback' => function ($in) {
 		$out = [];
@@ -37,7 +37,7 @@ add_action('admin_init', function () {
 // LiteSpeed purges on post saves, not option saves.
 add_action('update_option_ffe_popup', fn() => do_action('litespeed_purge_all'));
 add_action('admin_menu', function () {
-	add_menu_page('Launch popup', 'Launch popup', 'edit_pages', 'ffe-popup', function () {
+	add_menu_page('Launch popup', 'Launch popup', 'ffe_manage_content', 'ffe-popup', function () {
 		$o = wp_parse_args(get_option('ffe_popup', []), ffe_popup_defaults());
 		$labels = ['badge' => 'Badge', 'title' => 'Heading', 'visit_label' => 'Visit box: label', 'visit_btn' => 'Visit box: button', 'visit_url' => 'Visit box: link',
 			'exhibit_label' => 'Exhibit box: label', 'exhibit_btn' => 'Exhibit box: button', 'exhibit_url' => 'Exhibit box: link', 'date' => 'Date', 'venue' => 'Venue'];

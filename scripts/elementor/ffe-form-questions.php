@@ -31,7 +31,7 @@ function ffe_fq_get(?bool $test = null): array {
 }
 
 /* 1. The screen. */
-add_filter('option_page_capability_ffe_form_questions', fn() => 'edit_pages');
+add_filter('option_page_capability_ffe_form_questions', fn() => 'ffe_manage_content'); // administrators and Content managers (ffe-content.php)
 add_action('init', function () { // init, not admin_init: the sanitize filter then exists wherever the option is written
   register_setting('ffe_form_questions', 'ffe_form_questions', ['sanitize_callback' => function ($in) {
     $in = is_array($in) ? $in : [];
@@ -58,7 +58,7 @@ add_action('update_option_ffe_form_questions', fn() => do_action('litespeed_purg
 add_action('add_option_ffe_form_questions', fn() => do_action('litespeed_purge_all'));
 
 add_action('admin_menu', function () {
-  add_menu_page('Registration form', 'Registration form', 'edit_pages', 'ffe-form-questions', function () {
+  add_menu_page('Registration form', 'Registration form', 'ffe_manage_content', 'ffe-form-questions', function () {
     $o = ffe_fq_get(false);
     $rows = array_merge($o['questions'], array_fill(0, 2, ['id' => '', 'question' => '', 'type' => 'text', 'options' => [], 'required' => false, 'note' => '', 'before' => 'rf-c-marketingconsent']));
     $url = home_url('/' . FFE_FQ_PAGE . '/');

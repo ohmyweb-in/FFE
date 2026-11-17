@@ -127,3 +127,31 @@ $ffe_clean_upload = function ($u) {
 };
 add_filter('wp_handle_upload', $ffe_clean_upload); // Media Library and the block editor's file uploads
 add_filter('wp_handle_sideload', $ffe_clean_upload); // REST uploads of raw data and media_handle_sideload()
+
+/* 7. Who can do what. "Content manager" (for the person after Ruben): News & Press, Albums, Media, the Launch popup and Registration form
+ * screens (capability ffe_manage_content, which administrators get too), and nothing else: no pages, Elementor, plugins or settings, so
+ * the design can't be changed by accident. Posts are written in the block editor only: Elementor editing is for pages (an article turned
+ * into an Elementor page would skip the article template). Applied once per version. */
+add_action('init', function () {
+  if ((int) get_option('ffe_roles_v') >= 1) return;
+  remove_role('ffe_content_manager');
+  add_role('ffe_content_manager', 'Content manager', array_fill_keys([
+    'read', 'upload_files', 'edit_posts', 'edit_others_posts', 'edit_published_posts', 'edit_private_posts', 'publish_posts',
+    'delete_posts', 'delete_others_posts', 'delete_published_posts', 'read_private_posts', 'manage_categories', 'ffe_manage_content',
+  ], true));
+  get_role('administrator')->add_cap('ffe_manage_content');
+  update_option('elementor_cpt_support', ['page']);
+  update_option('ffe_roles_v', 1);
+});
+
+// Dashboard: how to update the site, for whoever logs in.
+add_action('wp_dashboard_setup', function () {
+  if (!current_user_can('ffe_manage_content')) return;
+  wp_add_dashboard_widget('ffe_howto', 'Update the website', function () { ?>
+    <p><strong>News or press release:</strong> Posts &gt; Add New. Title; the article in blocks (Insert + &gt; Patterns &gt; FFE has the Key facts panel and a link to photos); on the right: Category, Featured image (its Caption shows under the photo), Excerpt (the line under the title and on the News page). Publish. It appears first on <a href="<?php echo esc_url(home_url('/news/')); ?>" target="_blank">News &amp; Press</a>.</p>
+    <p><strong>Photo album:</strong> Albums (Gallery) &gt; Add New. Title, Excerpt, then drop the photos into the Gallery box and give each a caption (click the photo). Drag to reorder; the first is the cover. Publish. Camera and location data are removed from uploads.</p>
+    <p><strong>Registration form:</strong> Registration form (left menu). Show or hide questions, add your own.</p>
+    <p><strong>Launch popup:</strong> Launch popup (left menu). Text, buttons, links, on/off.</p>
+    <p>Visitors see changes within about 5 minutes.</p>
+  <?php });
+});
